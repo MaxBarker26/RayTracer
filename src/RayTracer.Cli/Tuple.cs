@@ -90,6 +90,15 @@ public class Tuple
         return Subtract(a, b);
     }
 
+    ///<summary>
+    /// Unary subtraction operator. Returns the negation of the tuple passed to it.
+    ///</summary>
+    public static Tuple operator -(Tuple a)
+    {
+        Tuple zeroVector = new Tuple(0, 0, 0, 0);
+        return Subtract(zeroVector, a);
+    }
+
     public static Tuple Subtract(Tuple left, Tuple right)
     {
         double x = left.X - right.X;

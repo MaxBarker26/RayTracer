@@ -144,4 +144,13 @@ public class TupleTests
         Tuple point = Tuple.Point(1, -4, -6);
         Assert.Throws<InvalidOperationException>(() => vector - point);
     }
+
+    [Fact]
+    public void NegativeUnaryOperator_NegateATuple_TuplePropertiesAreNegated()
+    {
+        Tuple vector = Tuple.Vector(2.3, -6.7, 9.846);
+        Tuple negated = -vector;
+        Tuple expected = new Tuple(-2.3, 6.7, -9.846, 0);
+        Assert.Equal(expected, negated);
+    }
 }
