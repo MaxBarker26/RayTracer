@@ -111,4 +111,22 @@ public class Tuple
             );
         return new Tuple(x, y, z, w);
     }
+
+    public static Tuple MultiplyScalar(Tuple tuple, double scalar)
+    {
+        double x = tuple.X * scalar;
+        double y = tuple.Y * scalar;
+        double z = tuple.Z * scalar;
+        double w = tuple.W * scalar;
+        if (w != 0 && w != 1)
+            throw new InvalidOperationException(
+                "Resulting W property must be 1 or 0. Is currently: " + w
+            );
+        return new Tuple(x, y, z, w);
+    }
+
+    public static Tuple operator *(Tuple tuple, double scalar)
+    {
+        return MultiplyScalar(tuple, scalar);
+    }
 }

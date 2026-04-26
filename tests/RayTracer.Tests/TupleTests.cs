@@ -145,6 +145,10 @@ public class TupleTests
         Assert.Throws<InvalidOperationException>(() => vector - point);
     }
 
+    ///<summary>
+    /// Eaach individual double in a tuple will be swapped to it's inverse as a result
+    /// of the unary minus operation.
+    ///</summary>
     [Fact]
     public void NegativeUnaryOperator_NegateATuple_TuplePropertiesAreNegated()
     {
@@ -152,5 +156,31 @@ public class TupleTests
         Tuple negated = -vector;
         Tuple expected = new Tuple(-2.3, 6.7, -9.846, 0);
         Assert.Equal(expected, negated);
+    }
+
+    ///<summary
+    /// Multiplying a tuple by a scalar greater that one
+    /// lengthening of the each vector property by the scalar.
+    ///</summary>
+    [Fact]
+    public void ScalarMultiply_MultiplyATupleByAScalarValue_TuplePropertiesScaleAsExpected()
+    {
+        Tuple vector = Tuple.Vector(3, -7, -11);
+        double scalar = 3;
+        Tuple scaledVector = vector * scalar;
+        Tuple expected = new Tuple(9, -21, -33, 0);
+    }
+
+    ///<summary
+    /// Multiplying a tuple by a scalar less than one will result in a
+    /// shortening of the each vector property by the scalar fraction.
+    ///</summary>
+    [Fact]
+    public void ScalarMultiply_MultiplyATupleByAScalarValueLessThan1_TuplePropertiesScaleAsExpected()
+    {
+        Tuple vector = Tuple.Vector(3, -7, -11);
+        double scalar = 0.5;
+        Tuple scaledVector = vector * scalar;
+        Tuple expected = new Tuple(1.5, -3.5, -5.5, 0);
     }
 }
