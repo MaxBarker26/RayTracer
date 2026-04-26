@@ -84,4 +84,22 @@ public class Tuple
             );
         return new Tuple(x, y, z, w);
     }
+
+    public static Tuple operator -(Tuple a, Tuple b)
+    {
+        return Subtract(a, b);
+    }
+
+    public static Tuple Subtract(Tuple left, Tuple right)
+    {
+        double x = left.X - right.X;
+        double y = left.Y - right.Y;
+        double z = left.Z - right.Z;
+        double w = left.W - right.W;
+        if (w != 0 && w != 1)
+            throw new InvalidOperationException(
+                "Resulting W property must be 1 or 0. Is currently: " + w
+            );
+        return new Tuple(x, y, z, w);
+    }
 }

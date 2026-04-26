@@ -92,4 +92,56 @@ public class TupleTests
         Tuple pointB = Tuple.Point(1, -4, -6);
         Assert.Throws<InvalidOperationException>(() => pointA + pointB);
     }
+
+    ///<summary>
+    /// Subtracting two points will not throw an exception it will instead result in
+    /// a vector.
+    ///</summary>
+    [Fact]
+    public void Subtract_CombineTwoPointsViaSubtraction_ReturnsExpectedVector()
+    {
+        Tuple pointA = Tuple.Point(3, -5, 1);
+        Tuple pointB = Tuple.Point(1, -4, -6);
+        Tuple resultingVector = pointA - pointB;
+        Tuple comparisonVector = new Tuple(2, -1, 7, 0);
+        Assert.Equal(comparisonVector, resultingVector);
+    }
+
+    ///<summary>
+    /// Subtracting a vector from a point is valid and will result in a point.
+    ///</summary>
+    [Fact]
+    public void Subtract_CombineVectorAndPointViaSubtraction_ReturnsExpectedPoint()
+    {
+        Tuple point = Tuple.Point(3, -5, 1);
+        Tuple vector = Tuple.Vector(1, -4, -6);
+        Tuple resultingVector = point - vector;
+        Tuple comparisonVector = new Tuple(2, -1, 7, 1);
+        Assert.Equal(comparisonVector, resultingVector);
+    }
+
+    ///<summary>
+    /// Subtracting a vector from a vector is valid and will result in a vector.
+    ///</summary>
+    [Fact]
+    public void Subtract_CombineTwoVectorsViaSubtraction_ReturnsExpectedVector()
+    {
+        Tuple vectorA = Tuple.Vector(3, -5, 1);
+        Tuple vectorB = Tuple.Vector(1, -4, -6);
+        Tuple resultingVector = vectorA - vectorB;
+        Tuple comparisonVector = new Tuple(2, -1, 7, 0);
+        Assert.Equal(comparisonVector, resultingVector);
+    }
+
+    ///<summary>
+    /// Subtracting a point from a vector will result in a negative w property
+    /// for the resulting tuple and therefore is not valid.
+    ///</summary>
+    [Fact]
+    public void Subtract_SubtractPointFromVector_ThrowsInvalidOperationException()
+    {
+        Tuple vector = Tuple.Vector(3, -5, 1);
+        Tuple point = Tuple.Point(1, -4, -6);
+        Assert.Throws<InvalidOperationException>(() => vector - point);
+    }
 }
