@@ -159,7 +159,7 @@ public class TupleTests
     }
 
     ///<summary
-    /// Multiplying a tuple by a scalar greater that one
+    /// Multiplying a tuple by a scalar greater that one results in the
     /// lengthening of the each vector property by the scalar.
     ///</summary>
     [Fact]
@@ -181,6 +181,19 @@ public class TupleTests
         Tuple vector = Tuple.Vector(3, -7, -11);
         double scalar = 0.5;
         Tuple scaledVector = vector * scalar;
+        Tuple expected = new Tuple(1.5, -3.5, -5.5, 0);
+    }
+
+    ///<summary
+    /// Dividing a tuple by a scalar divides each vector
+    /// property by the scalar amount.
+    ///</summary>
+    [Fact]
+    public void ScalarDivide_DivideATupleByAScalarValue_TuplePropertiesScaleAsExpected()
+    {
+        Tuple vector = Tuple.Vector(3, -7, -11);
+        double scalar = 2;
+        Tuple scaledVector = vector / scalar;
         Tuple expected = new Tuple(1.5, -3.5, -5.5, 0);
     }
 }

@@ -67,6 +67,17 @@ public class Tuple
         return true;
     }
 
+    ///<summary>
+    /// Override of hashcode since equals is overridden.
+    ///</summary>
+    public override int GetHashCode()
+    {
+        return this.X.GetHashCode()
+            + this.Y.GetHashCode()
+            + this.Z.GetHashCode()
+            + this.W.GetHashCode();
+    }
+
     public static Tuple operator +(Tuple a, Tuple b)
     {
         return Add(a, b);
@@ -128,5 +139,10 @@ public class Tuple
     public static Tuple operator *(Tuple tuple, double scalar)
     {
         return MultiplyScalar(tuple, scalar);
+    }
+
+    public static Tuple operator /(Tuple tuple, double scalar)
+    {
+        return MultiplyScalar(tuple, (1 / scalar));
     }
 }
