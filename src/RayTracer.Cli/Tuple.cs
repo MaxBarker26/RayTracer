@@ -66,4 +66,18 @@ public class Tuple
             return false;
         return true;
     }
+
+    public static Tuple operator +(Tuple a, Tuple b)
+    {
+        return Add(a, b);
+    }
+
+    public static Tuple Add(Tuple left, Tuple right)
+    {
+        double x = left.X + right.X;
+        double y = left.Y + right.Y;
+        double z = left.Z + right.Z;
+        double w = left.W + right.W;
+        return new Tuple(x, y, z, w);
+    }
 }

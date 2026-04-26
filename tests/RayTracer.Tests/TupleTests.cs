@@ -32,7 +32,7 @@ public class TupleTests
     /// equal to 1.0.
     ///</summary>
     [Fact]
-    public void Point_CreatesAPoint_NewPointIsEquivalentToTuple()
+    public void Point_CreatesAPoint_NewPointIsEquivalentToExpectedTuple()
     {
         Tuple point = Tuple.Point(6.1, 6.2, -81.6);
         Tuple comparisonPoint = new Tuple(6.1, 6.2, -81.6, 1.0);
@@ -45,11 +45,25 @@ public class TupleTests
     /// equal to 0.
     ///</summary>
     [Fact]
-    public void Vector_CreatesAVector_NewVectorIsEquivalentToTuple()
+    public void Vector_CreatesAVector_NewVectorIsEquivalentToExpectedTuple()
     {
         Tuple vector = Tuple.Vector(6.1, 6.2, -81.6);
         Tuple comparisonVector = new Tuple(6.1, 6.2, -81.6, 0);
         Console.WriteLine(vector.Equals(comparisonVector));
         Assert.Equal(comparisonVector, vector);
+    }
+
+    ///<summary>
+    /// Adding a point and vector together should result in a point which represents
+    /// the point arrived at after traveling along the vector from the given point.
+    ///</summary>
+    [Fact]
+    public void Add_CombineTwoVectorAndPointViaAddition_ReturnsExpectedTuple()
+    {
+        Tuple point = Tuple.Point(3, -5, 1);
+        Tuple vector = Tuple.Vector(1, -4, -6);
+        Tuple destinationPoint = point + vector;
+        Tuple comparisonPoint = new Tuple(4, -9, -5, 1);
+        Assert.Equal(comparisonPoint, destinationPoint);
     }
 }
