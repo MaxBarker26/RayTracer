@@ -78,6 +78,10 @@ public class Tuple
         double y = left.Y + right.Y;
         double z = left.Z + right.Z;
         double w = left.W + right.W;
+        if (w != 0 && w != 1)
+            throw new InvalidOperationException(
+                "Resulting W property must be 1 or 0. Is currently: " + w
+            );
         return new Tuple(x, y, z, w);
     }
 }

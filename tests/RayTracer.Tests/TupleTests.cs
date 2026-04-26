@@ -58,12 +58,38 @@ public class TupleTests
     /// the point arrived at after traveling along the vector from the given point.
     ///</summary>
     [Fact]
-    public void Add_CombineTwoVectorAndPointViaAddition_ReturnsExpectedTuple()
+    public void Add_CombineVectorAndPointViaAddition_ReturnsExpectedPoint()
     {
         Tuple point = Tuple.Point(3, -5, 1);
         Tuple vector = Tuple.Vector(1, -4, -6);
         Tuple destinationPoint = point + vector;
         Tuple comparisonPoint = new Tuple(4, -9, -5, 1);
         Assert.Equal(comparisonPoint, destinationPoint);
+    }
+
+    ///<summary>
+    /// Adding two vectors together should result in a vector which represents
+    /// sum magnitude and direction of the two vectors.
+    ///</summary>
+    [Fact]
+    public void Add_CombineTwoVectorsViaAddition_ReturnsExpectedVector()
+    {
+        Tuple vectorA = Tuple.Vector(3, -5, 1);
+        Tuple vectorB = Tuple.Vector(1, -4, -6);
+        Tuple resultingVector = vectorA + vectorB;
+        Tuple comparisonVector = new Tuple(4, -9, -5, 0);
+        Assert.Equal(comparisonVector, resultingVector);
+    }
+
+    ///<summary>
+    /// Adding two points together should result in a w value of 2, neither a point or vector.
+    /// This will cause an exception to be thrown.
+    ///</summary>
+    [Fact]
+    public void Add_CombineTwoPointsViaAddition_ThrowsInvalidOperationException()
+    {
+        Tuple pointA = Tuple.Point(3, -5, 1);
+        Tuple pointB = Tuple.Point(1, -4, -6);
+        Assert.Throws<InvalidOperationException>(() => pointA + pointB);
     }
 }
