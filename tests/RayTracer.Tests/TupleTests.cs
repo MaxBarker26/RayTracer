@@ -25,4 +25,31 @@ public class TupleTests
         Assert.Equal(vector.W, 0);
         Assert.True(vector.IsVector());
     }
+
+    ///<summary>
+    /// Creating a point with the Point() static method is equivalent
+    /// to creating a tuple with the same xyz coordinates and a w value
+    /// equal to 1.0.
+    ///</summary>
+    [Fact]
+    public void Point_CreatesAPoint_NewPointIsEquivalentToTuple()
+    {
+        Tuple point = Tuple.Point(6.1, 6.2, -81.6);
+        Tuple comparisonPoint = new Tuple(6.1, 6.2, -81.6, 1.0);
+        Assert.Equal(comparisonPoint, point);
+    }
+
+    ///<summary>
+    /// Creating a point with the Vector() static method is equivalent
+    /// to creating a tuple with the same xyz coordinates and a w value
+    /// equal to 0.
+    ///</summary>
+    [Fact]
+    public void Vector_CreatesAVector_NewVectorIsEquivalentToTuple()
+    {
+        Tuple vector = Tuple.Vector(6.1, 6.2, -81.6);
+        Tuple comparisonVector = new Tuple(6.1, 6.2, -81.6, 0);
+        Console.WriteLine(vector.Equals(comparisonVector));
+        Assert.Equal(comparisonVector, vector);
+    }
 }
