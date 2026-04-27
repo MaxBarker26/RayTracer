@@ -78,6 +78,11 @@ public class Tuple
             + this.W.GetHashCode();
     }
 
+    public override string ToString()
+    {
+        return X + ", " + Y + ", " + Z + ", " + W;
+    }
+
     public static Tuple operator +(Tuple a, Tuple b)
     {
         return Add(a, b);
@@ -152,11 +157,11 @@ public class Tuple
     /// Returns a Vector type when a vector tuple is passed as parameter.
     /// <param name="tuple">Must be a vector type Tuple (W property of 0). </param>
     ///</summary>
-    public Vector ToVector(Tuple tuple)
+    public Vector ToVector()
     {
-        if (tuple.IsVector())
+        if (this.IsVector())
         {
-            return new Vector(tuple.X, tuple.Y, tuple.Z);
+            return new Vector(X, Y, Z);
         }
         throw new ArgumentException("Argument passed is not a vector.");
     }

@@ -44,4 +44,14 @@ public class VectorTests()
         Assert.Equal(new Vector(-1, 2, -1), v1.Cross(v2));
         Assert.Equal(new Vector(1, -2, 1), v2.Cross(v1));
     }
+
+    [Fact]
+    public void Operators_OperatorsWorkOnVectorClass()
+    {
+        Vector v1 = new(1, 2, 3);
+        Vector v2 = new(2, 3, 4);
+        Assert.Equal(new Vector(-1, -1, -1), v1 - v2);
+        Assert.Equal(new Vector(3, 5, 7), v1 + v2);
+        Assert.Equal(new Vector(3, 6, 9), v1 * 3);
+    }
 }
