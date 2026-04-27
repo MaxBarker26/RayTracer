@@ -94,10 +94,6 @@ public class Tuple
         double y = left.Y + right.Y;
         double z = left.Z + right.Z;
         double w = left.W + right.W;
-        if (w != 0 && w != 1)
-            throw new InvalidOperationException(
-                "Resulting W property must be 1 or 0. Is currently: " + w
-            );
         return new Tuple(x, y, z, w);
     }
 
@@ -121,10 +117,6 @@ public class Tuple
         double y = left.Y - right.Y;
         double z = left.Z - right.Z;
         double w = left.W - right.W;
-        if (w != 0 && w != 1)
-            throw new InvalidOperationException(
-                "Resulting W property must be 1 or 0. Is currently: " + w
-            );
         return new Tuple(x, y, z, w);
     }
 
@@ -134,10 +126,6 @@ public class Tuple
         double y = tuple.Y * scalar;
         double z = tuple.Z * scalar;
         double w = tuple.W * scalar;
-        if (w != 0 && w != 1)
-            throw new InvalidOperationException(
-                "Resulting W property must be 1 or 0. Is currently: " + w
-            );
         return new Tuple(x, y, z, w);
     }
 
@@ -164,5 +152,10 @@ public class Tuple
             return new Vector(X, Y, Z);
         }
         throw new ArgumentException("Argument passed is not a vector.");
+    }
+
+    public Color ToColor()
+    {
+        return new Color(X, Y, Z);
     }
 }

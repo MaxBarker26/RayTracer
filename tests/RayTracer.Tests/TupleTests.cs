@@ -82,18 +82,6 @@ public class TupleTests
     }
 
     ///<summary>
-    /// Adding two points together should result in a w value of 2, neither a point or vector.
-    /// This will cause an exception to be thrown.
-    ///</summary>
-    [Fact]
-    public void Add_CombineTwoPointsViaAddition_ThrowsInvalidOperationException()
-    {
-        Tuple pointA = Tuple.Point(3, -5, 1);
-        Tuple pointB = Tuple.Point(1, -4, -6);
-        Assert.Throws<InvalidOperationException>(() => pointA + pointB);
-    }
-
-    ///<summary>
     /// Subtracting two points will not throw an exception it will instead result in
     /// a vector.
     ///</summary>
@@ -131,18 +119,6 @@ public class TupleTests
         Tuple resultingVector = vectorA - vectorB;
         Tuple comparisonVector = new Tuple(2, -1, 7, 0);
         Assert.Equal(comparisonVector, resultingVector);
-    }
-
-    ///<summary>
-    /// Subtracting a point from a vector will result in a negative w property
-    /// for the resulting tuple and therefore is not valid.
-    ///</summary>
-    [Fact]
-    public void Subtract_SubtractPointFromVector_ThrowsInvalidOperationException()
-    {
-        Tuple vector = Tuple.Vector(3, -5, 1);
-        Tuple point = Tuple.Point(1, -4, -6);
-        Assert.Throws<InvalidOperationException>(() => vector - point);
     }
 
     ///<summary>
