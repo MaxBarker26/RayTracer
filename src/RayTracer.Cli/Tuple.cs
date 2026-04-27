@@ -145,4 +145,17 @@ public class Tuple
     {
         return MultiplyScalar(tuple, (1 / scalar));
     }
+
+    ///<summary>
+    /// Returns a Vector type when a vector tuple is passed as parameter.
+    /// <param name="tuple">Must be a vector type Tuple (W property of 0). </param>
+    ///</summary>
+    public Vector ToVector(Tuple tuple)
+    {
+        if (tuple.IsVector())
+        {
+            return new Vector(tuple.X, tuple.Y, tuple.Z);
+        }
+        throw new ArgumentException("Argument passed is not a vector.");
+    }
 }

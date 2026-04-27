@@ -169,6 +169,7 @@ public class TupleTests
         double scalar = 3;
         Tuple scaledVector = vector * scalar;
         Tuple expected = new Tuple(9, -21, -33, 0);
+        Assert.Equal(expected, scaledVector);
     }
 
     ///<summary
@@ -182,6 +183,7 @@ public class TupleTests
         double scalar = 0.5;
         Tuple scaledVector = vector * scalar;
         Tuple expected = new Tuple(1.5, -3.5, -5.5, 0);
+        Assert.Equal(expected, scaledVector);
     }
 
     ///<summary
@@ -195,5 +197,6 @@ public class TupleTests
         double scalar = 2;
         Tuple scaledVector = vector / scalar;
         Tuple expected = new Tuple(1.5, -3.5, -5.5, 0);
+        Assert.Equal(expected, scaledVector);
     }
 }
