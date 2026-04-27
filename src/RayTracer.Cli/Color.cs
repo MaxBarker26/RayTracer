@@ -2,8 +2,8 @@
 
 public class Color : Tuple
 {
-    public Color(double x, double y, double z)
-        : base(x, y, z, double.NaN) { }
+    public Color(double r, double g, double b)
+        : base(r, g, b, double.NaN) { }
 
     public static Color operator +(Color a, Color b)
     {
@@ -23,5 +23,10 @@ public class Color : Tuple
     public static Color operator /(Color a, double b)
     {
         return MultiplyScalar(a, 1 / b).ToColor();
+    }
+
+    public Color Prod(Color other)
+    {
+        return new Color(X * other.X, Y * other.Y, Z * other.Z);
     }
 }

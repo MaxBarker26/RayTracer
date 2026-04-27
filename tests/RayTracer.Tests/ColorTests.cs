@@ -41,4 +41,14 @@ public class ColorTests()
         Color sumColor = c1 / 2;
         Assert.Equal(new Color(0.1, 0.35, 0.45), sumColor);
     }
+
+    [Fact]
+    public void HadamardProduct_TheHadamardProductOfTwoColorsProducesANewColor_RGBValuesAreExpected()
+    {
+        Color c1 = new(0.2, 0.7, 0.9);
+        Color c2 = new(0.2, 0.7, 0.1);
+
+        Color sumColor = c1.Prod(c2);
+        Assert.Equal(new Color(0.04, 0.49, 0.09), sumColor);
+    }
 }
