@@ -16,7 +16,7 @@ public class Environment
     public Projectile Tick(Projectile proj)
     {
         Tuple position = proj.Position + proj.Velocity;
-        Vector velocity = (proj.Velocity + Wind + Gravity).ToVector();
+        Vector velocity = proj.Velocity + Wind + Gravity;
         return new Projectile(position, velocity);
     }
 

@@ -30,6 +30,26 @@ public class Vector : Tuple
         return new Vector(Y * v.Z - Z * v.Y, Z * v.X - X * v.Z, X * v.Y - Y * v.X);
     }
 
+    public static Vector operator +(Vector a, Vector b)
+    {
+        return Add(a, b).ToVector();
+    }
+
+    public static Vector operator -(Vector a, Vector b)
+    {
+        return Subtract(a, b).ToVector();
+    }
+
+    public static Vector operator *(Vector a, double b)
+    {
+        return MultiplyScalar(a, b).ToVector();
+    }
+
+    public static Vector operator /(Vector a, double b)
+    {
+        return MultiplyScalar(a, 1 / b).ToVector();
+    }
+
     private void CalculateNormalized()
     {
         _normalized = new(X / Magnitude, Y / Magnitude, Z / Magnitude);

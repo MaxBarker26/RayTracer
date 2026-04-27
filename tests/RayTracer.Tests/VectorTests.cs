@@ -54,4 +54,16 @@ public class VectorTests()
         Assert.Equal(new Vector(3, 5, 7), v1 + v2);
         Assert.Equal(new Vector(3, 6, 9), v1 * 3);
     }
+
+    [Fact]
+    public void Operators_VectorSpecificOperatorOverloads_DoNotThrow()
+    {
+        Vector v1 = new(1, 2, 3);
+        Vector v2 = new(2, 3, 4);
+
+        Vector v3 = v1 - v2;
+        Vector v4 = v1 + v2;
+        Vector v5 = v1 * 2;
+        Vector v6 = v2 / 2;
+    }
 }
