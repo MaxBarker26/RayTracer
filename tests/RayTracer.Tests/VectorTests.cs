@@ -26,4 +26,22 @@ public class VectorTests()
         Vector expectedNormalized = new(2 / magnitude, 3 / magnitude, 4 / magnitude);
         Assert.Equal(expectedNormalized, vector.Normalized);
     }
+
+    [Fact]
+    public void Dot_DotProductOfTwoVectorsProducesAScalar_ResultingScalarIsAsExpected()
+    {
+        Vector v1 = new(3, 6, 9);
+        Vector v2 = new(2, 3, 4);
+        double expectedScalar = 60;
+        Assert.Equal(expectedScalar, v1.Dot(v2));
+    }
+
+    [Fact]
+    public void Cross_CrossProductOfTwoVectorsProducesAVector_ResultingVectorIsAsExpected()
+    {
+        Vector v1 = new(1, 2, 3);
+        Vector v2 = new(2, 3, 4);
+        Assert.Equal(new Vector(-1, 2, -1), v1.Cross(v2));
+        Assert.Equal(new Vector(1, -2, 1), v2.Cross(v1));
+    }
 }

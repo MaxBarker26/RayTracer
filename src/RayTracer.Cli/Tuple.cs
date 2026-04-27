@@ -143,6 +143,8 @@ public class Tuple
 
     public static Tuple operator /(Tuple tuple, double scalar)
     {
+        if (scalar == 0)
+            throw new DivideByZeroException();
         return MultiplyScalar(tuple, (1 / scalar));
     }
 
