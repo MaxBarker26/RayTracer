@@ -46,9 +46,22 @@ public class Canvas
 
         for (int i = 0; i < Height; i++)
         {
+            int currentLineLength = 0;
             for (int j = 0; j < Width; j++)
             {
-                data.Write(ConvertColorToPPM(_pixelMatrix[j, i]));
+                string colorString = ConvertColorToPPM(_pixelMatrix[j, i]);
+                if ((currentLineLength + colorString.Length) <= 70)
+                {
+                    data.Write(colorString);
+                    currentLineLength += colorString.Length;
+                }
+                else
+                {
+                    // removes the last space character at the end of a line.
+                    data.GetStringBuilder().Remove(data.GetStringBuilder().Length - 1, 1);
+                    data.Write("\n" + colorString);
+                    currentLineLength = colorString.Length;
+                }
             }
 
             // removes the last space character at the end of a line.
@@ -56,7 +69,6 @@ public class Canvas
 
             data.Write("\n");
         }
-
         return data.ToString();
     }
 

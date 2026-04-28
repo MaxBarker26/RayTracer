@@ -62,4 +62,54 @@ public class CanvasTests()
         Assert.Equal(comparison2, ppmLines[4]);
         Assert.Equal(comparison3, ppmLines[5]);
     }
+
+    [Fact]
+    public void SavePPM_PPMStringLineLength_LinesAreLessThan70Characters()
+    {
+        Canvas c = new(10, 2);
+        c.SetAllPixels(new(0.7, 1, 0.5));
+        string ppm = c.SavePPM();
+        StringReader ppmReader = new(ppm);
+
+        while (true)
+        {
+            string? line = ppmReader.ReadLine();
+            if (line is null)
+                break;
+
+            Assert.True(line.Length <= 70);
+        }
+    }
+
+    [Fact]
+    public void SavePPM_PPMStringColorValues_ColorValuesAreNotSplitByNewLines()
+    {
+        Canvas c = new(10, 2);
+        c.SetAllPixels(new(0.7, 1, 0.5));
+        string ppm = c.SavePPM();
+        string[] colorValues = ppm.Split(' ', '\n');
+
+        //start looking at tokens after header stop before end of file new line
+        for (int i = 4; i < colorValues.Length - 1; i++)
+        {
+            int emptyStringCounter = 0;
+            Console.WriteLine(colorValues[i]);
+            Console.WriteLine(colorValues[i].Length);
+            if (colorValues[i] == string.Empty)
+                emptyStringCounter++;
+            Console.WriteLine(emptyStringCounter);
+            // Each color value in the specified pixels should be 3 characters long,
+            // none should be split by new lines.
+            Assert.Equal(3, colorValues[i].Length);
+        }
+    }
+
+    [Fact]
+    public void SavePPM_PPMFinalCharacter_FinalCharacterIsNewLine()
+    {
+        Canvas c = new(10, 2);
+        c.SetAllPixels(new(0.7, 1, 0.5));
+        string ppm = c.SavePPM();
+        Assert.Equal('\n', ppm.Last());
+    }
 }
