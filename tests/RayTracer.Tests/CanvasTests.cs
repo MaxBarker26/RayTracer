@@ -45,4 +45,21 @@ public class CanvasTests()
         Assert.Equal("10 20", ppmLines[1]);
         Assert.Equal("255", ppmLines[2]);
     }
+
+    [Fact]
+    public void SavePPM_PPMStringBody_PixelsScaleCorrectly()
+    {
+        Canvas c = new(2, 3);
+        c.SetPixel(1, 0, new(1.5, 0, 0));
+        c.SetPixel(0, 1, new(0, 0.5, 0));
+        c.SetPixel(1, 2, new(-0.3, 0, 1));
+        String comparison1 = "0 0 0 255 0 0";
+        String comparison2 = "0 128 0 0 0 0";
+        String comparison3 = "0 0 0 0 0 255";
+        String ppm = c.SavePPM();
+        String[] ppmLines = ppm.Split("\n");
+        Assert.Equal(comparison1, ppmLines[3]);
+        Assert.Equal(comparison2, ppmLines[4]);
+        Assert.Equal(comparison3, ppmLines[5]);
+    }
 }

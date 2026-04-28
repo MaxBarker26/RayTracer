@@ -5,6 +5,7 @@ public class Canvas
     public Color[,] _pixelMatrix;
     public int Width { get; }
     public int Height { get; }
+    public int MaxColor { get; } = 255;
 
     public Canvas(int width, int height)
     {
@@ -43,6 +44,64 @@ public class Canvas
         data.WriteLine(Width + " " + Height);
         data.WriteLine("255");
 
+        for (int i = 0; i < Height; i++)
+        {
+            for (int j = 0; j < Width; j++)
+            {
+                data.Write(ConvertColorToPPM(_pixelMatrix[j, i]));
+            }
+
+            // removes the last space character at the end of a line.
+            data.GetStringBuilder().Remove(data.GetStringBuilder().Length - 1, 1);
+
+            data.Write("\n");
+        }
+
         return data.ToString();
+    }
+
+    private string ConvertColorToPPM(Color color)
+    {
+        string ppmColor = "";
+        if (color.X >= 1)
+        {
+            ppmColor += MaxColor + " ";
+        }
+        else if (color.X <= 0)
+        {
+            ppmColor += 0 + " ";
+        }
+        else
+        {
+            ppmColor += Math.Round(MaxColor * color.X) + " ";
+        }
+
+        if (color.Y >= 1)
+        {
+            ppmColor += MaxColor + " ";
+        }
+        else if (color.Y <= 0)
+        {
+            ppmColor += 0 + " ";
+        }
+        else
+        {
+            ppmColor += Math.Round(MaxColor * color.Y) + " ";
+        }
+
+        if (color.Z >= 1)
+        {
+            ppmColor += MaxColor + " ";
+        }
+        else if (color.Z <= 0)
+        {
+            ppmColor += 0 + " ";
+        }
+        else
+        {
+            ppmColor += Math.Round(MaxColor * color.Z) + " ";
+        }
+
+        return ppmColor;
     }
 }
