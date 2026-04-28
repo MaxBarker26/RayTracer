@@ -35,4 +35,14 @@ public class Canvas
     {
         return _pixelMatrix[x, y];
     }
+
+    public string SavePPM()
+    {
+        StringWriter data = new();
+        data.WriteLine("P3");
+        data.WriteLine(Width + " " + Height);
+        data.WriteLine("255");
+
+        return data.ToString();
+    }
 }

@@ -24,4 +24,25 @@ public class CanvasTests()
             }
         }
     }
+
+    [Fact]
+    public void SetPixel_SetASpecificPixelToASpecificColor_PixelIsAsExpected()
+    {
+        Canvas canvas = new Canvas(10, 20);
+        Color white = new Color(1, 1, 1);
+        canvas.SetPixel(3, 10, white);
+
+        Assert.Equal(white, canvas.GetPixel(3, 10));
+    }
+
+    [Fact]
+    public void SavePPM_PPMHeaderIsInCorrectFormat()
+    {
+        Canvas c = new(10, 20);
+        String ppm = c.SavePPM();
+        String[] ppmLines = ppm.Split("\n");
+        Assert.Equal("P3", ppmLines[0]);
+        Assert.Equal("10 20", ppmLines[1]);
+        Assert.Equal("255", ppmLines[2]);
+    }
 }
