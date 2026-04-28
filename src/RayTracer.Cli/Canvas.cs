@@ -29,7 +29,10 @@ public class Canvas
 
     public void SetPixel(int x, int y, Color color)
     {
-        _pixelMatrix[x, y] = color;
+        if (x < Width && y < Height && y > 0)
+        {
+            _pixelMatrix[x, y] = color;
+        }
     }
 
     public Color GetPixel(int x, int y)
