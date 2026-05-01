@@ -158,4 +158,31 @@ public class Matrix
     {
         return a.Times(b);
     }
+
+    /// <summary>
+    /// Creates an identity matrix of the specified size.
+    /// An identity matrix is a square matrix with ones on the main diagonal and zeros elsewhere.
+    /// </summary>
+    /// <param name="size">The dimension of the square identity matrix (e.g., for a 3x3 matrix, size would be 3).</param>
+    /// <returns>A new <see cref="Matrix"/> instance representing the identity matrix.</returns>
+    public static Matrix Identity(int size)
+    {
+        Matrix identity = new Matrix(size, size);
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                if (i == j)
+                {
+                    identity[i, j] = 1;
+                }
+                else
+                {
+                    identity[i, j] = 0;
+                }
+            }
+        }
+        return identity;
+    }
 }
