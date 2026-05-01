@@ -129,6 +129,23 @@ public class Tuple
         return new Tuple(x, y, z, w);
     }
 
+    /// <summary>
+    /// Calculates the Dot Product of two tuples.
+    /// </summary>
+    public static double MultiplyTuple(Tuple a, Tuple b)
+    {
+        return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z) + (a.W * b.W);
+    }
+
+    /// <summary>
+    /// Overloads the * operator to perform a dot product between two tuples.
+    /// This is used by the Matrix multiplication logic.
+    /// </summary>
+    public static double operator *(Tuple a, Tuple b)
+    {
+        return MultiplyTuple(a, b);
+    }
+
     public static Tuple operator *(Tuple tuple, double scalar)
     {
         return MultiplyScalar(tuple, scalar);
