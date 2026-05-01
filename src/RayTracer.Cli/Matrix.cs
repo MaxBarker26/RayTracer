@@ -64,6 +64,28 @@ public class Matrix
         return true;
     }
 
+    /// <summary>
+    /// Computes the transpose of the current matrix.
+    /// </summary>
+    /// <returns>A new <see cref="Matrix"/> instance representing the transpose of the current matrix.</returns>
+    /// <remarks>
+    /// The transpose of a matrix is obtained by swapping its rows and columns.
+    /// If the original matrix has dimensions m x n, its transpose will have dimensions n x m.
+    /// </remarks>
+    public Matrix Transpose()
+    {
+        Matrix transposed = new Matrix(RowCount, ColCount);
+        for (int i = 0; i < RowCount; i++)
+        {
+            for (int j = 0; j < ColCount; j++)
+            {
+                transposed[j, i] = this[i, j];
+            }
+        }
+
+        return transposed;
+    }
+
     ///<summary>
     /// Multiplies the current matrix by another matrix.
     /// Only meant to be used with 4 x 4 matrices.

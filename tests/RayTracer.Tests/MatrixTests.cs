@@ -171,4 +171,35 @@ public class MatrixTests
 
         Assert.Equal(matrix, matrix * identity);
     }
+
+    [Fact]
+    public void Tranpose_TheIdentityMatrixTransposedIsStillTheIdentityMatrix_TransposedIDMatrixEqualsIdMatrix()
+    {
+        Matrix identity = Matrix.Identity(4);
+
+        Matrix transposed = identity.Transpose();
+
+        Assert.Equal(identity, transposed);
+    }
+
+    [Fact]
+    public void Transpose_2x2MatrixRowsAndColumnsSwap_TransposeReturnsNewTransposedMatrix()
+    {
+        Matrix m = new(2, 2);
+        m[0, 0] = 1;
+        m[0, 1] = 2;
+        m[1, 0] = 3;
+        m[1, 1] = 4;
+
+        Matrix expected = new(2, 2);
+
+        expected[0, 0] = 1;
+        expected[0, 1] = 3;
+        expected[1, 0] = 2;
+        expected[1, 1] = 4;
+
+        Matrix transposed = m.Transpose();
+
+        Assert.Equal(expected, transposed);
+    }
 }
