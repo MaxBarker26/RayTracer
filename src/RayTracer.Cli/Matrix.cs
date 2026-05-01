@@ -1,11 +1,27 @@
 namespace RayTracer.Cli;
 
+/// <summary>
+/// Represents a matrix of double-precision floating-point numbers.
+/// </summary>
 public class Matrix
 {
     private double[,] _matrix;
+
+    /// <summary>
+    /// Gets the number of rows in the matrix.
+    /// </summary>
     public int RowCount { get; }
+
+    /// <summary>
+    /// Gets the number of columns in the matrix.
+    /// </summary>
     public int ColCount { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Matrix"/> class with the specified dimensions.
+    /// </summary>
+    /// <param name="numRow">The number of rows.</param>
+    /// <param name="numColumn">The number of columns.</param>
     public Matrix(int numRow, int numColumn)
     {
         RowCount = numRow;
@@ -20,6 +36,11 @@ public class Matrix
         set => _matrix[row, col] = value;
     }
 
+    /// <summary>
+    /// Determines whether the specified <see cref="object"/> is equal to the current <see cref="Matrix"/>.
+    /// </summary>
+    /// <param name="obj">The <see cref="object"/> to compare with the current <see cref="Matrix"/>.</param>
+    /// <returns><see langword="true"/> if the specified <see cref="object"/> is equal to the current <see cref="Matrix"/>; otherwise, <see langword="false"/>.</returns>
     public override bool Equals(object? obj)
     {
         if (obj is null)
@@ -44,8 +65,11 @@ public class Matrix
     }
 
     ///<summary>
+    /// Multiplies the current matrix by another matrix.
     /// Only meant to be used with 4 x 4 matrices.
     ///</summary>
+    /// <param name="other">The second matrix in the multiplication.</param>
+    /// <returns>A new <see cref="Matrix"/> representing the product of the two matrices.</returns>
     public Matrix Times(Matrix other)
     {
         if (ColCount != other.RowCount)
@@ -74,6 +98,12 @@ public class Matrix
         return product;
     }
 
+    /// <summary>
+    /// Overloads the multiplication operator for two <see cref="Matrix"/> objects.
+    /// </summary>
+    /// <param name="a">The first matrix in the multiplication.</param>
+    /// <param name="b">The second matrix in the multiplication.</param>
+    /// <returns>A new <see cref="Matrix"/> representing the product of the two matrices.</returns>
     public static Matrix operator *(Matrix a, Matrix b)
     {
         return a.Times(b);
