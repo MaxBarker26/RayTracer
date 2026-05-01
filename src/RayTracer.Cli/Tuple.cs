@@ -1,12 +1,38 @@
 ﻿namespace RayTracer.Cli;
 
+/// <summary>
+/// Represents a 4-dimensional tuple, which can act as either a point or a vector depending on its W component.
+/// Points have W=1.0 and vectors have W=0.0.
+/// </summary>
 public class Tuple
 {
+    /// <summary>
+    /// Gets the X component of the tuple.
+    /// </summary>
     public double X { get; }
+
+    /// <summary>
+    /// Gets the Y component of the tuple.
+    /// </summary>
     public double Y { get; }
+
+    /// <summary>
+    /// Gets the Z component of the tuple.
+    /// </summary>
     public double Z { get; }
+
+    /// <summary>
+    /// Gets the W component of the tuple, which distinguishes between points (W=1.0) and vectors (W=0.0).
+    /// </summary>
     public double W { get; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Tuple"/> class with specified components.
+    /// </summary>
+    /// <param name="x">The X component.</param>
+    /// <param name="y">The Y component.</param>
+    /// <param name="z">The Z component.</param>
+    /// <param name="w">The W component (1.0 for a point, 0.0 for a vector).</param>
     public Tuple(double x, double y, double z, double w)
     {
         X = x;
@@ -15,6 +41,10 @@ public class Tuple
         W = w;
     }
 
+    /// <summary>
+    /// Determines whether this tuple represents a point (W component is 1.0).
+    /// </summary>
+    /// <returns><c>true</c> if this tuple is a point; otherwise, <c>false</c>.</returns>
     public bool IsPoint()
     {
         if (W == 1.0)
@@ -24,6 +54,10 @@ public class Tuple
         return false;
     }
 
+    /// <summary>
+    /// Determines whether this tuple represents a vector (W component is 0.0).
+    /// </summary>
+    /// <returns><c>true</c> if this tuple is a vector; otherwise, <c>false</c>.</returns>
     public bool IsVector()
     {
         if (W == 0)
@@ -33,11 +67,25 @@ public class Tuple
         return false;
     }
 
+    /// <summary>
+    /// Creates a new <see cref="Tuple"/> instance representing a point.
+    /// </summary>
+    /// <param name="x">The X coordinate of the point.</param>
+    /// <param name="y">The Y coordinate of the point.</param>
+    /// <param name="z">The Z coordinate of the point.</param>
+    /// <returns>A new <see cref="Tuple"/> instance with W component set to 1.0.</returns>
     public static Tuple Point(double x, double y, double z)
     {
         return new Tuple(x, y, z, 1.0);
     }
 
+    /// <summary>
+    /// Creates a new <see cref="Tuple"/> instance representing a vector.
+    /// </summary>
+    /// <param name="x">The X component of the vector.</param>
+    /// <param name="y">The Y component of the vector.</param>
+    /// <param name="z">The Z component of the vector.</param>
+    /// <returns>A new <see cref="Tuple"/> instance with W component set to 0.0.</returns>
     public static Tuple Vector(double x, double y, double z)
     {
         return new Tuple(x, y, z, 0);
@@ -47,6 +95,8 @@ public class Tuple
     /// Equals override for tuples. Makes use of IsNearly double class extension in order to
     /// compare the x, y, z, and w properties of two Tuple objects.
     ///</summary>
+    /// <param name="other">The object to compare with the current tuple.</param>
+    /// <returns><c>true</c> if the specified object is equal to the current tuple; otherwise, <c>false</c>.</returns>
     public override bool Equals(object? other)
     {
         Tuple otherTuple;
@@ -70,6 +120,7 @@ public class Tuple
     ///<summary>
     /// Override of hashcode since equals is overridden.
     ///</summary>
+    /// <returns>A hash code for the current tuple.</returns>
     public override int GetHashCode()
     {
         return this.X.GetHashCode()
@@ -78,16 +129,32 @@ public class Tuple
             + this.W.GetHashCode();
     }
 
+    /// <summary>
+    /// Returns a string representation of the tuple.
+    /// </summary>
+    /// <returns>A string in the format "X, Y, Z, W".</returns>
     public override string ToString()
     {
         return X + ", " + Y + ", " + Z + ", " + W;
     }
 
+    /// <summary>
+    /// Overloads the addition operator to add two tuples.
+    /// </summary>
+    /// <param name="a">The first tuple to add.</param>
+    /// <param name="b">The second tuple to add.</param>
+    /// <returns>A new tuple representing the sum of the two input tuples.</returns>
     public static Tuple operator +(Tuple a, Tuple b)
     {
         return Add(a, b);
     }
 
+    /// <summary>
+    /// Adds two tuples component-wise.
+    /// </summary>
+    /// <param name="left">The first tuple.</param>
+    /// <param name="right">The second tuple.</param>
+    /// <returns>A new tuple with components as the sum of corresponding components of the input tuples.</returns>
     public static Tuple Add(Tuple left, Tuple right)
     {
         double x = left.X + right.X;
@@ -97,6 +164,12 @@ public class Tuple
         return new Tuple(x, y, z, w);
     }
 
+    /// <summary>
+    /// Overloads the subtraction operator to subtract one tuple from another.
+    /// </summary>
+    /// <param name="a">The tuple to subtract from.</param>
+    /// <param name="b">The tuple to subtract.</param>
+    /// <returns>A new tuple representing the difference between the two input tuples.</returns>
     public static Tuple operator -(Tuple a, Tuple b)
     {
         return Subtract(a, b);
@@ -105,12 +178,20 @@ public class Tuple
     ///<summary>
     /// Unary subtraction operator. Returns the negation of the tuple passed to it.
     ///</summary>
+    /// <param name="a">The tuple to negate.</param>
+    /// <returns>A new tuple with all components negated.</returns>
     public static Tuple operator -(Tuple a)
     {
         Tuple zeroVector = new Tuple(0, 0, 0, 0);
         return Subtract(zeroVector, a);
     }
 
+    /// <summary>
+    /// Subtracts one tuple from another component-wise.
+    /// </summary>
+    /// <param name="left">The tuple to subtract from.</param>
+    /// <param name="right">The tuple to subtract.</param>
+    /// <returns>A new tuple with components as the difference of corresponding components of the input tuples.</returns>
     public static Tuple Subtract(Tuple left, Tuple right)
     {
         double x = left.X - right.X;
@@ -120,6 +201,12 @@ public class Tuple
         return new Tuple(x, y, z, w);
     }
 
+    /// <summary>
+    /// Multiplies a tuple by a scalar value.
+    /// </summary>
+    /// <param name="tuple">The tuple to multiply.</param>
+    /// <param name="scalar">The scalar value to multiply by.</param>
+    /// <returns>A new tuple with each component multiplied by the scalar.</returns>
     public static Tuple MultiplyScalar(Tuple tuple, double scalar)
     {
         double x = tuple.X * scalar;
@@ -132,6 +219,9 @@ public class Tuple
     /// <summary>
     /// Calculates the Dot Product of two tuples.
     /// </summary>
+    /// <param name="a">The first tuple.</param>
+    /// <param name="b">The second tuple.</param>
+    /// <returns>The dot product of the two tuples.</returns>
     public static double MultiplyTuple(Tuple a, Tuple b)
     {
         return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z) + (a.W * b.W);
@@ -141,16 +231,32 @@ public class Tuple
     /// Overloads the * operator to perform a dot product between two tuples.
     /// This is used by the Matrix multiplication logic.
     /// </summary>
+    /// <param name="a">The first tuple.</param>
+    /// <param name="b">The second tuple.</param>
+    /// <returns>The dot product of the two tuples.</returns>
     public static double operator *(Tuple a, Tuple b)
     {
         return MultiplyTuple(a, b);
     }
 
+    /// <summary>
+    /// Overloads the multiplication operator to multiply a tuple by a scalar value.
+    /// </summary>
+    /// <param name="tuple">The tuple to multiply.</param>
+    /// <param name="scalar">The scalar value.</param>
+    /// <returns>A new tuple with each component multiplied by the scalar.</returns>
     public static Tuple operator *(Tuple tuple, double scalar)
     {
         return MultiplyScalar(tuple, scalar);
     }
 
+    /// <summary>
+    /// Overloads the division operator to divide a tuple by a scalar value.
+    /// </summary>
+    /// <param name="tuple">The tuple to divide.</param>
+    /// <param name="scalar">The scalar value to divide by.</param>
+    /// <returns>A new tuple with each component divided by the scalar.</returns>
+    /// <exception cref="DivideByZeroException">Thrown when the scalar is zero.</exception>
     public static Tuple operator /(Tuple tuple, double scalar)
     {
         if (scalar == 0)
@@ -158,19 +264,25 @@ public class Tuple
         return MultiplyScalar(tuple, (1 / scalar));
     }
 
-    ///<summary>
-    /// Returns a Vector type when a vector tuple is passed as parameter.
-    /// <param name="tuple">Must be a vector type Tuple (W property of 0). </param>
-    ///</summary>
+    /// <summary>
+    /// Converts the current instance to a <see cref="Vector"/> if it represents a vector.
+    /// </summary>
+    /// <returns>A new <see cref="Vector"/> instance with the X, Y, and Z components of this object.</returns>
+    /// <exception cref="InvalidCastException">Thrown if the current object does not represent a vector.</exception>
     public Vector ToVector()
     {
         if (this.IsVector())
         {
             return new Vector(X, Y, Z);
         }
-        throw new ArgumentException("Argument passed is not a vector.");
+        throw new InvalidCastException("This object is not of type Vector");
     }
 
+    /// <summary>
+    /// Converts the tuple's X, Y, Z components into a <see cref="Color"/> object.
+    /// The W component is ignored.
+    /// </summary>
+    /// <returns>A new <see cref="Color"/> instance.</returns>
     public Color ToColor()
     {
         return new Color(X, Y, Z);

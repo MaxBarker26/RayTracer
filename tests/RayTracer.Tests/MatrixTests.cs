@@ -1,6 +1,6 @@
-using RayTracer.Cli;
-
 namespace RayTracer.Tests;
+
+using RayTracer.Cli;
 
 public class MatrixTests
 {
@@ -116,5 +116,33 @@ public class MatrixTests
         _expectedProduct[3, 3] = 42;
 
         Assert.Equal(_expectedProduct, _matrixA * _matrixB);
+    }
+
+    [Fact]
+    public void Times_4x4MatrixMultipliedWithTuple_ResultsInCorrectTuple()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = 1;
+        matrix[0, 1] = 2;
+        matrix[0, 2] = 3;
+        matrix[0, 3] = 4;
+        matrix[1, 0] = 5;
+        matrix[1, 1] = 6;
+        matrix[1, 2] = 7;
+        matrix[1, 3] = 8;
+        matrix[2, 0] = 9;
+        matrix[2, 1] = 8;
+        matrix[2, 2] = 7;
+        matrix[2, 3] = 6;
+        matrix[3, 0] = 5;
+        matrix[3, 1] = 4;
+        matrix[3, 2] = 3;
+        matrix[3, 3] = 2;
+
+        Tuple tuple = new(1, 2, 3, 1);
+
+        Tuple expected = new(18, 46, 52, 24);
+
+        Assert.Equal(expected, matrix * tuple);
     }
 }

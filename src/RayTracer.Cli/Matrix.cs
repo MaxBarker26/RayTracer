@@ -99,6 +99,56 @@ public class Matrix
     }
 
     /// <summary>
+    /// Multiplies this matrix by a tuple.
+    /// </summary>
+    /// <param name="t">The tuple to multiply the matrix by.</param>
+    /// <returns>A new tuple representing the result of the matrix-tuple multiplication.</returns>
+    public Tuple Times(Tuple t)
+    {
+        if (ColCount != 4)
+            throw new InvalidOperationException("Matrix dimensions must agree for multiplication.");
+
+        double x = 0;
+        double y = 0;
+        double z = 0;
+        double w = 0;
+
+        for (int i = 0; i < 4; i++)
+        {
+            Tuple row = new Tuple(this[i, 0], this[i, 1], this[i, 2], this[i, 3]);
+            if (i == 0)
+            {
+                x = row * t;
+            }
+            else if (i == 1)
+            {
+                y = row * t;
+            }
+            else if (i == 2)
+            {
+                z = row * t;
+            }
+            else
+            {
+                w = row * t;
+            }
+        }
+
+        return new Tuple(x, y, z, w);
+    }
+
+    /// <summary>
+    /// Multiplies a Matrix by a Tuple.
+    /// </summary>
+    /// <param name="m">The matrix.</param>
+    /// <param name="t">The tuple.</param>
+    /// <returns>A new tuple representing the product of the matrix and the tuple.</returns>
+    public static Tuple operator *(Matrix m, Tuple t)
+    {
+        return m.Times(t);
+    }
+
+    /// <summary>
     /// Overloads the multiplication operator for two <see cref="Matrix"/> objects.
     /// </summary>
     /// <param name="a">The first matrix in the multiplication.</param>
