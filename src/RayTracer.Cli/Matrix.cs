@@ -207,4 +207,11 @@ public class Matrix
         }
         return identity;
     }
+
+    public static double FindDeterminant(Matrix m)
+    {
+        if (m.RowCount != 2 && m.ColCount != 2)
+            throw new ArgumentException("Determinant can only be calculated for 2x2 matrices.");
+        return m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1];
+    }
 }

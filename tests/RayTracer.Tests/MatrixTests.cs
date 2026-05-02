@@ -202,4 +202,17 @@ public class MatrixTests
 
         Assert.Equal(expected, transposed);
     }
+
+    [Fact]
+    public void Determinant_FindDeterminantOf2x2Matrix_DeterminantIsExpected()
+    {
+        Matrix m = new(2, 2);
+        m[0, 0] = 1;
+        m[0, 1] = 5;
+        m[1, 0] = -3;
+        m[1, 1] = 2;
+
+        double determinant = Matrix.FindDeterminant(m);
+        Assert.Equal(17, determinant);
+    }
 }
