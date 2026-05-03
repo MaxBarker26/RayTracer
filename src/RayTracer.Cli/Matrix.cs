@@ -266,4 +266,14 @@ public class Matrix
     {
         return FindDeterminant(this.Submatrix(row, col));
     }
+
+    public double Cofactor(int row, int col)
+    {
+        if (row + col % 2 == 0)
+        {
+            return Minor(row, col);
+        }
+        else
+            return -(Minor(row, col));
+    }
 }

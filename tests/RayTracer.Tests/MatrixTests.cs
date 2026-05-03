@@ -292,4 +292,25 @@ public class MatrixTests
 
         Assert.Equal(minor, m.Minor(0, 2));
     }
+
+    [Fact]
+    public void Cofactor_FindCofactorsOf3x3Matrix_CofactorSignIsCorrect()
+    {
+        Matrix m = new(3, 3);
+        m[0, 0] = 4;
+        m[0, 1] = 1;
+        m[0, 2] = 5;
+        m[1, 0] = -7;
+        m[1, 1] = -3;
+        m[1, 2] = 2;
+        m[2, 0] = 4;
+        m[2, 1] = 99;
+        m[2, 2] = -9;
+
+        double positiveCofactor = Matrix.FindDeterminant(m.Submatrix(0, 2));
+        double negativeCofactor = -(Matrix.FindDeterminant(m.Submatrix(0, 1)));
+
+        Assert.Equal(positiveCofactor, m.Cofactor(0, 2));
+        Assert.Equal(negativeCofactor, m.Cofactor(0, 1));
+    }
 }
