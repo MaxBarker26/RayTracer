@@ -215,4 +215,27 @@ public class MatrixTests
         double determinant = Matrix.FindDeterminant(m);
         Assert.Equal(17, determinant);
     }
+
+    [Fact]
+    public void Submatrix_3x3SubmatrixBecomes2x2_ReturnsExpected2x2SubMatrix()
+    {
+        Matrix m = new(3, 3);
+        m[0, 0] = 4;
+        m[0, 1] = 1;
+        m[0, 2] = 5;
+        m[1, 0] = -7;
+        m[1, 1] = -3;
+        m[1, 2] = 2;
+        m[2, 0] = 4;
+        m[2, 1] = 99;
+        m[2, 2] = -9;
+
+        Matrix expected = new(2, 2);
+        expected[0, 0] = m[1, 0];
+        expected[0, 1] = m[1, 1];
+        expected[1, 0] = m[2, 0];
+        expected[1, 1] = m[2, 1];
+
+        Assert.Equal(expected, m.Submatrix(0, 2));
+    }
 }

@@ -208,10 +208,51 @@ public class Matrix
         return identity;
     }
 
+    /// <summary>
+    /// Calculates the determinant of a 2x2 matrix.
+    /// </summary>
+    /// <param name="m">The 2x2 matrix for which to calculate the determinant.</param>
+    /// <returns>The determinant of the matrix.</returns>
+    /// <exception cref="ArgumentException">Thrown when the input matrix is not a 2x2 matrix.</exception>
     public static double FindDeterminant(Matrix m)
     {
         if (m.RowCount != 2 && m.ColCount != 2)
             throw new ArgumentException("Determinant can only be calculated for 2x2 matrices.");
         return m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1];
+    }
+
+    /// <summary>
+    /// Creates a submatrix by removing the specified row and column from the current matrix.
+    /// </summary>
+    /// <param name="row">The zero-based index of the row to remove.</param>
+    /// <param name="col">The zero-based index of the column to remove.</param>
+    /// <returns>A new matrix that is a submatrix of the current matrix, with the specified row and column removed.</returns>
+    public Matrix Submatrix(int row, int col)
+    {
+        Matrix sub = new(RowCount - 1, ColCount - 1);
+        for (int i = 0; i < RowCount; i++)
+        {
+            for (int j = 0; j < ColCount; j++)
+            {
+                //subRow and subCol keep track of the correct row and column to place a value in the sub matrix.
+                int subRow = i;
+                int subCol = j;
+                if (i == row)
+                    continue;
+                if (j == col)
+                    continue;
+                if (i > row)
+                {
+                    subRow--;
+                }
+                if (j > col)
+                {
+                    subCol--;
+                }
+
+                sub[subRow, subCol] = this[i, j];
+            }
+        }
+        return sub;
     }
 }
