@@ -255,4 +255,15 @@ public class Matrix
         }
         return sub;
     }
+
+    /// <summary>
+    /// Calculates the minor of the matrix at the specified row and column.
+    /// </summary>
+    /// <param name="row">The zero-based row index.</param>
+    /// <param name="col">The zero-based column index.</param>
+    /// <returns>The minor value at the given row and column.</returns>
+    public double Minor(int row, int col)
+    {
+        return FindDeterminant(this.Submatrix(row, col));
+    }
 }

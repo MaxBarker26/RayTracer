@@ -238,4 +238,58 @@ public class MatrixTests
 
         Assert.Equal(expected, m.Submatrix(0, 2));
     }
+
+    [Fact]
+    public void Submatrix_4x4SubmatrixRemoveMiddleRowsAndColumns_Resulting3x3SubmatrixIsCorrect()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = 1;
+        matrix[0, 1] = 2;
+        matrix[0, 2] = 3;
+        matrix[0, 3] = 4;
+        matrix[1, 0] = 5;
+        matrix[1, 1] = 6;
+        matrix[1, 2] = 7;
+        matrix[1, 3] = 8;
+        matrix[2, 0] = 9;
+        matrix[2, 1] = 8;
+        matrix[2, 2] = 7;
+        matrix[2, 3] = 6;
+        matrix[3, 0] = 5;
+        matrix[3, 1] = 4;
+        matrix[3, 2] = 3;
+        matrix[3, 3] = 2;
+
+        Matrix expected = new Matrix(3, 3);
+        expected[0, 0] = 1;
+        expected[0, 1] = 2;
+        expected[0, 2] = 4;
+        expected[1, 0] = 9;
+        expected[1, 1] = 8;
+        expected[1, 2] = 6;
+        expected[2, 0] = 5;
+        expected[2, 1] = 4;
+        expected[2, 2] = 2;
+
+        Assert.Equal(expected, matrix.Submatrix(1, 2));
+    }
+
+    [Fact]
+    public void Minor_FindMinorOf3x3Matrix_MinorIsDeterminantOfSubmatrix()
+    {
+        Matrix m = new(3, 3);
+        m[0, 0] = 4;
+        m[0, 1] = 1;
+        m[0, 2] = 5;
+        m[1, 0] = -7;
+        m[1, 1] = -3;
+        m[1, 2] = 2;
+        m[2, 0] = 4;
+        m[2, 1] = 99;
+        m[2, 2] = -9;
+
+        double minor = Matrix.FindDeterminant(m.Submatrix(0, 2));
+
+        Assert.Equal(minor, m.Minor(0, 2));
+    }
 }
