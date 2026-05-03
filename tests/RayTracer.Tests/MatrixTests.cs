@@ -313,4 +313,52 @@ public class MatrixTests
         Assert.Equal(positiveCofactor, m.Cofactor(0, 2));
         Assert.Equal(negativeCofactor, m.Cofactor(0, 1));
     }
+
+    [Fact]
+    public void Determinant_DeterminantOf3x3Matrix_DeterminantIsCorrect()
+    {
+        Matrix matrix = new Matrix(3, 3);
+        matrix[0, 0] = 1;
+        matrix[0, 1] = 2;
+        matrix[0, 2] = 6;
+        matrix[1, 0] = -5;
+        matrix[1, 1] = 8;
+        matrix[1, 2] = -4;
+        matrix[2, 0] = 2;
+        matrix[2, 1] = 6;
+        matrix[2, 2] = 4;
+
+        Assert.Equal(56, matrix.Cofactor(0, 0));
+        Assert.Equal(12, matrix.Cofactor(0, 1));
+        Assert.Equal(-46, matrix.Cofactor(0, 2));
+        Assert.Equal(-196, Matrix.FindDeterminant(matrix));
+    }
+
+    [Fact]
+    public void Determinant_DeterminantOf4x4Matrix_DeterminantIsCorrect()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = -2;
+        matrix[0, 1] = -8;
+        matrix[0, 2] = 3;
+        matrix[0, 3] = 5;
+        matrix[1, 0] = -3;
+        matrix[1, 1] = 1;
+        matrix[1, 2] = 7;
+        matrix[1, 3] = 3;
+        matrix[2, 0] = 1;
+        matrix[2, 1] = 2;
+        matrix[2, 2] = -9;
+        matrix[2, 3] = 6;
+        matrix[3, 0] = -6;
+        matrix[3, 1] = 7;
+        matrix[3, 2] = 7;
+        matrix[3, 3] = -9;
+
+        Assert.Equal(690, matrix.Cofactor(0, 0));
+        Assert.Equal(447, matrix.Cofactor(0, 1));
+        Assert.Equal(210, matrix.Cofactor(0, 2));
+        Assert.Equal(51, matrix.Cofactor(0, 3));
+        Assert.Equal(-4071, Matrix.FindDeterminant(matrix));
+    }
 }

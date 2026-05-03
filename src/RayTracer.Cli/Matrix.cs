@@ -209,16 +209,23 @@ public class Matrix
     }
 
     /// <summary>
-    /// Calculates the determinant of a 2x2 matrix.
+    /// Calculates the determinant of a matrix.
     /// </summary>
-    /// <param name="m">The 2x2 matrix for which to calculate the determinant.</param>
+    /// <param name="m">The matrix for which to calculate the determinant.</param>
     /// <returns>The determinant of the matrix.</returns>
-    /// <exception cref="ArgumentException">Thrown when the input matrix is not a 2x2 matrix.</exception>
     public static double FindDeterminant(Matrix m)
     {
-        if (m.RowCount != 2 && m.ColCount != 2)
-            throw new ArgumentException("Determinant can only be calculated for 2x2 matrices.");
-        return m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1];
+        if (m.RowCount == 2 && m.ColCount == 2)
+        {
+            return m[0, 0] * m[1, 1] - m[1, 0] * m[0, 1];
+        }
+
+        double determinant = 0;
+        for (int i = 0; i < m.RowCount; i++)
+        {
+            determinant += m[0, i] * m.Cofactor(0, i);
+        }
+        return determinant;
     }
 
     /// <summary>
