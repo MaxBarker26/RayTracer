@@ -361,4 +361,56 @@ public class MatrixTests
         Assert.Equal(51, matrix.Cofactor(0, 3));
         Assert.Equal(-4071, Matrix.FindDeterminant(matrix));
     }
+
+    [Fact]
+    public void IsInvertible_TestIfAMatrixIsInvertible_ReturnTrue()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = 6;
+        matrix[0, 1] = 4;
+        matrix[0, 2] = 4;
+        matrix[0, 3] = 4;
+        matrix[1, 0] = 5;
+        matrix[1, 1] = 5;
+        matrix[1, 2] = 7;
+        matrix[1, 3] = 6;
+        matrix[2, 0] = 4;
+        matrix[2, 1] = -9;
+        matrix[2, 2] = 3;
+        matrix[2, 3] = -7;
+        matrix[3, 0] = 9;
+        matrix[3, 1] = 1;
+        matrix[3, 2] = 7;
+        matrix[3, 3] = -6;
+
+        Assert.Equal(-2120, Matrix.FindDeterminant(matrix));
+
+        Assert.True(matrix.IsInvertible());
+    }
+
+    [Fact]
+    public void IsInvertible_TestIfAMatrixIsInvertible_ReturnFalse()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = -4;
+        matrix[0, 1] = 2;
+        matrix[0, 2] = -2;
+        matrix[0, 3] = -3;
+        matrix[1, 0] = 9;
+        matrix[1, 1] = 6;
+        matrix[1, 2] = 2;
+        matrix[1, 3] = 6;
+        matrix[2, 0] = 0;
+        matrix[2, 1] = -5;
+        matrix[2, 2] = 1;
+        matrix[2, 3] = -5;
+        matrix[3, 0] = 0;
+        matrix[3, 1] = 0;
+        matrix[3, 2] = 0;
+        matrix[3, 3] = 0;
+
+        Assert.Equal(0, Matrix.FindDeterminant(matrix));
+
+        Assert.False(matrix.IsInvertible());
+    }
 }

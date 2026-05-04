@@ -283,4 +283,11 @@ public class Matrix
         else
             return -(Minor(row, col));
     }
+
+    public bool IsInvertible()
+    {
+        if (FindDeterminant(this) == 0)
+            return false;
+        return true;
+    }
 }
