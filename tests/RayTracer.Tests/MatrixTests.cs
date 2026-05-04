@@ -458,8 +458,8 @@ public class MatrixTests
         Assert.Equal((double)-160 / 532, matrix2[3, 2], 0.0001);
         Assert.Equal(matrix2[3, 2], matrix.Invert()[3, 2], 0.0001);
 
-        //Assert.Equal(matrix.Cofactor(2, 0) / 532, matrix2[0, 2], 0.0001);
+        Assert.Equal(matrix.Cofactor(2, 0) / 532, matrix2[0, 2], 0.0001);
 
-        //Assert.Equal(matrix2, matrix.Invert());
+        Assert.Equal(matrix2, matrix.Invert());
     }
 }

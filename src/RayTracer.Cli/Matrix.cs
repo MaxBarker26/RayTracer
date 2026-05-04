@@ -274,6 +274,13 @@ public class Matrix
         return FindDeterminant(this.Submatrix(row, col));
     }
 
+    /// <summary>
+    /// Calculates the cofactor of a specific element in the matrix.
+    /// The cofactor is the minor multiplied by (-1)^(row + col).
+    /// </summary>
+    /// <param name="row">The zero-based row index of the element.</param>
+    /// <param name="col">The zero-based column index of the element.</param>
+    /// <returns>The cofactor of the element at the specified row and column.</returns>
     public double Cofactor(int row, int col)
     {
         if ((row + col) % 2 == 0)
