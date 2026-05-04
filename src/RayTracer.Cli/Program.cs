@@ -5,6 +5,21 @@ public class Program
 {
     static void Main()
     {
+        string[] routines = { "projectile" };
+        Console.WriteLine("Enter the name of the routine you would like to run.");
+        foreach (string s in routines)
+        {
+            Console.WriteLine(s);
+        }
+        string? selected = Console.ReadLine();
+        if (selected == "projectile")
+        {
+            Projectile();
+        }
+    }
+
+    public static void Projectile()
+    {
         Console.WriteLine("Enter File Path");
         string? filePath = Console.ReadLine();
         Console.WriteLine("Enter Projectile Starting Coordinates");
