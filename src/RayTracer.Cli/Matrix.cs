@@ -233,7 +233,7 @@ public class Matrix
     /// </summary>
     /// <param name="row">The zero-based index of the row to remove.</param>
     /// <param name="col">The zero-based index of the column to remove.</param>
-    /// <returns>A new matrix that is a submatrix of the current matrix, with the specified row and column removed.</returns>
+    // <returns>A new matrix that is a submatrix of the current matrix, with the specified row and column removed.</returns>
     public Matrix Submatrix(int row, int col)
     {
         Matrix sub = new(RowCount - 1, ColCount - 1);
@@ -276,7 +276,7 @@ public class Matrix
 
     public double Cofactor(int row, int col)
     {
-        if (row + col % 2 == 0)
+        if ((row + col) % 2 == 0)
         {
             return Minor(row, col);
         }
@@ -284,10 +284,29 @@ public class Matrix
             return -(Minor(row, col));
     }
 
+    /// <summary>
+    /// Checks if the matrix is invertible.
+    /// </summary>
+    /// <returns><c>true</c> if the matrix is invertible (its determinant is not zero); otherwise, <c>false</c>.</returns>
     public bool IsInvertible()
     {
         if (FindDeterminant(this) == 0)
             return false;
         return true;
+    }
+
+    public Matrix Invert()
+    {
+        double determinant = FindDeterminant(this);
+        Matrix inverted = new(RowCount, ColCount);
+        for (int i = 0; i < RowCount; i++)
+        {
+            for (int j = 0; j < ColCount; j++)
+            {
+                inverted[j, i] = this.Cofactor(i, j) / determinant;
+            }
+        }
+
+        return inverted;
     }
 }

@@ -2,7 +2,7 @@
 
 public static class DoubleExtensions
 {
-    private const double Epsilon = 0.000001;
+    private const double Epsilon = 0.001;
 
     public static bool IsNearly(this double a, double b)
     {

@@ -413,4 +413,53 @@ public class MatrixTests
 
         Assert.False(matrix.IsInvertible());
     }
+
+    [Fact]
+    public void Invert_InvertingA4x4Matrix_ResultIsExpectedInverse()
+    {
+        Matrix matrix = new Matrix(4, 4);
+        matrix[0, 0] = -5;
+        matrix[0, 1] = 2;
+        matrix[0, 2] = 6;
+        matrix[0, 3] = -8;
+        matrix[1, 0] = 1;
+        matrix[1, 1] = -5;
+        matrix[1, 2] = 1;
+        matrix[1, 3] = 8;
+        matrix[2, 0] = 7;
+        matrix[2, 1] = 7;
+        matrix[2, 2] = -6;
+        matrix[2, 3] = -7;
+        matrix[3, 0] = 1;
+        matrix[3, 1] = -3;
+        matrix[3, 2] = 7;
+        matrix[3, 3] = 4;
+
+        Matrix matrix2 = new Matrix(4, 4);
+        matrix2[0, 0] = 0.21805;
+        matrix2[0, 1] = 0.45113;
+        matrix2[0, 2] = 0.24060;
+        matrix2[0, 3] = -0.04511;
+        matrix2[1, 0] = -0.80827;
+        matrix2[1, 1] = -1.45677;
+        matrix2[1, 2] = -0.44361;
+        matrix2[1, 3] = 0.52068;
+        matrix2[2, 0] = -0.07895;
+        matrix2[2, 1] = -0.22368;
+        matrix2[2, 2] = -0.05263;
+        matrix2[2, 3] = 0.19737;
+        matrix2[3, 0] = -0.52256;
+        matrix2[3, 1] = -0.81391;
+        matrix2[3, 2] = -0.30075;
+        matrix2[3, 3] = 0.30639;
+
+        Assert.Equal(532, Matrix.FindDeterminant(matrix));
+        Assert.Equal(-160, matrix.Cofactor(2, 3));
+        Assert.Equal((double)-160 / 532, matrix2[3, 2], 0.0001);
+        Assert.Equal(matrix2[3, 2], matrix.Invert()[3, 2], 0.0001);
+
+        //Assert.Equal(matrix.Cofactor(2, 0) / 532, matrix2[0, 2], 0.0001);
+
+        //Assert.Equal(matrix2, matrix.Invert());
+    }
 }
