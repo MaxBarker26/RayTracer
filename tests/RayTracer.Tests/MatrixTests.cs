@@ -462,4 +462,83 @@ public class MatrixTests
 
         Assert.Equal(matrix2, matrix.Invert());
     }
+
+    [Fact]
+    public void Invert_AdditionalInversionTests_InvertedIsCorrect()
+    {
+        Matrix matrixA = new Matrix(4, 4);
+        matrixA[0, 0] = 8;
+        matrixA[0, 1] = -5;
+        matrixA[0, 2] = 9;
+        matrixA[0, 3] = 2;
+        matrixA[1, 0] = 7;
+        matrixA[1, 1] = 5;
+        matrixA[1, 2] = 6;
+        matrixA[1, 3] = 1;
+        matrixA[2, 0] = -6;
+        matrixA[2, 1] = 0;
+        matrixA[2, 2] = 9;
+        matrixA[2, 3] = 6;
+        matrixA[3, 0] = -3;
+        matrixA[3, 1] = 0;
+        matrixA[3, 2] = -9;
+        matrixA[3, 3] = -4;
+
+        Matrix inverseA = new Matrix(4, 4);
+        inverseA[0, 0] = -0.15385;
+        inverseA[0, 1] = -0.15385;
+        inverseA[0, 2] = -0.28205;
+        inverseA[0, 3] = -0.53846;
+        inverseA[1, 0] = -0.07692;
+        inverseA[1, 1] = 0.12308;
+        inverseA[1, 2] = 0.02564;
+        inverseA[1, 3] = 0.03077;
+        inverseA[2, 0] = 0.35897;
+        inverseA[2, 1] = 0.35897;
+        inverseA[2, 2] = 0.43590;
+        inverseA[2, 3] = 0.92308;
+        inverseA[3, 0] = -0.69231;
+        inverseA[3, 1] = -0.69231;
+        inverseA[3, 2] = -0.76923;
+        inverseA[3, 3] = -1.92308;
+
+        Matrix matrixB = new Matrix(4, 4);
+        matrixB[0, 0] = 9;
+        matrixB[0, 1] = 3;
+        matrixB[0, 2] = 0;
+        matrixB[0, 3] = 9;
+        matrixB[1, 0] = -5;
+        matrixB[1, 1] = -2;
+        matrixB[1, 2] = -6;
+        matrixB[1, 3] = -3;
+        matrixB[2, 0] = -4;
+        matrixB[2, 1] = 9;
+        matrixB[2, 2] = 6;
+        matrixB[2, 3] = 4;
+        matrixB[3, 0] = -7;
+        matrixB[3, 1] = 6;
+        matrixB[3, 2] = 6;
+        matrixB[3, 3] = 2;
+
+        Matrix inverseB = new Matrix(4, 4);
+        inverseB[0, 0] = -0.04074;
+        inverseB[0, 1] = -0.07778;
+        inverseB[0, 2] = 0.14444;
+        inverseB[0, 3] = -0.22222;
+        inverseB[1, 0] = -0.07778;
+        inverseB[1, 1] = 0.03333;
+        inverseB[1, 2] = 0.36667;
+        inverseB[1, 3] = -0.33333;
+        inverseB[2, 0] = -0.02901;
+        inverseB[2, 1] = -0.14630;
+        inverseB[2, 2] = -0.10926;
+        inverseB[2, 3] = 0.12963;
+        inverseB[3, 0] = 0.17778;
+        inverseB[3, 1] = 0.06667;
+        inverseB[3, 2] = -0.26667;
+        inverseB[3, 3] = 0.33333;
+
+        Assert.Equal(inverseA, matrixA.Invert());
+        Assert.Equal(inverseB, matrixB.Invert());
+    }
 }
