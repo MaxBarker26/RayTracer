@@ -253,6 +253,18 @@ public class Matrix
         return scaling;
     }
 
+    public static Matrix RotationX(double radians)
+    {
+        Matrix rotation = Matrix.Identity(4);
+        rotation[1, 1] = Math.Cos(radians);
+        rotation[2, 1] = Math.Sin(radians);
+        rotation[1, 2] = -Math.Sin(radians);
+        rotation[2, 2] = Math.Cos(radians);
+        return rotation;
+    }
+
+    //TODO: Add wrapper methods for multiplying tuples by transformation matrices (ie vector.Scale(x,y,z))
+
     /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
     /// </summary>

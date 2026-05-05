@@ -55,4 +55,22 @@ public class TransformationTests
         Vector v = new(-4, 6, 8);
         Assert.Equal(new Vector(-2, 2, 2), inverse * v);
     }
+
+    [Fact]
+    public void RotationX_RotatingAPointAroundXAxis_PointRotatesAsExpected()
+    {
+        Point p = new(0, 1, 0);
+        Matrix halfQuarter = Matrix.RotationX(Math.PI / 4);
+        Matrix fullQuarter = Matrix.RotationX(Math.PI / 2);
+        Assert.Equal(new Point(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2), halfQuarter * p);
+        Assert.Equal(new Point(0, 0, 1), fullQuarter * p);
+    }
+
+    [Fact]
+    public void RotationX_RotatingAPointAroundXAxisInverseRotation_PointRotatesOpposite()
+    {
+        Point p = new(0, 1, 0);
+        Matrix halfQuarter = Matrix.RotationX(Math.PI / 4).Invert();
+        Assert.Equal(new Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2), halfQuarter * p);
+    }
 }
