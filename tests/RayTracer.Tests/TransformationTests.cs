@@ -73,4 +73,26 @@ public class TransformationTests
         Matrix halfQuarter = Matrix.RotationX(Math.PI / 4).Invert();
         Assert.Equal(new Point(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2), halfQuarter * p);
     }
+
+    [Fact]
+    public void RotationY_RotatingAPointAroundYAxis_PointRotatesCorrectly()
+    {
+        Point p = new(0, 0, 1);
+
+        Matrix halfQuarter = Matrix.RotationY(Math.PI / 4);
+        Matrix fullQuarter = Matrix.RotationY(Math.PI / 2);
+        Assert.Equal(new Point(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2), halfQuarter * p);
+        Assert.Equal(new Point(1, 0, 0), fullQuarter * p);
+    }
+
+    [Fact]
+    public void RotationZ_RotatingAPointAroundZAxis_PointRotatesCorrectly()
+    {
+        Point p = new(0, 1, 0);
+
+        Matrix halfQuarter = Matrix.RotationZ(Math.PI / 4);
+        Matrix fullQuarter = Matrix.RotationZ(Math.PI / 2);
+        Assert.Equal(new Point(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0), halfQuarter * p);
+        Assert.Equal(new Point(-1, 0, 0), fullQuarter * p);
+    }
 }

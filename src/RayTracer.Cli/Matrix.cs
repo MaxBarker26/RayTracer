@@ -253,6 +253,11 @@ public class Matrix
         return scaling;
     }
 
+    /// <summary>
+    /// Creates a 4x4 rotation matrix around the X-axis.
+    /// </summary>
+    /// <param name="radians">The angle of rotation in radians.</param>
+    /// <returns>A new <see cref="Matrix"/> instance representing the X-axis rotation.</n
     public static Matrix RotationX(double radians)
     {
         Matrix rotation = Matrix.Identity(4);
@@ -260,6 +265,26 @@ public class Matrix
         rotation[2, 1] = Math.Sin(radians);
         rotation[1, 2] = -Math.Sin(radians);
         rotation[2, 2] = Math.Cos(radians);
+        return rotation;
+    }
+
+    public static Matrix RotationY(double radians)
+    {
+        Matrix rotation = Matrix.Identity(4);
+        rotation[0, 0] = Math.Cos(radians);
+        rotation[0, 2] = Math.Sin(radians);
+        rotation[2, 0] = -Math.Sin(radians);
+        rotation[2, 2] = Math.Cos(radians);
+        return rotation;
+    }
+
+    public static Matrix RotationZ(double radians)
+    {
+        Matrix rotation = Matrix.Identity(4);
+        rotation[0, 0] = Math.Cos(radians);
+        rotation[1, 0] = Math.Sin(radians);
+        rotation[0, 1] = -Math.Sin(radians);
+        rotation[1, 1] = Math.Cos(radians);
         return rotation;
     }
 
