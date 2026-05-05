@@ -228,6 +228,13 @@ public class Matrix
         return determinant;
     }
 
+    /// <summary>
+    /// Creates a translation matrix.
+    /// </summary>
+    /// <param name="x">The translation amount along the x-axis.</param>
+    /// <param name="y">The translation amount along the y-axis.</param>
+    /// <param name="z">The translation amount along the z-axis.</param>
+    /// <returns>A 4x4 translation matrix.</returns>
     public static Matrix Translation(int x, int y, int z)
     {
         Matrix translation = Identity(4);
@@ -235,6 +242,15 @@ public class Matrix
         translation[1, 3] = y;
         translation[2, 3] = z;
         return translation;
+    }
+
+    public static Matrix Scaling(int x, int y, int z)
+    {
+        Matrix scaling = Identity(4);
+        scaling[0, 0] = x;
+        scaling[1, 1] = y;
+        scaling[2, 2] = z;
+        return scaling;
     }
 
     /// <summary>
