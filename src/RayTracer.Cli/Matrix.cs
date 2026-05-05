@@ -228,6 +228,15 @@ public class Matrix
         return determinant;
     }
 
+    public static Matrix Translation(int x, int y, int z)
+    {
+        Matrix translation = Identity(4);
+        translation[0, 3] = x;
+        translation[1, 3] = y;
+        translation[2, 3] = z;
+        return translation;
+    }
+
     /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
     /// </summary>
