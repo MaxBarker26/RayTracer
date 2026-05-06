@@ -95,4 +95,58 @@ public class TransformationTests
         Assert.Equal(new Point(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0), halfQuarter * p);
         Assert.Equal(new Point(-1, 0, 0), fullQuarter * p);
     }
+
+    [Fact]
+    public void Shearing_TransformXInProportionToY_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(1, 0, 0, 0, 0, 0);
+
+        Assert.Equal(new Point(5, 3, 4), transform * p);
+    }
+
+    [Fact]
+    public void Shearing_TransformXInProportionToZ_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(0, 1, 0, 0, 0, 0);
+
+        Assert.Equal(new Point(6, 3, 4), transform * p);
+    }
+
+    [Fact]
+    public void Shearing_TransformYInProportionToX_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(0, 0, 1, 0, 0, 0);
+
+        Assert.Equal(new Point(2, 5, 4), transform * p);
+    }
+
+    [Fact]
+    public void Shearing_TransformYInProportionToZ_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(0, 0, 0, 1, 0, 0);
+
+        Assert.Equal(new Point(2, 7, 4), transform * p);
+    }
+
+    [Fact]
+    public void Shearing_TransformZInProportionToX_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(0, 0, 0, 0, 1, 0);
+
+        Assert.Equal(new Point(2, 3, 6), transform * p);
+    }
+
+    [Fact]
+    public void Shearing_TransformZInProportionToY_PointIsExpected()
+    {
+        Point p = new(2, 3, 4);
+        Matrix transform = Matrix.Shearing(0, 0, 0, 0, 0, 1);
+
+        Assert.Equal(new Point(2, 3, 7), transform * p);
+    }
 }
