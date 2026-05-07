@@ -11,8 +11,8 @@ public class Ray
         Direction = direction;
     }
 
-    public Tuple Position(double t)
+    public Point Position(double t)
     {
-        return Origin + (Direction * t);
+        return (Origin + (Direction * t)).ToPoint();
     }
 }

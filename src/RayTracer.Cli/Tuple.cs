@@ -356,4 +356,18 @@ public class Tuple
     {
         return new Color(X, Y, Z);
     }
+
+    /// <summary>
+    /// Converts a <see cref="Tuple"/> to a <see cref="Point"/> if the tuple represents a point.
+    /// </summary>
+    /// <returns>A new <see cref="Point"/> instance initialized with the tuple's X, Y, and Z components.</returns>
+    /// <exception cref="InvalidCastException">Thrown if the tuple is not a point (i.e., <see cref="Tuple.IsPoint"/> returns false).</exception>
+    public Point ToPoint()
+    {
+        if (this.IsPoint())
+        {
+            return new Point(X, Y, Z);
+        }
+        throw new InvalidCastException();
+    }
 }
