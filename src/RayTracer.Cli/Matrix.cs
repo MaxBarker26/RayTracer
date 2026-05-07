@@ -288,6 +288,19 @@ public class Matrix
         return rotation;
     }
 
+    public static Matrix Shearing(int xy, int xz, int yx, int yz, int zx, int zy)
+    {
+        Matrix shearing = Matrix.Identity(4);
+        shearing[0, 1] = xy;
+        shearing[0, 2] = xz;
+        shearing[1, 2] = yz;
+        shearing[1, 0] = yx;
+        shearing[2, 0] = zx;
+        shearing[2, 1] = zy;
+
+        return shearing;
+    }
+
     //TODO: Add wrapper methods for multiplying tuples by transformation matrices (ie vector.Scale(x,y,z))
 
     /// <summary>
