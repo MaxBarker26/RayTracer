@@ -3,18 +3,27 @@ namespace RayTracer.Cli;
 
 public class Program
 {
+    public static string[] _routines = { "projectile", "clock" };
+
     static void Main()
     {
-        string[] routines = { "projectile" };
         Console.WriteLine("Enter the name of the routine you would like to run.");
-        foreach (string s in routines)
+        while (true)
         {
-            Console.WriteLine(s);
-        }
-        string? selected = Console.ReadLine();
-        if (selected == "projectile")
-        {
-            Projectile();
+            ListRoutines();
+            string? selected = Console.ReadLine();
+            switch (selected)
+            {
+                case "projectile":
+                    Projectile();
+                    break;
+                case "clock":
+                    Clock();
+                    break;
+                default:
+                    Console.WriteLine("Valid routine not detected.");
+                    break;
+            }
         }
     }
 
@@ -47,5 +56,33 @@ public class Program
         string ppm = env.canvas.SavePPM();
 
         File.AppendAllText(filePath, ppm);
+    }
+
+    public static void Clock()
+    {
+        Console.WriteLine("Enter File Path");
+        string? filePath = Console.ReadLine();
+        Canvas canvas = new(500, 500);
+
+        for (int i = 1; i <= 12; i++)
+        {
+            Tuple p = new Point(0, 100, 0).RotateZ((i * Math.PI * 2) / 12);
+
+            Console.WriteLine("" + (int)p.X + " " + "" + (int)p.Y);
+            canvas.SetPixel(250 + (int)p.X, (int)p.Y + 250, new Color(255, 255, 0));
+            Console.WriteLine(canvas.GetPixel(250 + (int)p.X, (int)p.Y + 250));
+        }
+
+        string ppm = canvas.SavePPM();
+        File.AppendAllText(filePath, ppm);
+    }
+
+    public static void ListRoutines()
+    {
+        Console.WriteLine("Available routines are: ");
+        foreach (string s in _routines)
+        {
+            Console.WriteLine(s);
+        }
     }
 }
