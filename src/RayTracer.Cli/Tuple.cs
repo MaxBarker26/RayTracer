@@ -265,6 +265,75 @@ public class Tuple
     }
 
     /// <summary>
+    /// Translates this matrix by the specified offset values.
+    /// </summary>
+    /// <param name="x">The x-coordinate offset.</param>
+    /// <param name="y">The y-coordinate offset.</param>
+    /// <param name="z">The z-coordinate offset.</param>
+    /// <returns>A new matrix representing the translated matrix.</returns>
+    public Tuple Translate(int x, int y, int z)
+    {
+        return (Matrix.Translation(x, y, z) * this);
+    }
+
+    /// <summary>
+    /// Scales this matrix by the given factors along the x, y, and z axes.
+    /// </summary>
+    /// <param name="x">The scaling factor for the x-axis.</param>
+    /// <param name="y">The scaling factor for the y-axis.</param>
+    /// <param name="z">The scaling factor for the z-axis.</param>
+    /// <returns>A new scaled Matrix.</returns>
+    public Tuple Scale(int x, int y, int z)
+    {
+        return (Matrix.Scaling(x, y, z) * this);
+    }
+
+    /// <summary>
+    /// Rotates this matrix around the x-axis by the given angle.
+    /// </summary>
+    /// <param name="radians">The angle of rotation in radians.</param>
+    /// <returns>A new rotated Matrix.</returns>
+    public Tuple RotateX(double radians)
+    {
+        return (Matrix.RotationX(radians) * this);
+    }
+
+    /// <summary>
+    /// Rotates this matrix around the y-axis by the given angle.
+    /// </summary>
+    /// <param name="radians">The angle of rotation in radians.</param>
+    /// <returns>A new rotated Matrix.</returns>
+    public Tuple RotateY(double radians)
+    {
+        return (Matrix.RotationY(radians) * this);
+    }
+
+    /// <summary>
+    /// Rotates this matrix around the z-axis by the given angle.
+    /// </summary>
+    /// <param name="radians">The angle of rotation in radians.</param>
+    /// <returns>A new rotated Matrix.</returns>
+    public Tuple RotateZ(double radians)
+    {
+        return (Matrix.RotationZ(radians) * this);
+    }
+
+    /// <summary>
+    /// Applies a shearing transformation to the current tuple.
+    /// </summary>
+    /// <param name="xy">The shearing factor for the X-component relative to the Y-axis.</param>
+    /// <param name="xz">The shearing factor for the X-component relative to the Z-axis.</param>
+    /// <param name="yx">The shearing factor for the Y-component relative to the X-axis.</param>
+    /// <param name="yz">The shearing factor for the Y-component relative to the Z-axis.</param>
+    /// <param name="zx">The shearing factor for the Z-component relative to the X-axis.</param>
+    /// <param name="zy">The shearing factor for the Z-component relative to the Y-axis.</param>
+    /// <returns>A new <see cref="Matrix"/> instance representing the result of the shearing operation.</returns>
+    public Tuple Shear(int xy, int xz, int yx, int yz, int zx, int zy)
+    {
+        return (Matrix.Shearing(xy, xz, yx, yz, zx, zy) * this);
+    }
+
+    /// <summary>
     /// Converts the current instance to a <see cref="Vector"/> if it represents a vector.
     /// </summary>
     /// <returns>A new <see cref="Vector"/> instance with the X, Y, and Z components of this object.</returns>

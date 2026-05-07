@@ -149,4 +149,23 @@ public class TransformationTests
 
         Assert.Equal(new Point(2, 3, 7), transform * p);
     }
+
+    [Fact]
+    public void TransformationInstanceMethodsForPoints_InstanceMethodsReturnSameAsMulitiplication()
+    {
+        Tuple p = new(2, 3, 4, 1);
+        Tuple p2 = new(0, 1, 0, 1);
+
+        Assert.Equal(new Point(2, 3, 7), p.Shear(0, 0, 0, 0, 0, 1));
+        Assert.Equal(new Point(0, 0, 1), p2.RotateX(Math.PI / 2));
+    }
+
+    [Fact]
+    public void ChainingTupleTransformations_TransformationsChainCorrectly()
+    {
+        Tuple p = new(1, 0, 1, 1);
+        Tuple t = p.RotateX(Math.PI / 2).Scale(5, 5, 5).Translate(10, 5, 7);
+
+        Assert.Equal(new Point(15, 0, 7), t);
+    }
 }

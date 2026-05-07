@@ -288,6 +288,16 @@ public class Matrix
         return rotation;
     }
 
+    /// <summary>
+    /// Creates a shearing transformation matrix.
+    /// </summary>
+    /// <param name="xy">The shearing factor for the X-coordinate based on Y (x' = x + y * xy).</param>
+    /// <param name="xz">The shearing factor for the X-coordinate based on Z (x' = x + z * xz).</param>
+    /// <param name="yx">The shearing factor for the Y-coordinate based on X (y' = y + x * yx).</param>
+    /// <param name="yz">The shearing factor for the Y-coordinate based on Z (y' = y + z * yz).</param>
+    /// <param name="zx">The shearing factor for the Z-coordinate based on X (z' = z + x * zx).</param>
+    /// <param name="zy">The shearing factor for the Z-coordinate based on Y (z' = z + y * zy).</param>
+    /// <returns>A new <see cref="Matrix"/> representing the shearing transformation.</returns>
     public static Matrix Shearing(int xy, int xz, int yx, int yz, int zx, int zy)
     {
         Matrix shearing = Matrix.Identity(4);
@@ -300,8 +310,6 @@ public class Matrix
 
         return shearing;
     }
-
-    //TODO: Add wrapper methods for multiplying tuples by transformation matrices (ie vector.Scale(x,y,z))
 
     /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
