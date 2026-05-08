@@ -14,4 +14,8 @@ public class Point : Tuple
     public Point(double x, double y, double z)
         : base(x, y, z, 1) { }
 
+    public static Vector operator -(Point a, Point b)
+    {
+        return Subtract(a, b).ToVector();
+    }
 }
