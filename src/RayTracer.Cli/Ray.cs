@@ -16,6 +16,11 @@ public class Ray
         return (Origin + (Direction * t)).ToPoint();
     }
 
+    /// <summary>
+    /// Calculates the intersection points of the ray with a given sphere.
+    /// </summary>
+    /// <param name="s">The sphere to check for intersection with.</param>
+    /// <returns>An array of doubles representing the intersection distances (t-values). Returns an empty array if no intersection occurs.</returns>
     public double[] Intersects(Sphere s)
     {
         Vector sphereToRay = Origin - s.Center;

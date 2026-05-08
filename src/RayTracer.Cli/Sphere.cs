@@ -1,6 +1,6 @@
 ﻿namespace RayTracer.Cli;
 
-public class Sphere
+public class Sphere : IShape
 {
     public double Radius { get; }
     public Point Center { get; }
