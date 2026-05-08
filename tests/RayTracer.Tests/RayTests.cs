@@ -29,7 +29,7 @@ public class RayTests
         Sphere s = new();
         Ray r = new(new Point(0, 0, -5), new Vector(0, 0, 1));
         double[] xs = r.Intersects(s);
-        Assert.Equal(xs.Length, 2);
+        Assert.Equal(2, xs.Length);
         Assert.Equal(4.0, xs[0]);
         Assert.Equal(6.0, xs[1]);
     }
@@ -68,7 +68,7 @@ public class RayTests
     public void Intersects_RayOriginatesBehindSphere_RayPassesThroughSphereAtExpectedPoints()
     {
         Sphere s = new();
-        Ray r = new(new Point(0, 0, 0), new Vector(0, 0, 1));
+        Ray r = new(new Point(0, 0, 5), new Vector(0, 0, 1));
         double[] xs = r.Intersects(s);
         Assert.Equal(xs.Length, 2);
         Assert.Equal(-6.0, xs[0]);

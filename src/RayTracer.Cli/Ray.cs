@@ -18,15 +18,18 @@ public class Ray
 
     public double[] Intersects(Sphere s)
     {
-        if (Discriminant(s) < 0)
-            return new double[0];
-    }
-
-    private double Discriminant(Sphere s)
-    {
-        Vector sphereToRay = s.Center - Origin;
+        Vector sphereToRay = Origin - s.Center;
 
         double a = Direction.Dot(Direction);
-        double b = Direction.Dot(sphereToRay);
+        double b = 2 * Direction.Dot(sphereToRay);
+        double c = sphereToRay.Dot(sphereToRay) - 1;
+
+        double discriminant = (b * b) - (4 * a * c);
+        if (discriminant < 0)
+            return new double[0];
+
+        double t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
+        double t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
+        return new double[2] { t1, t2 };
     }
 }

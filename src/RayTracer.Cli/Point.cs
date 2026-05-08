@@ -14,6 +14,13 @@ public class Point : Tuple
     public Point(double x, double y, double z)
         : base(x, y, z, 1) { }
 
+    /// <summary>
+    /// Subtracts two <see cref="Point"/> objects to produce a <see cref="Vector"/>.
+    /// Used to specifically return a vector when points are subtracted from one another.
+    /// </summary>
+    /// <param name="a">The minuend point.</param>
+    /// <param name="b">The subtrahend point.</param>
+    /// <returns>A new <see cref="Vector"/> representing the difference between point a and point b.</returns>
     public static Vector operator -(Point a, Point b)
     {
         return Subtract(a, b).ToVector();
