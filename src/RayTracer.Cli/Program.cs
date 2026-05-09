@@ -3,7 +3,7 @@ namespace RayTracer.Cli;
 
 public class Program
 {
-    public static string[] _routines = { "projectile", "clock" };
+    public static string[] _routines = { "projectile", "clock", "sphere" };
 
     static void Main()
     {
@@ -20,6 +20,9 @@ public class Program
                 case "clock":
                     Clock();
                     break;
+                case "sphere":
+                    Sphere();
+                    break;
                 default:
                     Console.WriteLine("Valid routine not detected.");
                     break;
@@ -27,7 +30,7 @@ public class Program
         }
     }
 
-    public static void Projectile()
+    private static void Projectile()
     {
         Console.WriteLine("Enter File Path");
         string? filePath = Console.ReadLine();
@@ -58,7 +61,7 @@ public class Program
         File.AppendAllText(filePath, ppm);
     }
 
-    public static void Clock()
+    private static void Clock()
     {
         Console.WriteLine("Enter File Path");
         string? filePath = Console.ReadLine();
@@ -77,7 +80,12 @@ public class Program
         File.AppendAllText(filePath, ppm);
     }
 
-    public static void ListRoutines()
+    private static void Sphere()
+    {
+        Canvas c = new(500, 500);
+    }
+
+    private static void ListRoutines()
     {
         Console.WriteLine("Available routines are: ");
         foreach (string s in _routines)

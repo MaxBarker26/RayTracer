@@ -43,10 +43,11 @@ public class Ray
     /// <returns>An array of doubles representing the intersection distances (t-values). Returns an empty array if no intersection occurs.</returns>
     public double[] Intersects(Sphere s)
     {
-        Vector sphereToRay = Origin - s.Center;
+        Ray r = this.Transform(s.TransformMatrix.Invert());
+        Vector sphereToRay = r.Origin - s.Center;
 
-        double a = Direction.Dot(Direction);
-        double b = 2 * Direction.Dot(sphereToRay);
+        double a = r.Direction.Dot(r.Direction);
+        double b = 2 * r.Direction.Dot(sphereToRay);
         double c = sphereToRay.Dot(sphereToRay) - 1;
 
         double discriminant = (b * b) - (4 * a * c);

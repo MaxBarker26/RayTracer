@@ -2,6 +2,7 @@
 
 public class Sphere : IShape
 {
+    public Matrix TransformMatrix { get; set; } = Matrix.Identity(4);
     public double Radius { get; }
     public Point Center { get; }
 
