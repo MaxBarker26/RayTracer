@@ -74,4 +74,26 @@ public class RayTests
         Assert.Equal(-6.0, xs[0]);
         Assert.Equal(-4.0, xs[1]);
     }
+
+    [Fact]
+    public void Transform_TranslatingARay_ReturnNewTranslatedRay()
+    {
+        Ray r = new(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix m = Matrix.Translation(3, 4, 5);
+        Ray r2 = r.Transform(m);
+
+        Assert.Equal(new Point(4, 6, 8), r2.Origin);
+        Assert.Equal(new Vector(0, 1, 0), r2.Direction);
+    }
+
+    [Fact]
+    public void Transform_ScalingARay_ReturnNewScaledRay()
+    {
+        Ray r = new(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix m = Matrix.Scaling(2, 3, 4);
+        Ray r2 = r.Transform(m);
+
+        Assert.Equal(new Point(2, 6, 12), r2.Origin);
+        Assert.Equal(new Vector(0, 3, 0), r2.Direction);
+    }
 }
