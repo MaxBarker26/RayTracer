@@ -41,10 +41,11 @@ public class Ray
     /// </summary>
     /// <param name="s">The sphere to check for intersection with.</param>
     /// <returns>An array of doubles representing the intersection distances (t-values). Returns an empty array if no intersection occurs.</returns>
-    public double[] Intersects(Sphere s)
+    public PriorityQueue<Intersection, double> Intersects(Sphere s)
     {
         Ray r = this.Transform(s.TransformMatrix.Invert());
         Vector sphereToRay = r.Origin - s.Center;
+        PriorityQueue<Intersection, double> pq = new();
 
         double a = r.Direction.Dot(r.Direction);
         double b = 2 * r.Direction.Dot(sphereToRay);
@@ -52,11 +53,14 @@ public class Ray
 
         double discriminant = (b * b) - (4 * a * c);
         if (discriminant < 0)
-            return new double[0];
+            return pq;
 
         double t1 = (-b - Math.Sqrt(discriminant)) / (2 * a);
         double t2 = (-b + Math.Sqrt(discriminant)) / (2 * a);
-        return new double[2] { t1, t2 };
+        pq.Enqueue(new(t1, s), t1);
+        pq.Enqueue(new(t2, s), t2);
+
+        return pq;
     }
 
     public Ray Transform(Matrix transformation)

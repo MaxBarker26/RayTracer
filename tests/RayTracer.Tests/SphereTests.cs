@@ -27,9 +27,9 @@ public class SphereTests
         Sphere s = new();
         s.TransformMatrix = Matrix.Scaling(2, 2, 2);
 
-        double[] xs = r.Intersects(s);
-        Assert.Equal(3, xs[0]);
-        Assert.Equal(7, xs[1]);
+        var xs = r.Intersects(s);
+        Assert.Equal(3, xs.Dequeue().T);
+        Assert.Equal(7, xs.Dequeue().T);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class SphereTests
         Sphere s = new();
         s.TransformMatrix = Matrix.Translation(2, 2, 2);
 
-        double[] xs = r.Intersects(s);
-        Assert.Equal(0, xs.Length);
+        var xs = r.Intersects(s);
+        Assert.Equal(0, xs.Count);
     }
 }

@@ -28,10 +28,10 @@ public class RayTests
     {
         Sphere s = new();
         Ray r = new(new Point(0, 0, -5), new Vector(0, 0, 1));
-        double[] xs = r.Intersects(s);
-        Assert.Equal(2, xs.Length);
-        Assert.Equal(4.0, xs[0]);
-        Assert.Equal(6.0, xs[1]);
+        var xs = r.Intersects(s);
+        Assert.Equal(2, xs.Count);
+        Assert.Equal(4.0, xs.Dequeue().T);
+        Assert.Equal(6.0, xs.Dequeue().T);
     }
 
     [Fact]
@@ -39,9 +39,9 @@ public class RayTests
     {
         Sphere s = new();
         Ray r = new(new Point(0, 1, -5), new Vector(0, 0, 1));
-        double[] xs = r.Intersects(s);
-        Assert.Equal(5.0, xs[0]);
-        Assert.Equal(5.0, xs[1]);
+        var xs = r.Intersects(s);
+        Assert.Equal(5.0, xs.Dequeue().T);
+        Assert.Equal(5.0, xs.Dequeue().T);
     }
 
     [Fact]
@@ -49,8 +49,8 @@ public class RayTests
     {
         Sphere s = new();
         Ray r = new(new Point(0, 2, -5), new Vector(0, 0, 1));
-        double[] xs = r.Intersects(s);
-        Assert.Equal(xs.Length, 0);
+        var xs = r.Intersects(s);
+        Assert.Equal(xs.Count, 0);
     }
 
     [Fact]
@@ -58,10 +58,10 @@ public class RayTests
     {
         Sphere s = new();
         Ray r = new(new Point(0, 0, 0), new Vector(0, 0, 1));
-        double[] xs = r.Intersects(s);
-        Assert.Equal(xs.Length, 2);
-        Assert.Equal(-1.0, xs[0]);
-        Assert.Equal(1.0, xs[1]);
+        var xs = r.Intersects(s);
+        Assert.Equal(xs.Count, 2);
+        Assert.Equal(-1.0, xs.Dequeue().T);
+        Assert.Equal(1.0, xs.Dequeue().T);
     }
 
     [Fact]
@@ -69,10 +69,10 @@ public class RayTests
     {
         Sphere s = new();
         Ray r = new(new Point(0, 0, 5), new Vector(0, 0, 1));
-        double[] xs = r.Intersects(s);
-        Assert.Equal(xs.Length, 2);
-        Assert.Equal(-6.0, xs[0]);
-        Assert.Equal(-4.0, xs[1]);
+        var xs = r.Intersects(s);
+        Assert.Equal(xs.Count, 2);
+        Assert.Equal(-6.0, xs.Dequeue().T);
+        Assert.Equal(-4.0, xs.Dequeue().T);
     }
 
     [Fact]

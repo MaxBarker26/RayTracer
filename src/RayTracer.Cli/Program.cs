@@ -82,7 +82,28 @@ public class Program
 
     private static void Sphere()
     {
+        Console.WriteLine("Enter File Path");
+        string? filePath = Console.ReadLine();
         Canvas c = new(500, 500);
+        Sphere s = new();
+        s.TransformMatrix = Matrix.Translation(250, 250, 0);
+        s.TransformMatrix *= Matrix.Scaling(50, 50, 0);
+        for (int i = 0; i < 500; i++)
+        {
+            for (int j = 0; j < 500; j++)
+            {
+                Ray r = new(new Point(i, j, -100), new Vector(0, 0, 1));
+
+                Intersection? x = Intersection.Hit(r.Intersects(s));
+                if (x != null)
+                {
+                    c.SetPixel(i, j, new(255, 0, 0));
+                }
+            }
+        }
+
+        string ppm = c.SavePPM();
+        File.AppendAllText(filePath, ppm);
     }
 
     private static void ListRoutines()
