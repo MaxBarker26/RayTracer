@@ -20,6 +20,11 @@ public class Vector : Tuple
         Magnitude = Math.Sqrt((x * x) + (y * y) + (z * z));
     }
 
+    public Vector Reflect(Vector normal)
+    {
+        return this - normal * 2 * this.Dot(normal);
+    }
+
     public double Dot(Vector v)
     {
         return (X * v.X) + (Y * v.Y) + (Z * v.Z);

@@ -66,4 +66,22 @@ public class VectorTests()
         Vector v5 = v1 * 2;
         Vector v6 = v2 / 2;
     }
+
+    [Fact]
+    public void Reflect_ReflectingVectorApproachingAt45Degrees_ReturnsReflectedVector()
+    {
+        Vector v = new(1, -1, 0);
+        Vector n = new(0, 1, 0);
+        Vector r = v.Reflect(n);
+        Assert.Equal(new Vector(1, 1, 0), r);
+    }
+
+    [Fact]
+    public void Reflect_ReflectingVectorOffSlantedSurface_ReturnsReflectedVector()
+    {
+        Vector v = new(0, -1, 0);
+        Vector n = new(Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0);
+        Vector r = v.Reflect(n);
+        Assert.Equal(new Vector(1, 0, 0), r);
+    }
 }
