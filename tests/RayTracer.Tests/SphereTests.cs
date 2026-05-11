@@ -42,4 +42,62 @@ public class SphereTests
         var xs = r.Intersects(s);
         Assert.Equal(0, xs.Count);
     }
+
+    [Fact]
+    public void NormalAt_FindNormalVectorOnASphereOnXAxis_ReturnsVector()
+    {
+        Sphere s = new();
+        Vector n = s.NormalAt(new(1, 0, 0));
+        Assert.Equal(new Vector(1, 0, 0), n);
+    }
+
+    [Fact]
+    public void NormalAt_FindNormalVectorOnASphereOnYAxis_ReturnsVector()
+    {
+        Sphere s = new();
+        Vector n = s.NormalAt(new(0, 1, 0));
+        Assert.Equal(new Vector(0, 1, 0), n);
+    }
+
+    [Fact]
+    public void NormalAt_FindNormalVectorOnASphereOnZAxis_ReturnsVector()
+    {
+        Sphere s = new();
+        Vector n = s.NormalAt(new(0, 0, 1));
+        Assert.Equal(new Vector(0, 0, 1), n);
+    }
+
+    [Fact]
+    public void NormalAt_FindNormalVectorOnASphereNonAxialPoint_ReturnsVector()
+    {
+        Sphere s = new();
+        Vector n = s.NormalAt(new(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+        Assert.Equal(new Vector(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3), n);
+    }
+
+    [Fact]
+    public void NormalAt_NormalIsNormalizedVector_ReturnsNormalizedVector()
+    {
+        Sphere s = new();
+        Vector n = s.NormalAt(new(Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3));
+        Assert.Equal(n.Normalized, n);
+    }
+
+    [Fact]
+    public void NormalAt_NormalOnTranslatedSphere_ReturnsVector()
+    {
+        Sphere s = new();
+        s.TransformMatrix = Matrix.Translation(0, 1, 0);
+        Vector n = s.NormalAt(new(0, 1.70711, -0.70711));
+        Assert.Equal(new Vector(0, 0.70711, -0.70711), n);
+    }
+
+    [Fact]
+    public void NormalAt_NormalOnMultiTransformedSphere_ReturnsVector()
+    {
+        Sphere s = new();
+        s.TransformMatrix = Matrix.Scaling(1, 0.5, 1) * Matrix.RotationZ(Math.PI / 5);
+        Vector n = s.NormalAt(new(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
+        Assert.Equal(new Vector(0, 0.97014, -0.24254), n);
+    }
 }
