@@ -235,7 +235,7 @@ public class Matrix
     /// <param name="y">The translation amount along the y-axis.</param>
     /// <param name="z">The translation amount along the z-axis.</param>
     /// <returns>A 4x4 translation matrix.</returns>
-    public static Matrix Translation(int x, int y, int z)
+    public static Matrix Translation(double x, double y, double z)
     {
         Matrix translation = Identity(4);
         translation[0, 3] = x;
@@ -244,7 +244,7 @@ public class Matrix
         return translation;
     }
 
-    public static Matrix Scaling(int x, int y, int z)
+    public static Matrix Scaling(double x, double y, double z)
     {
         Matrix scaling = Identity(4);
         scaling[0, 0] = x;
@@ -298,7 +298,7 @@ public class Matrix
     /// <param name="zx">The shearing factor for the Z-coordinate based on X (z' = z + x * zx).</param>
     /// <param name="zy">The shearing factor for the Z-coordinate based on Y (z' = z + y * zy).</param>
     /// <returns>A new <see cref="Matrix"/> representing the shearing transformation.</returns>
-    public static Matrix Shearing(int xy, int xz, int yx, int yz, int zx, int zy)
+    public static Matrix Shearing(double xy, double xz, double yx, double yz, double zx, double zy)
     {
         Matrix shearing = Matrix.Identity(4);
         shearing[0, 1] = xy;

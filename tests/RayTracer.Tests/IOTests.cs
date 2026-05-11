@@ -17,6 +17,7 @@ public class IOTests()
         Canvas c = new(pixels, pixels);
         Color red = new Color(1, 0, 0);
         Sphere s = new();
+        s.TransformMatrix = Matrix.Shearing(1, 0, 0, 0, 0, 0) * Matrix.Scaling(0.5, 1, 1);
         Point origin = new(0, 0, -5);
 
         double worldY;
