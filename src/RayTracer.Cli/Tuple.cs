@@ -264,6 +264,18 @@ public class Tuple
         return MultiplyScalar(tuple, (1 / scalar));
     }
 
+    public static bool operator ==(Tuple t, Tuple other)
+    {
+        if (t.Equals(other))
+            return true;
+        return false;
+    }
+
+    public static bool operator !=(Tuple t, Tuple other)
+    {
+        return !(t == other);
+    }
+
     /// <summary>
     /// Translates this matrix by the specified offset values.
     /// </summary>

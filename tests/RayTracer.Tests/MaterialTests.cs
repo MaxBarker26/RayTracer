@@ -14,4 +14,11 @@ public class MaterialTests
         Assert.Equal(0.9, m.Specular);
         Assert.Equal(200, m.Shininess);
     }
+
+    [Fact]
+    public void SphereHasDefaultMaterial()
+    {
+        Sphere s = new();
+        Assert.Equal(new Material(), s.Material);
+    }
 }
