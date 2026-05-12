@@ -8,17 +8,20 @@ public class IOTests()
     public void Sphere()
     {
         string? filePath = "/home/maxbarker/Desktop/sphere.ppm";
-        int pixels = 100;
+        int pixels = 1000;
         double wallZ = 10;
         double wallSize = 7;
         double pixel_size = wallSize / pixels;
         double half = wallSize / 2;
 
         Canvas c = new(pixels, pixels);
-        Color red = new Color(1, 0, 0);
-        Sphere s = new();
-        s.TransformMatrix = Matrix.Shearing(1, 0, 0, 0, 0, 0) * Matrix.Scaling(0.5, 1, 1);
+        Color red = new(1, 0, 0);
         Point origin = new(0, 0, -5);
+        Sphere s = new();
+        s.Material.Color = new(1, 0.2, 1);
+        Point lightPosition = new(-10, 10, -10);
+        Color lightColor = new(1, 1, 1);
+        PointLight light = new(lightPosition, lightColor);
 
         double worldY;
         double worldX;
@@ -30,11 +33,22 @@ public class IOTests()
                 worldX = -half + pixel_size * x;
                 Point position = new(worldX, worldY, wallZ);
                 Ray r = new(origin, (position - origin).Normalized);
-                PriorityQueue<Intersection, double> pq = r.Intersects(s);
+                PriorityQueue<Intersection, double> xs = r.Intersects(s);
+                Intersection? hit = Intersection.Hit(xs);
 
-                if (Intersection.Hit(pq) != null)
+                if (hit != null)
                 {
-                    c.SetPixel(x, y, red);
+                    Point point = r.Position(hit.T);
+                    Vector normal = hit.Shape.NormalAt(point);
+                    Vector eye = (-r.Direction).ToVector();
+                    Color pixelColor = Color.Lighting(
+                        hit.Shape.Material,
+                        light,
+                        point,
+                        eye,
+                        normal
+                    );
+                    c.SetPixel(x, y, pixelColor);
                 }
             }
         }
