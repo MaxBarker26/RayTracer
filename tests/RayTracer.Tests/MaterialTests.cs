@@ -21,4 +21,14 @@ public class MaterialTests
         Sphere s = new();
         Assert.Equal(new Material(), s.Material);
     }
+
+    [Fact]
+    public void SphereCanBeAssignedNewMaterial()
+    {
+        Sphere s = new();
+        Material m = new();
+        m.Ambient = 1;
+        s.Material = m;
+        Assert.Equal(m, s.Material);
+    }
 }

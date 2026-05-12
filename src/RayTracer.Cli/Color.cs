@@ -67,4 +67,52 @@ public class Color : Tuple
     {
         return new Color(X * other.X, Y * other.Y, Z * other.Z);
     }
+
+    public static Color operator *(Color l, Color r)
+    {
+        return l.Prod(r);
+    }
+
+    public static Color Lighting(
+        Material material,
+        PointLight light,
+        Point position,
+        Vector eyeVector,
+        Vector normalVector
+    )
+    {
+        Color effectiveColor = material.Color * light.Intensity;
+        Vector lightVector = (light.Position - position).Normalized;
+        Color ambient = effectiveColor * material.Ambient;
+        Color diffuse;
+        Color specular;
+        double reflectDotEye;
+        double lightDotNormal = lightVector.Dot(normalVector);
+
+        if (lightDotNormal < 0)
+        {
+            diffuse = new Color(0, 0, 0);
+            specular = new Color(0, 0, 0);
+        }
+        else
+        {
+            diffuse = effectiveColor * material.Diffuse * lightDotNormal;
+            //negating light vector converts it to tuple, so it is converted
+            //back to Vector before the Reflect method is applied.
+            Vector negatedLightV = (-lightVector).ToVector();
+            Vector reflectVector = negatedLightV.Reflect(normalVector);
+            reflectDotEye = reflectVector.Dot(eyeVector);
+            if (reflectDotEye <= 0)
+            {
+                specular = new Color(0, 0, 0);
+            }
+            else
+            {
+                double factor = Math.Pow(reflectDotEye, material.Shininess);
+                specular = light.Intensity * material.Specular * factor;
+            }
+        }
+
+        return ambient + diffuse + specular;
+    }
 }

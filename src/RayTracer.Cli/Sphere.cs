@@ -21,6 +21,9 @@ public class Sphere : IShape
     /// </summary>
     public Point Center { get; }
 
+    /// <summary>
+    /// Gets or sets the material associated with this object.
+    /// </summary>
     public Material Material { get; set; } = new();
 
     /// <summary>

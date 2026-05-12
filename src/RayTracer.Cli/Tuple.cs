@@ -264,6 +264,12 @@ public class Tuple
         return MultiplyScalar(tuple, (1 / scalar));
     }
 
+    /// <summary>
+    /// Determines whether two <see cref="Tuple"/> objects are equal.
+    /// </summary>
+    /// <param name="t">The first <see cref="Tuple"/> to compare.</param>
+    /// <param name="other">The second <see cref="Tuple"/> to compare.</param>
+    /// <returns><c>true</c> if the tuples are equal; otherwise, <c>false</c>.</returns>
     public static bool operator ==(Tuple t, Tuple other)
     {
         if (t.Equals(other))
@@ -271,6 +277,12 @@ public class Tuple
         return false;
     }
 
+    /// <summary>
+    /// Determines whether two <see cref="Tuple"/> objects are not equal.
+    /// </summary>
+    /// <param name="t">The first <see cref="Tuple"/> to compare.</param>
+    /// <param name="other">The second <see cref="Tuple"/> to compare.</param>
+    /// <returns><c>true</c> if the tuples are not equal; otherwise, <c>false</c>.</returns>
     public static bool operator !=(Tuple t, Tuple other)
     {
         return !(t == other);
