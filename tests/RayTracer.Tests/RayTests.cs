@@ -96,4 +96,18 @@ public class RayTests
         Assert.Equal(new Point(2, 6, 12), r2.Origin);
         Assert.Equal(new Vector(0, 3, 0), r2.Direction);
     }
+
+    [Fact]
+    public void Intersects_RayIntersectsAWorld_ReturnExpectedIntersections()
+    {
+        World w = World.Default();
+        Ray r = new Ray(new(0, 0, -5), new(0, 0, 1));
+        PriorityQueue<Intersection, double> xs = r.Intersects(w);
+
+        Assert.Equal(4, xs.Count);
+        Assert.Equal(4, xs.Dequeue().T);
+        Assert.Equal(4.5, xs.Dequeue().T);
+        Assert.Equal(5.5, xs.Dequeue().T);
+        Assert.Equal(6, xs.Dequeue().T);
+    }
 }

@@ -41,15 +41,15 @@ public class Ray
     /// </summary>
     /// <param name="s">The sphere to check for intersection with.</param>
     /// <returns>An array of doubles representing the intersection distances (t-values). Returns an empty array if no intersection occurs.</returns>
-    public PriorityQueue<Intersection, double> Intersects(Sphere s)
+    public PriorityQueue<Intersection, double> Intersects(IShape s)
     {
         Ray r = this.Transform(s.TransformMatrix.Invert());
-        Vector sphereToRay = r.Origin - s.Center;
+        Vector shapeToRay = r.Origin - s.Center;
         PriorityQueue<Intersection, double> pq = new();
 
         double a = r.Direction.Dot(r.Direction);
-        double b = 2 * r.Direction.Dot(sphereToRay);
-        double c = sphereToRay.Dot(sphereToRay) - 1;
+        double b = 2 * r.Direction.Dot(shapeToRay);
+        double c = shapeToRay.Dot(shapeToRay) - 1;
 
         double discriminant = (b * b) - (4 * a * c);
         if (discriminant < 0)
@@ -60,6 +60,30 @@ public class Ray
         pq.Enqueue(new(t1, s), t1);
         pq.Enqueue(new(t2, s), t2);
 
+        return pq;
+    }
+
+    /// <summary>
+    /// Calculates the intersections between this ray and all objects in the given world.
+    /// </summary>
+    /// <param name="w">The world containing objects to intersect with.</param>
+    /// <returns>A priority queue of intersections, ordered by their distance from the ray's origin.</returns>
+    public PriorityQueue<Intersection, double> Intersects(World w)
+    {
+        //List of tuples will contain the intersection and priority of all items
+        List<(Intersection, double)> list = new();
+
+        foreach (var obj in w.Objects)
+        {
+            var temp = this.Intersects(obj);
+            while (temp.TryDequeue(out Intersection? x, out double p))
+            {
+                //items are added with their associated priority after intersections are calculated
+                list.Add((x, p));
+            }
+        }
+        //List is heapified by creating a new priority queue
+        PriorityQueue<Intersection, double> pq = new(list);
         return pq;
     }
 
