@@ -8,18 +8,21 @@ public class IOTests()
     public void Sphere()
     {
         string? filePath = "/home/maxbarker/Desktop/sphere.ppm";
-        int pixels = 1000;
-        double wallZ = 10;
-        double wallSize = 7;
+        int pixels = 500;
+        double wallZ = 5;
+        double wallSize = 25;
         double pixel_size = wallSize / pixels;
         double half = wallSize / 2;
 
         Canvas c = new(pixels, pixels);
-        Color red = new(1, 0, 0);
-        Point origin = new(0, 0, -5);
+        Point origin = new(0, 50, -100);
         Sphere s = new();
-        s.Material.Color = new(1, 0.2, 1);
-        Point lightPosition = new(-10, 10, -10);
+        s.TransformMatrix =
+            Matrix.RotationX(Math.PI / 4)
+            * Matrix.Translation(5, 5, -15)
+            * Matrix.Scaling(1, 5, 10);
+        s.Material.Color = new(1, 1, 0);
+        Point lightPosition = new(-25, 50, -25);
         Color lightColor = new(1, 1, 1);
         PointLight light = new(lightPosition, lightColor);
 
