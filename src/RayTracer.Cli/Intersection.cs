@@ -16,6 +16,22 @@ public class Intersection
     public double T { get; }
 
     /// <summary>
+    /// Gets the point where this intersection occurred. This is precomputed with the
+    /// PrepareComputations method.
+    /// </summary>
+    public Point Point { get; private set; }
+
+    /// <summary>
+    /// Gets the eye vector. Precomputed with the PrepareComputation method.
+    /// </summary>
+    public Vector Eyev { get; private set; }
+
+    /// <summary>
+    /// Gets the normal vector. Precomputed with the PrepareComputation method.
+    /// </summary>
+    public Vector Normalv { get; private set; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="Intersection"/> class.
     /// </summary>
     /// <param name="t">The distance along the ray to the intersection point.</param>
