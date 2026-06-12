@@ -31,6 +31,11 @@ public class IntersectionComps
     public Vector NormalV { get; }
 
     /// <summary>
+    /// Indicates whether a ray is originating from inside an object.
+    /// </summary>
+    public bool Inside { get; } = false;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="IntersectionComps"/> class.
     /// </summary>
     /// <param name="i">The intersection object containing `t` and the intersected shape.</param>
@@ -42,5 +47,11 @@ public class IntersectionComps
         Point = r.Position(T);
         EyeV = (-r.Direction).ToVector();
         NormalV = Shape.NormalAt(Point);
+
+        if (NormalV.Dot(EyeV) < 0)
+        {
+            Inside = true;
+            NormalV = (-NormalV).ToVector();
+        }
     }
 }

@@ -27,4 +27,29 @@ public class WorldTests()
         Assert.Equal(compareLight.Intensity, w.LightSource?.Intensity);
         Assert.Equal(compareLight.Position, w.LightSource?.Position);
     }
+
+    [Fact]
+    public void ShadeHit_ShadingAnIntersection_ColorIsExpected()
+    {
+        World w = World.Default();
+        Ray r = new(new(0, 0, -5), new(0, 0, 1));
+        IShape shape = w.Objects[0];
+        Intersection i = new(4, shape);
+        IntersectionComps comps = new(i, r);
+        Color c = w.ShadeHit(comps);
+        Assert.Equal(new Color(0.38066, 0.47583, 0.2855), c);
+    }
+
+    [Fact]
+    public void ShadeHit_ShadingAnIntersectionFromInside_ColorIsExpected()
+    {
+        World w = World.Default();
+        w.LightSource = new(new(0, 0.25, 0), new(1, 1, 1));
+        Ray r = new(new(0, 0, 0), new(0, 0, 1));
+        IShape shape = w.Objects[1];
+        Intersection i = new(0.5, shape);
+        IntersectionComps comps = new(i, r);
+        Color c = w.ShadeHit(comps);
+        Assert.Equal(new(0.90498, 0.90498, 0.90498), c);
+    }
 }

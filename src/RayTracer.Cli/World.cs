@@ -23,4 +23,19 @@ public class World
         w.Objects.Add(s2);
         return w;
     }
+
+    public Color ShadeHit(IntersectionComps comps)
+    {
+        if (this.LightSource is null)
+            throw new InvalidOperationException(
+                "Must establish a LightSource before calling ShadeHit on a world."
+            );
+        return Color.Lighting(
+            comps.Shape.Material,
+            this.LightSource,
+            comps.Point,
+            comps.EyeV,
+            comps.NormalV
+        );
+    }
 }

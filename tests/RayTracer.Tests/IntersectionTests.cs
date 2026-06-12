@@ -83,4 +83,41 @@ public class IntersectionTests
         Intersection? i = Intersection.Hit(xs);
         Assert.Equal(i4, i);
     }
+
+    [Fact]
+    public void IntersectionComps_CompsDataStructure_ComputesAdditionalIntersectionDataCorrectly()
+    {
+        Ray r = new(new(0, 0, -5), new(0, 0, 1));
+        IShape shape = new Sphere();
+        Intersection i = new(4, shape);
+        IntersectionComps comps = new(i, r);
+        Assert.Equal(i.T, comps.T);
+        Assert.Equal(i.Shape, comps.Shape);
+        Assert.Equal(new(0, 0, -1), comps.Point);
+        Assert.Equal(new(0, 0, -1), comps.EyeV);
+        Assert.Equal(new(0, 0, -1), comps.NormalV);
+    }
+
+    [Fact]
+    public void IntersectionComps_IntersectionOccursOnOutside_InsidePropertyIsFalse()
+    {
+        Ray r = new(new(0, 0, -5), new(0, 0, 1));
+        IShape shape = new Sphere();
+        Intersection i = new(4, shape);
+
+        IntersectionComps comps = new(i, r);
+        Assert.False(comps.Inside);
+    }
+
+    [Fact]
+    public void IntersectionComps_IntersectionOccursOnInside_InsidePropertyIsTrue()
+    {
+        Ray r = new(new(0, 0, 0), new(0, 0, 1));
+        IShape shape = new Sphere();
+        Intersection i = new(1, shape);
+        IntersectionComps comps = new(i, r);
+        Assert.Equal(new(0, 0, 1), comps.Point);
+        Assert.Equal(new(0, 0, -1), comps.EyeV);
+        Assert.True(comps.Inside);
+    }
 }
