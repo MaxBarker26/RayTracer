@@ -52,4 +52,35 @@ public class WorldTests()
         Color c = w.ShadeHit(comps);
         Assert.Equal(new(0.90498, 0.90498, 0.90498), c);
     }
+
+    [Fact]
+    public void ColorAt_ColorWhenRayMisses_ColorIsBlack()
+    {
+        World w = World.Default();
+        Ray r = new(new(0, 0, -5), new(0, 1, 0));
+        Color c = w.ColorAt(r);
+        Assert.Equal(new(0, 0, 0), c);
+    }
+
+    [Fact]
+    public void ColorAt_ColorWhenRayMisses_ColorIsExpected()
+    {
+        World w = World.Default();
+        Ray r = new(new(0, 0, -5), new(0, 0, 1));
+        Color c = w.ColorAt(r);
+        Assert.Equal(new(0.38066, 0.47583, 0.2855), c);
+    }
+
+    [Fact]
+    public void ColorAt_ColorWithAnIntersectionBehindTheRay_ColorMatchesInnerMaterial()
+    {
+        World w = World.Default();
+        IShape outer = w.Objects[0];
+        outer.Material.Ambient = 1;
+        IShape inner = w.Objects[1];
+        inner.Material.Ambient = 1;
+        Ray r = new(new(0, 0, 0.75), new(0, 0, -1));
+        Color c = w.ColorAt(r);
+        Assert.Equal(inner.Material.Color, c);
+    }
 }

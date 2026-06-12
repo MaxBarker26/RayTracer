@@ -28,7 +28,7 @@ public class World
     {
         if (this.LightSource is null)
             throw new InvalidOperationException(
-                "Must establish a LightSource before calling ShadeHit on a world."
+                "Must establish a LightSource for this World before calling ShadeHit."
             );
         return Color.Lighting(
             comps.Shape.Material,
@@ -37,5 +37,17 @@ public class World
             comps.EyeV,
             comps.NormalV
         );
+    }
+
+    public Color ColorAt(Ray r)
+    {
+        PriorityQueue<Intersection, double> xs = r.Intersects(this);
+        //could be null if there are no intersections, in which case return black.
+        Intersection? i = Intersection.Hit(xs);
+        if (i is null)
+            return new Color(0, 0, 0);
+
+        IntersectionComps comps = new(i, r);
+        return ShadeHit(comps);
     }
 }
