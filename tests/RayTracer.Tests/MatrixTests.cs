@@ -541,4 +541,13 @@ public class MatrixTests
         Assert.Equal(inverseA, matrixA.Invert());
         Assert.Equal(inverseB, matrixB.Invert());
     }
+
+    public void ViewTransformationMatrix_TransformationMatrixForDefaultView_EqualsIdentityMatrix()
+    {
+        Point from = new(0, 0, 0);
+        Point to = new(0, 0, -1);
+        Point up = new(0, 1, 0);
+        Matrix t = Matrix.ViewTransform(from, up, to);
+        Assert.Equal(Matrix.Identity(4), t);
+    }
 }

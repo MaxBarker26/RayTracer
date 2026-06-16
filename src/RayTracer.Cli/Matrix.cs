@@ -209,6 +209,33 @@ public class Matrix
     }
 
     /// <summary>
+    /// Creates a 4x4 identity matrix.
+    /// An identity matrix is a square matrix with ones on the main diagonal and zeros elsewhere.
+    /// When an identity matrix multiplies another matrix, the other matrix remains unchanged.
+    /// </summary>
+    /// <returns>A new 4x4 identity <see cref="Matrix"/>.</returns>
+    public static Matrix Identity()
+    {
+        Matrix identity = new Matrix(4, 4);
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (i == j)
+                {
+                    identity[i, j] = 1;
+                }
+                else
+                {
+                    identity[i, j] = 0;
+                }
+            }
+        }
+        return identity;
+    }
+
+    /// <summary>
     /// Calculates the determinant of a matrix.
     /// </summary>
     /// <param name="m">The matrix for which to calculate the determinant.</param>
