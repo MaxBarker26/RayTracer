@@ -339,6 +339,39 @@ public class Matrix
     }
 
     /// <summary>
+    /// Creates a view matrix looking from one point to another.
+    /// </summary>
+    /// <param name="from">The position of the camera (eye point).</param>
+    /// <param name="to">The point the camera is looking at (target point).</param>
+    /// <param name="up">The world's up vector, used to orient the camera. Does not have to be exact or normalized.</param>
+    /// <returns>A view matrix that transforms world coordinates to view coordinates.</n`returns>
+    public static Matrix View(Point from, Point to, Vector up)
+    {
+        Matrix orientation = new(4, 4);
+        Vector forward = (to - from).Normalized;
+        Vector left = forward.Cross(up.Normalized);
+        Vector trueUp = left.Cross(forward);
+        orientation[0, 0] = left.X;
+        orientation[0, 1] = left.Y;
+        orientation[0, 2] = left.Z;
+        orientation[0, 3] = 0;
+        orientation[1, 0] = trueUp.X;
+        orientation[1, 1] = trueUp.Y;
+        orientation[1, 2] = trueUp.Z;
+        orientation[1, 3] = 0;
+        orientation[2, 0] = -(forward.X);
+        orientation[2, 1] = -(forward.Y);
+        orientation[2, 2] = -(forward.Z);
+        orientation[2, 3] = 0;
+        orientation[3, 0] = 0;
+        orientation[3, 1] = 0;
+        orientation[3, 2] = 0;
+        orientation[3, 3] = 1;
+
+        return orientation * Translation(-(from.X), -(from).Y, -(from).Z);
+    }
+
+    /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
     /// </summary>
     /// <param name="row">The zero-based index of the row to remove.</param>

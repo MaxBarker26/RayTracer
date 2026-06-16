@@ -542,12 +542,63 @@ public class MatrixTests
         Assert.Equal(inverseB, matrixB.Invert());
     }
 
+    [Fact]
     public void ViewTransformationMatrix_TransformationMatrixForDefaultView_EqualsIdentityMatrix()
     {
         Point from = new(0, 0, 0);
         Point to = new(0, 0, -1);
-        Point up = new(0, 1, 0);
-        Matrix t = Matrix.ViewTransform(from, up, to);
-        Assert.Equal(Matrix.Identity(4), t);
+        Vector up = new(0, 1, 0);
+        Matrix t = Matrix.View(from, to, up);
+        Assert.Equal(Matrix.Identity(), t);
+    }
+
+    [Fact]
+    public void ViewTransformationMatrix_TransformationMatrixPositiveZTo_EqualsNegativeScalingMatrix()
+    {
+        Point from = new(0, 0, 0);
+        Point to = new(0, 0, 1);
+        Vector up = new(0, 1, 0);
+        Matrix t = Matrix.View(from, to, up);
+        //This test should result in the mirror image accross
+        //z axis, the same as reflection (negative scaling).
+        Assert.Equal(Matrix.Scaling(-1, 1, -1), t);
+    }
+
+    [Fact]
+    public void ViewTransformationMatrix_TransformationMatrixWorldMoves_WorldTranslatesOppositeOfEyePosition()
+    {
+        Point from = new(0, 0, 8);
+        Point to = new(0, 0, 0);
+        Vector up = new(0, 1, 0);
+        Matrix t = Matrix.View(from, to, up);
+        //This test should result in the world being translated opposite from the eye's from position
+        Assert.Equal(Matrix.Translation(0, 0, -8), t);
+    }
+
+    [Fact]
+    public void ViewTransformationMatrix_ArbitraryTransformation_MatrixEqualsExpected()
+    {
+        Point from = new(1, 3, 2);
+        Point to = new(4, -2, 8);
+        Vector up = new(1, 1, 0);
+        Matrix t = Matrix.View(from, to, up);
+        Matrix expected = new Matrix(4, 4);
+        expected[0, 0] = -0.50709;
+        expected[0, 1] = 0.50709;
+        expected[0, 2] = 0.67612;
+        expected[0, 3] = -2.36643;
+        expected[1, 0] = 0.76772;
+        expected[1, 1] = 0.60609;
+        expected[1, 2] = 0.12122;
+        expected[1, 3] = -2.82843;
+        expected[2, 0] = -0.35857;
+        expected[2, 1] = 0.59761;
+        expected[2, 2] = -0.71714;
+        expected[2, 3] = 0.00000;
+        expected[3, 0] = 0.00000;
+        expected[3, 1] = 0.00000;
+        expected[3, 2] = 0.00000;
+        expected[3, 3] = 1.00000;
+        Assert.Equal(expected, t);
     }
 }
