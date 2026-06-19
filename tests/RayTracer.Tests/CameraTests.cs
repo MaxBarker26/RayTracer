@@ -58,4 +58,17 @@ public class CameraTests()
         Assert.Equal(new(0, 2, -5), r.Origin);
         Assert.Equal(new(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2), r.Direction);
     }
+
+    [Fact]
+    public void Render_RenderingAWorldWithACamera_ImagePixelIsExpected()
+    {
+        World w = World.Default();
+        Camera c = new(11, 11, Math.PI / 2);
+        Point from = new(0, 0, -5);
+        Point to = new(0, 0, 0);
+        Vector up = new(0, 1, 0);
+        c.Transform = Matrix.View(from, to, up);
+        Canvas image = c.Render(w);
+        Assert.Equal(new Color(0.38066, 0.47583, 0.2855), image.GetPixel(5, 5));
+    }
 }

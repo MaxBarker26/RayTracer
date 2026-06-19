@@ -2,8 +2,8 @@
 
 public class Camera
 {
-    public double HSize { get; }
-    public double VSize { get; }
+    public int HSize { get; }
+    public int VSize { get; }
     public double FieldOfView { get; }
     public Matrix Transform { get; set; } = Matrix.Identity();
     public double PixelSize { get; private set; }
@@ -34,10 +34,25 @@ public class Camera
         return new(origin, direction);
     }
 
+    public Canvas Render(World w)
+    {
+        Canvas image = new(HSize, VSize);
+        for (int y = 0; y < VSize - 1; y++)
+        {
+            for (int x = 0; x < HSize - 1; x++)
+            {
+                Ray r = RayForPixel(x, y);
+                Color color = w.ColorAt(r);
+                image.SetPixel(x, y, color);
+            }
+        }
+        return image;
+    }
+
     private void SetPixelSize()
     {
         double halfView = Math.Tan(FieldOfView / 2);
-        double aspect = HSize / VSize;
+        double aspect = (double)HSize / VSize;
         double halfWidth;
         double halfHeight;
         if (aspect >= 1)
