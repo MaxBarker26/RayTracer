@@ -30,4 +30,32 @@ public class CameraTests()
 
         Assert.Equal(0.01, c.PixelSize, 0.0001);
     }
+
+    [Fact]
+    public void RayForPixel_RayThroughCenterOfCanvas_RayOriginAndDirectionAreAsExpected()
+    {
+        Camera c = new(201, 101, Math.PI / 2);
+        Ray r = c.RayForPixel(100, 50);
+        Assert.Equal(new(0, 0, 0), r.Origin);
+        Assert.Equal(new(0, 0, -1), r.Direction);
+    }
+
+    [Fact]
+    public void RayForPixel_RayThroughCornerOfCanvas_RayOriginAndDirectionAreAsExpected()
+    {
+        Camera c = new(201, 101, Math.PI / 2);
+        Ray r = c.RayForPixel(0, 0);
+        Assert.Equal(new(0, 0, 0), r.Origin);
+        Assert.Equal(new(0.66519, 0.33259, -0.66851), r.Direction);
+    }
+
+    [Fact]
+    public void RayForPixel_RayWhenCameraIsTransformed_RayOriginAndDirectionAreAsExpected()
+    {
+        Camera c = new(201, 101, Math.PI / 2);
+        c.Transform = Matrix.RotationY(Math.PI / 4) * Matrix.Translation(0, -2, 5);
+        Ray r = c.RayForPixel(100, 50);
+        Assert.Equal(new(0, 2, -5), r.Origin);
+        Assert.Equal(new(Math.Sqrt(2) / 2, 0, -Math.Sqrt(2) / 2), r.Direction);
+    }
 }
