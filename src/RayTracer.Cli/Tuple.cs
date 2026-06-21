@@ -392,6 +392,6 @@ public class Tuple
         {
             return new Point(X, Y, Z);
         }
-        throw new InvalidCastException();
+        throw new InvalidCastException("" + X + " " + Y + " " + Z + " " + W);
     }
 }
