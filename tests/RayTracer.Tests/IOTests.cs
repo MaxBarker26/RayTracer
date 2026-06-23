@@ -120,7 +120,7 @@ public class IOTests()
         w.LightSource = new(new(-10, 10, -10), new(1, 1, 1));
 
         //Add camera
-        Camera c = new(1000, 1000, Math.PI / 3);
+        Camera c = new(100, 100, Math.PI / 6);
         c.Transform = Matrix.View(new(0, 1.5, -5), new(0, 1, 0), new(0, 1, 0));
 
         //render to Canvas
