@@ -2,13 +2,15 @@
 
 public class Scene
 {
-    World World { get; set; }
+    public string? OutputPath { get; set; }
 
-    Camera Camera { get; set; }
+    public World World { get; set; }
 
-    public Scene(World w, Camera c)
+    public Camera Camera { get; set; }
+
+    public Scene(World w)
     {
         World = w;
-        Camera = c;
+        Camera = new(300, 150, Math.PI / 3);
     }
 }

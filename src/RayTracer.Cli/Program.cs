@@ -5,12 +5,14 @@ public class Program
 {
     static void Main()
     {
-        Scene s = new(World.Default(), new(100, 100, Math.PI / 2));
+        Scene s = new(World.Default());
         CommandParser parser = new(s);
 
         while (true)
         {
             string? input = Console.ReadLine();
+            if (input is null)
+                throw new NullReferenceException("Console input was null");
             parser.Parse(input);
         }
     }

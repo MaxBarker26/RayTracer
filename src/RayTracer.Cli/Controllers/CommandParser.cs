@@ -3,18 +3,24 @@
 public class CommandParser
 {
     private Scene _scene;
+    private Executor _exec;
 
     public CommandParser(Scene s)
     {
         _scene = s;
+        _exec = new(s);
     }
 
     public void Parse(string cmd)
     {
-        string[] tokens = Tokenize(cmd);
+        string[] args = Tokenize(cmd);
 
-        //switch (tokens[0]):
-        // case "Render"
+        switch (args[0])
+        {
+            case "render":
+                _exec.Render(args);
+                break;
+        }
     }
 
     public static string[] Tokenize(string cmd)
@@ -24,6 +30,10 @@ public class CommandParser
             delimiters,
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
         );
+        foreach (string token in tokens)
+        {
+            token.ToLowerInvariant();
+        }
         return tokens;
     }
 }
