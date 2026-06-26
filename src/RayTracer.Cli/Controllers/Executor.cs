@@ -9,6 +9,7 @@ public class Executor
         _scene = s;
     }
 
+    // This is the public facing method that takes the arguments passed via command line.
     public void Render(string[] args)
     {
         string? filePath;
@@ -49,5 +50,18 @@ public class Executor
         {
             Console.WriteLine("No file path has been set for output");
         }
+    }
+
+    public void Preview(string[] args)
+    {
+        if (args.Length == 1)
+        {
+            Preview();
+        }
+    }
+
+    private void Preview()
+    {
+        TerminalGraphics.PrintScene(_scene);
     }
 }

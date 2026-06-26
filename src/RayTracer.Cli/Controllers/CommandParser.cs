@@ -20,6 +20,9 @@ public class CommandParser
             case "render":
                 _exec.Render(args);
                 break;
+            case "preview":
+                _exec.Preview(args);
+                break;
         }
     }
 
