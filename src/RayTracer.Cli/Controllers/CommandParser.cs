@@ -5,10 +5,10 @@ public class CommandParser
     private Scene _scene;
     private Executor _exec;
 
-    public CommandParser(Scene s)
+    public CommandParser()
     {
-        _scene = s;
-        _exec = new(s);
+        _scene = new();
+        _exec = new(_scene);
     }
 
     public void Parse(string cmd)

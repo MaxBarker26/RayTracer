@@ -24,6 +24,60 @@ public class World
         return w;
     }
 
+    public static World Default2()
+    {
+        World w = new();
+
+        //create floors and walls
+        IShape floor = new Sphere();
+        floor.TransformMatrix = Matrix.Scaling(10, 0.01, 10);
+        floor.Material.Color = new(1, 0.9, 0.9);
+        floor.Material.Specular = 0;
+
+        IShape leftWall = new Sphere();
+        leftWall.TransformMatrix =
+            Matrix.Translation(0, 0, 5)
+            * Matrix.RotationY(-Math.PI / 4)
+            * Matrix.RotationX(Math.PI / 2)
+            * Matrix.Scaling(10, 0.01, 10);
+        leftWall.Material = floor.Material;
+
+        IShape rightWall = new Sphere();
+        rightWall.TransformMatrix =
+            Matrix.Translation(0, 0, 5)
+            * Matrix.RotationY(Math.PI / 4)
+            * Matrix.RotationX(Math.PI / 2)
+            * Matrix.Scaling(10, 0.01, 10);
+        rightWall.Material = floor.Material;
+
+        //cretae spheres
+        Sphere middle = new();
+        middle.TransformMatrix = Matrix.Translation(-0.5, 1, 0.5);
+        middle.Material.Color = new(0.1, 1, 0.5);
+        middle.Material.Diffuse = 0.7;
+        middle.Material.Specular = 0.3;
+
+        Sphere right = new();
+        right.TransformMatrix = Matrix.Translation(1.5, 0.5, -0.5) * Matrix.Scaling(0.5, 0.5, 0.5);
+        right.Material.Color = new(0.5, 1, 0.1);
+        right.Material.Diffuse = 0.7;
+        right.Material.Specular = 0.3;
+
+        Sphere left = new();
+        left.TransformMatrix =
+            Matrix.Translation(-1.5, 0.33, -0.75) * Matrix.Scaling(0.33, 0.33, 0.33);
+        right.Material.Color = new(1, 0.8, 0.1);
+        right.Material.Diffuse = 0.7;
+        right.Material.Specular = 0.3;
+
+        //Add objects
+        w.Objects.AddRange(new List<IShape> { floor, leftWall, rightWall, left, right, middle });
+        //Add light source
+        w.LightSource = new(new(-10, 10, -10), new(1, 1, 1));
+
+        return w;
+    }
+
     public Color ShadeHit(IntersectionComps comps)
     {
         if (this.LightSource is null)

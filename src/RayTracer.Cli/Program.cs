@@ -5,8 +5,7 @@ public class Program
 {
     static void Main()
     {
-        Scene s = new(World.Default());
-        CommandParser parser = new(s);
+        CommandParser parser = new();
 
         while (true)
         {
