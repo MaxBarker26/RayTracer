@@ -9,6 +9,7 @@ public class Program
 
         while (true)
         {
+            Console.Write("> ");
             string? input = Console.ReadLine();
             if (input is null)
                 throw new NullReferenceException("Console input was null");

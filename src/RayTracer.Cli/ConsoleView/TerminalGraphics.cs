@@ -5,7 +5,24 @@ public class TerminalGraphics
     // prints a 100 x 100 pixel rendering of the scene to the console
     public static void PrintScene(Scene _scene)
     {
-        Camera previewCam = new(100, 50, _scene.Camera.FieldOfView);
+        //maintain scene's aspect ratio while having the longest side
+        //100 pixels in order to fit in terminal
+        int width;
+        int height;
+        double aspect = (double)_scene.Camera.HSize / _scene.Camera.VSize;
+        if (aspect >= 1)
+        {
+            width = 100;
+            height = (int)(((double)_scene.Camera.VSize / _scene.Camera.HSize) * 100);
+        }
+        else
+        {
+            width = (int)(((double)_scene.Camera.HSize / _scene.Camera.VSize) * 100);
+            height = 100;
+        }
+
+        //set up camera for terminal preview
+        Camera previewCam = new(width, height, _scene.Camera.FieldOfView);
         previewCam.Transform = _scene.Camera.Transform;
         Canvas canvas = previewCam.Render(_scene.World);
 
@@ -31,7 +48,7 @@ public class TerminalGraphics
 
                 // \u001b[38;2;... sets top color (foreground)
                 // \u001b[48;2;... sets bottom color (background)
-                // '▀' is the unicode half-block so pixels can be one character wide
+                // '▀' is the unicode half-block so pixels can be one character wide and perfectly square
                 Console.Write($"\u001b[38;2;{r1};{g1};{b1}m\u001b[48;2;{r2};{g2};{b2}m▀");
             }
 
