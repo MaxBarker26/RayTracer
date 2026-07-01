@@ -35,6 +35,7 @@ public class Executor
         Render();
     }
 
+    // Renders the current scene to canvas and saves the PPM file
     private void Render()
     {
         //render to Canvas
@@ -52,6 +53,7 @@ public class Executor
         }
     }
 
+    // public facing Preview method calls the appropriate overload based on the provided arguments
     public void Preview(string[] args)
     {
         if (args.Length == 1)
