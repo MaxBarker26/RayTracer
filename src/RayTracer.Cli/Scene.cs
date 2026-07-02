@@ -8,6 +8,8 @@ public class Scene
 
     public Camera Camera { get; set; }
 
+    public List<IShape> Selected { get; } = new();
+
     public Scene()
     {
         World = World.Default2();

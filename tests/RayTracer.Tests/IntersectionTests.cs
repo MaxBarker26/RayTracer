@@ -7,7 +7,7 @@ public class IntersectionTests
     [Fact]
     public void IntersectionConstructor_ANewIntersectionWithTheAppropriateDataIsConstructed()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i = new(3.5, s);
 
         Assert.Equal(3.5, i.T);
@@ -17,7 +17,7 @@ public class IntersectionTests
     [Fact]
     public void ListOfIntersections_ListOfIntersectionsFunctionsCorrectly()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i1 = new(1, s);
         Intersection i2 = new(2, s);
 
@@ -31,7 +31,7 @@ public class IntersectionTests
     [Fact]
     public void Hit_HitFunctionWithPositiveTIntersections_ReturnsCorrectIntersection()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i1 = new(1, s);
         Intersection i2 = new(1, s);
         PriorityQueue<Intersection, double> xs = new();
@@ -44,7 +44,7 @@ public class IntersectionTests
     [Fact]
     public void Hit_HitFunctionWithSomeNegativeTIntersections_ReturnsCorrectIntersection()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i1 = new(-1, s);
         Intersection i2 = new(1, s);
         PriorityQueue<Intersection, double> xs = new();
@@ -57,7 +57,7 @@ public class IntersectionTests
     [Fact]
     public void Hit_HitFunctionWithAllNegativeTIntersections_ReturnsCorrectIntersection()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i1 = new(-1, s);
         Intersection i2 = new(-1, s);
         PriorityQueue<Intersection, double> xs = new();
@@ -70,7 +70,7 @@ public class IntersectionTests
     [Fact]
     public void Hit_HitFunctionReturnsLowestNonnegativeIntersection_ReturnsCorrectIntersection()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Intersection i1 = new(5, s);
         Intersection i2 = new(7, s);
         Intersection i3 = new(-3, s);
@@ -88,7 +88,7 @@ public class IntersectionTests
     public void IntersectionComps_CompsDataStructure_ComputesAdditionalIntersectionDataCorrectly()
     {
         Ray r = new(new(0, 0, -5), new(0, 0, 1));
-        IShape shape = new Sphere();
+        IShape shape = new Sphere("s");
         Intersection i = new(4, shape);
         IntersectionComps comps = new(i, r);
         Assert.Equal(i.T, comps.T);
@@ -102,7 +102,7 @@ public class IntersectionTests
     public void IntersectionComps_IntersectionOccursOnOutside_InsidePropertyIsFalse()
     {
         Ray r = new(new(0, 0, -5), new(0, 0, 1));
-        IShape shape = new Sphere();
+        IShape shape = new Sphere("s");
         Intersection i = new(4, shape);
 
         IntersectionComps comps = new(i, r);
@@ -113,7 +113,7 @@ public class IntersectionTests
     public void IntersectionComps_IntersectionOccursOnInside_InsidePropertyIsTrue()
     {
         Ray r = new(new(0, 0, 0), new(0, 0, 1));
-        IShape shape = new Sphere();
+        IShape shape = new Sphere("s");
         Intersection i = new(1, shape);
         IntersectionComps comps = new(i, r);
         Assert.Equal(new(0, 0, 1), comps.Point);

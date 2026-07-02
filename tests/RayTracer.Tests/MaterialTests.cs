@@ -18,14 +18,14 @@ public class MaterialTests
     [Fact]
     public void SphereHasDefaultMaterial()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Assert.Equal(new Material(), s.Material);
     }
 
     [Fact]
     public void SphereCanBeAssignedNewMaterial()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Material m = new();
         m.Ambient = 1;
         s.Material = m;

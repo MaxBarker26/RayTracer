@@ -4,6 +4,7 @@ public interface IShape
 {
     public Matrix TransformMatrix { get; set; }
     public Material Material { get; set; }
+    public string ID { get; }
 
     //The center must be the point (0, 0, 0)
     //TODO: consider making center a constant in this interface.

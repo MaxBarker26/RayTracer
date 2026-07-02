@@ -16,7 +16,7 @@ public class IOTests()
 
         Canvas c = new(pixels, pixels);
         Point origin = new(0, 50, -100);
-        Sphere s = new();
+        Sphere s = new("s");
         s.TransformMatrix =
             Matrix.RotationX(Math.PI / 4)
             * Matrix.Translation(5, 5, -15)
@@ -73,12 +73,12 @@ public class IOTests()
         World w = new();
 
         //create floors and walls
-        IShape floor = new Sphere();
+        IShape floor = new Sphere("s");
         floor.TransformMatrix = Matrix.Scaling(10, 0.01, 10);
         floor.Material.Color = new(1, 0.9, 0.9);
         floor.Material.Specular = 0;
 
-        IShape leftWall = new Sphere();
+        IShape leftWall = new Sphere("s");
         leftWall.TransformMatrix =
             Matrix.Translation(0, 0, 5)
             * Matrix.RotationY(-Math.PI / 4)
@@ -86,7 +86,7 @@ public class IOTests()
             * Matrix.Scaling(10, 0.01, 10);
         leftWall.Material = floor.Material;
 
-        IShape rightWall = new Sphere();
+        IShape rightWall = new Sphere("s");
         rightWall.TransformMatrix =
             Matrix.Translation(0, 0, 5)
             * Matrix.RotationY(Math.PI / 4)
@@ -95,19 +95,19 @@ public class IOTests()
         rightWall.Material = floor.Material;
 
         //cretae spheres
-        Sphere middle = new();
+        Sphere middle = new("s");
         middle.TransformMatrix = Matrix.Translation(-0.5, 1, 0.5);
         middle.Material.Color = new(0.1, 1, 0.5);
         middle.Material.Diffuse = 0.7;
         middle.Material.Specular = 0.3;
 
-        Sphere right = new();
+        Sphere right = new("s");
         right.TransformMatrix = Matrix.Translation(1.5, 0.5, -0.5) * Matrix.Scaling(0.5, 0.5, 0.5);
         right.Material.Color = new(0.5, 1, 0.1);
         right.Material.Diffuse = 0.7;
         right.Material.Specular = 0.3;
 
-        Sphere left = new();
+        Sphere left = new("s");
         left.TransformMatrix =
             Matrix.Translation(-1.5, 0.33, -0.75) * Matrix.Scaling(0.33, 0.33, 0.33);
         right.Material.Color = new(1, 0.8, 0.1);

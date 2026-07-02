@@ -11,12 +11,12 @@ public class World
         PointLight l = new(new(-10, 10, -10), new(1, 1, 1));
         w.LightSource = l;
 
-        Sphere s1 = new();
+        Sphere s1 = new("s");
         s1.Material.Color = new(0.8, 1.0, 0.6);
         s1.Material.Diffuse = 0.7;
         s1.Material.Specular = 0.2;
 
-        Sphere s2 = new();
+        Sphere s2 = new("s");
         s2.TransformMatrix = Matrix.Scaling(0.5, 0.5, 0.5);
 
         w.Objects.Add(s1);
@@ -29,12 +29,12 @@ public class World
         World w = new();
 
         //create floors and walls
-        IShape floor = new Sphere();
+        IShape floor = new Sphere("s");
         floor.TransformMatrix = Matrix.Scaling(10, 0.01, 10);
         floor.Material.Color = new(1, 0.9, 0.9);
         floor.Material.Specular = 0;
 
-        IShape leftWall = new Sphere();
+        IShape leftWall = new Sphere("s");
         leftWall.TransformMatrix =
             Matrix.Translation(0, 0, 5)
             * Matrix.RotationY(-Math.PI / 4)
@@ -42,7 +42,7 @@ public class World
             * Matrix.Scaling(10, 0.01, 10);
         leftWall.Material = floor.Material;
 
-        IShape rightWall = new Sphere();
+        IShape rightWall = new Sphere("s");
         rightWall.TransformMatrix =
             Matrix.Translation(0, 0, 5)
             * Matrix.RotationY(Math.PI / 4)
@@ -51,19 +51,19 @@ public class World
         rightWall.Material = floor.Material;
 
         //cretae spheres
-        Sphere middle = new();
+        Sphere middle = new("s");
         middle.TransformMatrix = Matrix.Translation(-0.5, 1, 0.5);
         middle.Material.Color = new(0.1, 1, 0.5);
         middle.Material.Diffuse = 0.7;
         middle.Material.Specular = 0.3;
 
-        Sphere right = new();
+        Sphere right = new("s");
         right.TransformMatrix = Matrix.Translation(1.5, 0.5, -0.5) * Matrix.Scaling(0.5, 0.5, 0.5);
         right.Material.Color = new(0.5, 1, 0.1);
         right.Material.Diffuse = 0.7;
         right.Material.Specular = 0.3;
 
-        Sphere left = new();
+        Sphere left = new("s");
         left.TransformMatrix =
             Matrix.Translation(-1.5, 0.33, -0.75) * Matrix.Scaling(0.33, 0.33, 0.33);
         right.Material.Color = new(1, 0.8, 0.1);

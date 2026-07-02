@@ -26,14 +26,17 @@ public class Sphere : IShape
     /// </summary>
     public Material Material { get; set; } = new();
 
+    public string ID { get; }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Sphere"/> class with a default radius of 1.0
     /// and a center at the origin (0, 0, 0).
     /// </summary>
-    public Sphere()
+    public Sphere(string id)
     {
         Radius = 1.0;
         Center = new Point(0, 0, 0);
+        ID = id;
     }
 
     /// <summary>

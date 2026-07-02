@@ -66,4 +66,24 @@ public class Executor
     {
         TerminalGraphics.PrintScene(_scene);
     }
+
+    public void Select(string[] args)
+    {
+        if (args.Length == 1)
+        {
+            Console.WriteLine("No objects specified. To see available objects, type 'objects'.");
+        }
+        else
+        {
+            for (int i = 1; i < args.Length; i++)
+            {
+                Select(args[i]);
+            }
+        }
+    }
+
+    private void Select(string obj)
+    {
+        //if
+    }
 }

@@ -26,7 +26,7 @@ public class RayTests
     [Fact]
     public void Intersects_RayIntersectingSphere_RayPassesThroughSphereAtExpectedPoints()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Ray r = new(new Point(0, 0, -5), new Vector(0, 0, 1));
         var xs = r.Intersects(s);
         Assert.Equal(2, xs.Count);
@@ -37,7 +37,7 @@ public class RayTests
     [Fact]
     public void Intersects_RayTangentToASphere_RayIntersectsAtOnePointOnTheSphere()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Ray r = new(new Point(0, 1, -5), new Vector(0, 0, 1));
         var xs = r.Intersects(s);
         Assert.Equal(5.0, xs.Dequeue().T);
@@ -47,7 +47,7 @@ public class RayTests
     [Fact]
     public void Intersects_RayMissesSphere_RayIntersectsAtNoPointOnTheSphere()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Ray r = new(new Point(0, 2, -5), new Vector(0, 0, 1));
         var xs = r.Intersects(s);
         Assert.Equal(xs.Count, 0);
@@ -56,7 +56,7 @@ public class RayTests
     [Fact]
     public void Intersects_RayOriginatesInsideSphere_RayPassesThroughSphereAtExpectedPoints()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Ray r = new(new Point(0, 0, 0), new Vector(0, 0, 1));
         var xs = r.Intersects(s);
         Assert.Equal(xs.Count, 2);
@@ -67,7 +67,7 @@ public class RayTests
     [Fact]
     public void Intersects_RayOriginatesBehindSphere_RayPassesThroughSphereAtExpectedPoints()
     {
-        Sphere s = new();
+        Sphere s = new("s");
         Ray r = new(new Point(0, 0, 5), new Vector(0, 0, 1));
         var xs = r.Intersects(s);
         Assert.Equal(xs.Count, 2);
