@@ -93,4 +93,32 @@ public class Executor
             Console.WriteLine($"No object with the ID \"{id}\" was found.");
         }
     }
+
+    public void Deselect(string[] args)
+    {
+        if (args.Length == 1)
+        {
+            Scene.Selected.Clear();
+            Console.WriteLine("Deselected all.");
+        }
+        else
+        {
+            for (int i = 1; i < args.Length; i++)
+            {
+                Deselect(args[i]);
+            }
+        }
+    }
+
+    private void Deselect(string id)
+    {
+        if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
+        {
+            Scene.Selected.Remove(obj);
+        }
+        else
+        {
+            Console.WriteLine($"No object with the ID \"{id}\" was found.");
+        }
+    }
 }
