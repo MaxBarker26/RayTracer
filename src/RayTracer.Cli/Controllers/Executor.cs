@@ -2,11 +2,11 @@
 
 public class Executor
 {
-    private Scene _scene;
+    private Scene Scene;
 
     public Executor(Scene s)
     {
-        _scene = s;
+        Scene = s;
     }
 
     // This is the public facing method that takes the arguments passed via command line.
@@ -30,7 +30,7 @@ public class Executor
     //using the current width height and zoom of the scene
     private void Render(string filePath)
     {
-        _scene.OutputPath = filePath;
+        Scene.OutputPath = filePath;
 
         Render();
     }
@@ -39,13 +39,13 @@ public class Executor
     private void Render()
     {
         //render to Canvas
-        Canvas canvas = _scene.Camera.Render(_scene.World);
+        Canvas canvas = Scene.Camera.Render(Scene.World);
 
         //output canvas
         string ppm = canvas.SavePPM();
-        if (_scene.OutputPath is not null)
+        if (Scene.OutputPath is not null)
         {
-            File.AppendAllText(_scene.OutputPath, ppm);
+            File.AppendAllText(Scene.OutputPath, ppm);
         }
         else
         {
@@ -64,7 +64,7 @@ public class Executor
 
     private void Preview()
     {
-        TerminalGraphics.PrintScene(_scene);
+        TerminalGraphics.PrintScene(Scene);
     }
 
     public void Select(string[] args)
@@ -82,8 +82,15 @@ public class Executor
         }
     }
 
-    private void Select(string obj)
+    private void Select(string id)
     {
-        //if
+        if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
+        {
+            Scene.Selected.Add(obj);
+        }
+        else
+        {
+            Console.WriteLine($"No object with the ID \"{id}\" was found.");
+        }
     }
 }

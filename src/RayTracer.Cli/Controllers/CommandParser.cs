@@ -23,6 +23,9 @@ public class CommandParser
             case "preview":
                 _exec.Preview(args);
                 break;
+            case "select":
+                _exec.Select(args);
+                break;
         }
     }
 
