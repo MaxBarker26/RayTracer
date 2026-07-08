@@ -28,6 +28,18 @@ public class CommandParser
             case "deselect":
                 Exec.Deselect(args);
                 break;
+            case "move":
+                try
+                {
+                    Exec.Move(args);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine(
+                        "Could not parse distance, it should go at the end as the last argument of the move command"
+                    );
+                }
+                break;
         }
     }
 

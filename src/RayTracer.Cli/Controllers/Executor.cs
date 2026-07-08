@@ -77,7 +77,14 @@ public class Executor
         {
             for (int i = 1; i < args.Length; i++)
             {
-                Select(args[i]);
+                try
+                {
+                    Select(args[i]);
+                }
+                catch
+                {
+                    Console.WriteLine($"No object with the ID \"{args[i]}\" was found.");
+                }
             }
         }
     }
@@ -90,7 +97,7 @@ public class Executor
         }
         else
         {
-            Console.WriteLine($"No object with the ID \"{id}\" was found.");
+            throw new ArgumentException($"ID {id} is not valid");
         }
     }
 
@@ -99,16 +106,29 @@ public class Executor
         // running deselect with no arguments simply deselects all currently selected objects
         if (args.Length == 1)
         {
-            Scene.Selected.Clear();
+            Deselect();
             Console.WriteLine("Deselected all.");
         }
         else
         {
             for (int i = 1; i < args.Length; i++)
             {
-                Deselect(args[i]);
+                try
+                {
+                    Deselect(args[i]);
+                }
+                catch
+                {
+                    Console.WriteLine($"No object with the ID \"{args[i]}\" was found.");
+                }
             }
         }
+    }
+
+    //deselect overload with no arguments simply clears any selected objects
+    private void Deselect()
+    {
+        Scene.Selected.Clear();
     }
 
     private void Deselect(string id)
@@ -119,7 +139,53 @@ public class Executor
         }
         else
         {
-            Console.WriteLine($"No object with the ID \"{id}\" was found.");
+            throw new ArgumentException($"ID {id} was not found");
+        }
+    }
+
+    public void Move(string[] args)
+    {
+        // if there are only three arguments passed in, one is assumed to be the "move" command itself,
+        // the next to be the direction relative to the camera frame, and the last to be the distance. Currently selected objects will be moved.
+        if (args.Length == 3)
+        {
+            string direction = args[1];
+            double distance = double.Parse(args[2]);
+            switch (direction)
+            {
+                case "left":
+                    MoveLeft(distance);
+                    break;
+                case "right":
+                    MoveRight(distance);
+                    break;
+                default:
+                    Console.WriteLine(
+                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back"
+                    );
+                    break;
+            }
+        }
+        else if (args.Length > 3) { } //If there are more than three arguments it is assumed that the arguments between the direction and distance are the ids of objects to be moved
+    }
+
+    private void MoveLeft(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, distance, 0, 0)
+                * obj.TransformMatrix;
+        }
+    }
+
+    private void MoveRight(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, -distance, 0, 0)
+                * obj.TransformMatrix;
         }
     }
 }

@@ -18,4 +18,19 @@ public class CommandParserTests()
         Assert.Equal(expected[2], tokenized[2]);
         Assert.Equal(expected[3], tokenized[3]);
     }
+
+    [Fact]
+    public void Tokenize_TokensAreAllLowerCase_TokensAreExpected()
+    {
+        string[] expected = { "command", "arg1", "--flag", "arg2" };
+
+        string command = "CommanD      aRg1  \t--flag\n arg2";
+
+        string[] tokenized = CommandParser.Tokenize(command);
+
+        Assert.Equal(expected[0], tokenized[0]);
+        Assert.Equal(expected[1], tokenized[1]);
+        Assert.Equal(expected[2], tokenized[2]);
+        Assert.Equal(expected[3], tokenized[3]);
+    }
 }
