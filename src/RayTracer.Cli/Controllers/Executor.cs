@@ -96,6 +96,7 @@ public class Executor
 
     public void Deselect(string[] args)
     {
+        // running deselect with no arguments simply deselects all currently selected objects
         if (args.Length == 1)
         {
             Scene.Selected.Clear();

@@ -601,4 +601,26 @@ public class MatrixTests
         expected[3, 3] = 1.00000;
         Assert.Equal(expected, t);
     }
+
+    [Fact]
+    public void CameraRelativeTranslation_MoveObjectLeftRelativeToCamera_ObjectIsExpected()
+    {
+        Camera c = new(160, 120, Math.PI / 2);
+        c.Transform = Matrix.View(new(0, 0, 0), new(1, 0, 0), new(0, 1, 0));
+        Sphere s = new("s");
+        s.TransformMatrix = Matrix.CameraRelativeTranslation(c, 5, 0, 0) * s.TransformMatrix;
+
+        Assert.Equal(Matrix.Translation(0, 0, 5), s.TransformMatrix);
+    }
+
+    [Fact]
+    public void CameraRelativeTranslation_MoveObjectRightRelativeToCamera_ObjectIsExpected()
+    {
+        Camera c = new(160, 120, Math.PI / 2);
+        c.Transform = Matrix.View(new(0, 0, 0), new(1, 0, 0), new(0, 1, 0));
+        Sphere s = new("s");
+        s.TransformMatrix = Matrix.CameraRelativeTranslation(c, -5, 0, 0) * s.TransformMatrix;
+
+        Assert.Equal(Matrix.Translation(0, 0, -5), s.TransformMatrix);
+    }
 }

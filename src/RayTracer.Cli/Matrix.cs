@@ -371,6 +371,19 @@ public class Matrix
         return orientation * Translation(-(from.X), -(from).Y, -(from).Z);
     }
 
+    //Creates a translation matrix to orient an object in world space based on its position
+    //relative to the camera.
+    //IMPORTANT: Due to the x axis of the cameras view transformation being a left vector, a positive x value
+    // will move an object LEFT when it is applied to an objects transformation matrix.
+    // +y moves an object up, -y down, +z will move an object further from the camera, -z closer.
+    public static Matrix CameraRelativeTranslation(Camera cam, double x, double y, double z)
+    {
+        Vector localVector = new(x, y, z);
+        Vector worldVector = (cam.Transform.Invert() * localVector).ToVector();
+        Matrix relativeTransform = Matrix.Translation(worldVector.X, worldVector.Y, worldVector.Z);
+        return relativeTransform;
+    }
+
     /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
     /// </summary>

@@ -2,13 +2,12 @@
 
 public class CommandParser
 {
-    private Scene _scene;
-    private Executor _exec;
+    private Executor Exec;
 
     public CommandParser()
     {
-        _scene = new();
-        _exec = new(_scene);
+        Scene scene = new();
+        Exec = new(scene);
     }
 
     public void Parse(string cmd)
@@ -18,13 +17,16 @@ public class CommandParser
         switch (args[0])
         {
             case "render":
-                _exec.Render(args);
+                Exec.Render(args);
                 break;
             case "preview":
-                _exec.Preview(args);
+                Exec.Preview(args);
                 break;
             case "select":
-                _exec.Select(args);
+                Exec.Select(args);
+                break;
+            case "deselect":
+                Exec.Deselect(args);
                 break;
         }
     }
