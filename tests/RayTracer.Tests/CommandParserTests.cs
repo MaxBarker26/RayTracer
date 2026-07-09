@@ -11,7 +11,7 @@ public class CommandParserTests()
 
         string command = "command      arg1  \t--flag\n arg2";
 
-        string[] tokenized = CommandParser.Tokenize(command);
+        string[] tokenized = CommandParser.Tokenize(command, out string[] originalCaseArgs);
 
         Assert.Equal(expected[0], tokenized[0]);
         Assert.Equal(expected[1], tokenized[1]);
@@ -26,7 +26,7 @@ public class CommandParserTests()
 
         string command = "CommanD      aRg1  \t--flag\n arg2";
 
-        string[] tokenized = CommandParser.Tokenize(command);
+        string[] tokenized = CommandParser.Tokenize(command, out string[] originalCaseArgs);
 
         Assert.Equal(expected[0], tokenized[0]);
         Assert.Equal(expected[1], tokenized[1]);
