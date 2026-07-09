@@ -104,6 +104,7 @@ public class Executor
         }
     }
 
+    //returns the IDs of all of the selected objects in the world
     public void Selected(string[] args)
     {
         Console.WriteLine("IDs of currently selected objects:");
@@ -146,9 +147,9 @@ public class Executor
                 {
                     Deselect(args[i]);
                 }
-                catch
+                catch (ArgumentException)
                 {
-                    Console.WriteLine($"No object with the ID \"{args[i]}\" was found.");
+                    Console.WriteLine($"No selected object with the ID \"{args[i]}\" was found.");
                 }
             }
         }
@@ -164,6 +165,8 @@ public class Executor
     {
         if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
         {
+            if (!Scene.Selected.Contains(obj))
+                throw new ArgumentException($"ID {id} was not found");
             Scene.Selected.Remove(obj);
         }
         else

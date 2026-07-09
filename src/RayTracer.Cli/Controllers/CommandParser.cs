@@ -46,6 +46,9 @@ public class CommandParser
                     );
                 }
                 break;
+            default:
+                Console.WriteLine($"Unable to parse command {args[0]}");
+                break;
         }
     }
 
@@ -56,6 +59,7 @@ public class CommandParser
             delimiters,
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
         );
+        //string immutability, lowercased tokens must be saved in a new array
         string[] lowerTokens = new string[tokens.Length];
         int i = 0;
         foreach (string token in tokens)
