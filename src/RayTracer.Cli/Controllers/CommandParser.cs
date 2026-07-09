@@ -56,10 +56,13 @@ public class CommandParser
             delimiters,
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
         );
+        string[] lowerTokens = new string[tokens.Length];
+        int i = 0;
         foreach (string token in tokens)
         {
-            token.ToLowerInvariant();
+            lowerTokens[i] = token.ToLowerInvariant();
+            i++;
         }
-        return tokens;
+        return lowerTokens;
     }
 }
