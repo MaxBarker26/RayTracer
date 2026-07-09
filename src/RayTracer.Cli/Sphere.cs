@@ -34,6 +34,8 @@ public class Sphere : IShape
     /// </summary>
     public Sphere(string id)
     {
+        if (id.Any(char.IsWhiteSpace))
+            throw new ArgumentException("Object IDs may not contain white space");
         Radius = 1.0;
         Center = new Point(0, 0, 0);
         //IDs are not case sensitive

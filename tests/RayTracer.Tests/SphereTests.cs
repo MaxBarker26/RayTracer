@@ -100,4 +100,12 @@ public class SphereTests
         Vector n = s.NormalAt(new(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2));
         Assert.Equal(new Vector(0, 0.97014, -0.24254), n);
     }
+
+    [Fact]
+    public void Constructor_IdContainsWhiteSpace_ExceptionIsThrown()
+    {
+        Assert.Throws<ArgumentException>(() => new Sphere("white space"));
+        Assert.Throws<ArgumentException>(() => new Sphere("white\tspace"));
+        Assert.Throws<ArgumentException>(() => new Sphere("white\nspace"));
+    }
 }
