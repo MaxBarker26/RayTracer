@@ -8,7 +8,7 @@ public class Scene
 
     public Camera Camera { get; set; }
 
-    public List<IShape> Selected { get; } = new();
+    public List<IShape> Selected { get; set; } = new();
 
     public Scene()
     {

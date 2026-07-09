@@ -159,14 +159,52 @@ public class Executor
                 case "right":
                     MoveRight(distance);
                     break;
+                case "up":
+                    MoveUp(distance);
+                    break;
+                case "down":
+                    MoveDown(distance);
+                    break;
+                case "forward":
+                    MoveForward(distance);
+                    break;
+                case "back":
+                    MoveBack(distance);
+                    break;
                 default:
                     Console.WriteLine(
-                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back"
+                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back and follow the \"move\" command."
                     );
                     break;
             }
         }
-        else if (args.Length > 3) { } //If there are more than three arguments it is assumed that the arguments between the direction and distance are the ids of objects to be moved
+        else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments between the direction and distance are the ids of objects to be moved
+        {
+            string direction = args[1];
+            string distance = args[args.Length - 1];
+            string[] directionAndDistance = { "move", direction, distance };
+            //save a deep copy of each of the currectly selected objects
+            List<IShape> currentlySelected = new();
+            foreach (var obj in Scene.Selected)
+            {
+                currentlySelected.Add(obj);
+            }
+            // deselect current and select the new objects specified in the arguments
+            Deselect();
+            for (int i = 2; i < args.Length; i++)
+            {
+                Select(args[i]);
+            }
+            //call move with the direction and distance as arguments
+            Move(directionAndDistance);
+            Scene.Selected = currentlySelected;
+        }
+        else
+        {
+            Console.WriteLine(
+                "The move command must be followed by a direction (up, down, left, right, forward, back) AND THEN a distance (a double value)"
+            );
+        }
     }
 
     private void MoveLeft(double distance)
@@ -185,6 +223,46 @@ public class Executor
         {
             obj.TransformMatrix =
                 Matrix.CameraRelativeTranslation(Scene.Camera, -distance, 0, 0)
+                * obj.TransformMatrix;
+        }
+    }
+
+    private void MoveUp(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, 0, distance, 0)
+                * obj.TransformMatrix;
+        }
+    }
+
+    private void MoveDown(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, 0, -distance, 0)
+                * obj.TransformMatrix;
+        }
+    }
+
+    private void MoveForward(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, 0, 0, distance)
+                * obj.TransformMatrix;
+        }
+    }
+
+    private void MoveBack(double distance)
+    {
+        foreach (IShape obj in Scene.Selected)
+        {
+            obj.TransformMatrix =
+                Matrix.CameraRelativeTranslation(Scene.Camera, 0, 0, -distance)
                 * obj.TransformMatrix;
         }
     }
