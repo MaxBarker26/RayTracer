@@ -12,12 +12,12 @@ public class CommandParser
 
     public void Parse(string cmd)
     {
-        string[] args = Tokenize(cmd);
+        string[] args = Tokenize(cmd, out string[] originalCaseArgs);
 
         switch (args[0])
         {
             case "render":
-                Exec.Render(args);
+                Exec.Render(originalCaseArgs);
                 break;
             case "preview":
                 Exec.Preview(args);
@@ -47,18 +47,19 @@ public class CommandParser
                 }
                 break;
             default:
-                Console.WriteLine($"Unable to parse command {args[0]}");
+                Console.WriteLine($"Unable to parse command \"{args[0]}\"");
                 break;
         }
     }
 
-    public static string[] Tokenize(string cmd)
+    public static string[] Tokenize(string cmd, out string[] originalCaseArgs)
     {
         char[] delimiters = { ' ', '\t', '\n' };
         string[] tokens = cmd.Split(
             delimiters,
             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
         );
+        originalCaseArgs = tokens;
         //string immutability, lowercased tokens must be saved in a new array
         string[] lowerTokens = new string[tokens.Length];
         int i = 0;

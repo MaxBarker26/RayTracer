@@ -225,7 +225,14 @@ public class Executor
             Deselect();
             for (int i = 1; i < args.Length - 2; i++)
             {
-                Select(args[i]);
+                try
+                {
+                    Select(args[i]);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"The ID {args[i]} does not exist");
+                }
             }
             //call move with the direction and distance as arguments
             Move(directionAndDistance);

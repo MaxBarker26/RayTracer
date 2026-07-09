@@ -36,7 +36,8 @@ public class Sphere : IShape
     {
         Radius = 1.0;
         Center = new Point(0, 0, 0);
-        ID = id;
+        //IDs are not case sensitive
+        ID = id.ToLowerInvariant();
     }
 
     /// <summary>
