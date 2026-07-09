@@ -25,6 +25,12 @@ public class CommandParser
             case "select":
                 Exec.Select(args);
                 break;
+            case "selected":
+                Exec.Selected(args);
+                break;
+            case "objects":
+                Exec.Objects(args);
+                break;
             case "deselect":
                 Exec.Deselect(args);
                 break;

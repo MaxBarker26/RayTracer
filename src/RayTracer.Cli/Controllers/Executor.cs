@@ -89,6 +89,35 @@ public class Executor
         }
     }
 
+    //returns the IDs of all of the objects in the world
+    public void Objects(string[] args)
+    {
+        Console.WriteLine("IDs of all objects:");
+        foreach (var obj in Scene.World.Objects)
+        {
+            Console.WriteLine(obj.ID);
+        }
+
+        if (args.Length > 1)
+        {
+            Console.WriteLine("Note: the \"objects\" command does not take any arguments");
+        }
+    }
+
+    public void Selected(string[] args)
+    {
+        Console.WriteLine("IDs of currently selected objects:");
+        foreach (var obj in Scene.Selected)
+        {
+            Console.WriteLine(obj.ID);
+        }
+
+        if (args.Length > 1)
+        {
+            Console.WriteLine("Note: the \"selected\" command does not take any arguments");
+        }
+    }
+
     private void Select(string id)
     {
         if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
