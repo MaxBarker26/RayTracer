@@ -178,9 +178,9 @@ public class Executor
                     break;
             }
         }
-        else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments between the direction and distance are the ids of objects to be moved
+        else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments preceding direction and distance are the ids of objects to be moved
         {
-            string direction = args[1];
+            string direction = args[args.Length - 2];
             string distance = args[args.Length - 1];
             string[] directionAndDistance = { "move", direction, distance };
             //save a deep copy of the currectly selected objects
@@ -191,7 +191,7 @@ public class Executor
             }
             // deselect current and select the new objects specified in the arguments
             Deselect();
-            for (int i = 2; i < args.Length - 1; i++)
+            for (int i = 1; i < args.Length - 2; i++)
             {
                 Select(args[i]);
             }
