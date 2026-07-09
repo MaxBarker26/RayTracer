@@ -183,7 +183,7 @@ public class Executor
             string direction = args[1];
             string distance = args[args.Length - 1];
             string[] directionAndDistance = { "move", direction, distance };
-            //save a deep copy of each of the currectly selected objects
+            //save a deep copy of the currectly selected objects
             List<IShape> currentlySelected = new();
             foreach (var obj in Scene.Selected)
             {
@@ -191,7 +191,7 @@ public class Executor
             }
             // deselect current and select the new objects specified in the arguments
             Deselect();
-            for (int i = 2; i < args.Length; i++)
+            for (int i = 2; i < args.Length - 1; i++)
             {
                 Select(args[i]);
             }
