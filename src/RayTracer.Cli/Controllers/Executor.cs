@@ -2,11 +2,13 @@
 
 public class Executor
 {
-    private Scene Scene;
+    private Scene _scene;
+    private bool _visualMode;
 
     public Executor(Scene s)
     {
-        Scene = s;
+        _scene = s;
+        _visualMode = false;
     }
 
     // This is the public facing method that takes the arguments passed via command line.
@@ -30,7 +32,7 @@ public class Executor
     //using the current width height and zoom of the scene
     private void Render(string filePath)
     {
-        Scene.OutputPath = filePath;
+        _scene.OutputPath = filePath;
 
         Render();
     }
@@ -39,13 +41,13 @@ public class Executor
     private void Render()
     {
         //render to Canvas
-        Canvas canvas = Scene.Camera.Render(Scene.World);
+        Canvas canvas = _scene.Camera.Render(_scene.World);
 
         //output canvas
         string ppm = canvas.SavePPM();
-        if (Scene.OutputPath is not null)
+        if (_scene.OutputPath is not null)
         {
-            File.AppendAllText(Scene.OutputPath, ppm);
+            File.AppendAllText(_scene.OutputPath, ppm);
         }
         else
         {
@@ -64,7 +66,7 @@ public class Executor
 
     private void Preview()
     {
-        TerminalGraphics.PrintScene(Scene);
+        TerminalGraphics.PrintScene(_scene);
     }
 
     public void Select(string[] args)
@@ -93,7 +95,7 @@ public class Executor
     public void Objects(string[] args)
     {
         Console.WriteLine("IDs of all objects:");
-        foreach (var obj in Scene.World.Objects)
+        foreach (var obj in _scene.World.Objects)
         {
             Console.WriteLine(obj.ID);
         }
@@ -108,7 +110,7 @@ public class Executor
     public void Selected(string[] args)
     {
         Console.WriteLine("IDs of currently selected objects:");
-        foreach (var obj in Scene.Selected)
+        foreach (var obj in _scene.Selected)
         {
             Console.WriteLine(obj.ID);
         }
@@ -119,11 +121,20 @@ public class Executor
         }
     }
 
+    public void ToggleVisualMode()
+    {
+        _visualMode = !_visualMode;
+        if (_visualMode)
+            Console.WriteLine("Visual Mode On.");
+        else
+            Console.WriteLine("Visual Mode Off");
+    }
+
     private void Select(string id)
     {
-        if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
+        if (_scene.World.IdToObject.TryGetValue(id, out IShape? obj))
         {
-            Scene.Selected.Add(obj);
+            _scene.Selected.Add(obj);
         }
         else
         {
@@ -158,16 +169,16 @@ public class Executor
     //deselect overload with no arguments simply clears any selected objects
     private void Deselect()
     {
-        Scene.Selected.Clear();
+        _scene.Selected.Clear();
     }
 
     private void Deselect(string id)
     {
-        if (Scene.World.IdToObject.TryGetValue(id, out IShape? obj))
+        if (_scene.World.IdToObject.TryGetValue(id, out IShape? obj))
         {
-            if (!Scene.Selected.Contains(obj))
+            if (!_scene.Selected.Contains(obj))
                 throw new ArgumentException($"ID {id} was not found");
-            Scene.Selected.Remove(obj);
+            _scene.Selected.Remove(obj);
         }
         else
         {
@@ -217,7 +228,7 @@ public class Executor
             string[] directionAndDistance = { "move", direction, distance };
             //save a deep copy of the currectly selected objects
             List<IShape> currentlySelected = new();
-            foreach (var obj in Scene.Selected)
+            foreach (var obj in _scene.Selected)
             {
                 currentlySelected.Add(obj);
             }
@@ -236,72 +247,79 @@ public class Executor
             }
             //call move with the direction and distance as arguments
             Move(directionAndDistance);
-            Scene.Selected = currentlySelected;
+            _scene.Selected = currentlySelected;
+            //prevents preview from being run if visual mode is activated.
+            return;
         }
         else
         {
             Console.WriteLine(
                 "The move command must be followed by a direction (up, down, left, right, forward, back) AND THEN a distance (a double value)"
             );
+            //prevents preview from being run if visual mode is activated.
+            return;
         }
+        //automatically call preview if visualMode is activated
+        if (_visualMode)
+            Preview();
     }
 
     private void MoveLeft(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, distance, 0, 0)
+                Matrix.CameraRelativeTranslation(_scene.Camera, distance, 0, 0)
                 * obj.TransformMatrix;
         }
     }
 
     private void MoveRight(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, -distance, 0, 0)
+                Matrix.CameraRelativeTranslation(_scene.Camera, -distance, 0, 0)
                 * obj.TransformMatrix;
         }
     }
 
     private void MoveUp(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, 0, distance, 0)
+                Matrix.CameraRelativeTranslation(_scene.Camera, 0, distance, 0)
                 * obj.TransformMatrix;
         }
     }
 
     private void MoveDown(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, 0, -distance, 0)
+                Matrix.CameraRelativeTranslation(_scene.Camera, 0, -distance, 0)
                 * obj.TransformMatrix;
         }
     }
 
     private void MoveForward(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, 0, 0, distance)
+                Matrix.CameraRelativeTranslation(_scene.Camera, 0, 0, distance)
                 * obj.TransformMatrix;
         }
     }
 
     private void MoveBack(double distance)
     {
-        foreach (IShape obj in Scene.Selected)
+        foreach (IShape obj in _scene.Selected)
         {
             obj.TransformMatrix =
-                Matrix.CameraRelativeTranslation(Scene.Camera, 0, 0, -distance)
+                Matrix.CameraRelativeTranslation(_scene.Camera, 0, 0, -distance)
                 * obj.TransformMatrix;
         }
     }

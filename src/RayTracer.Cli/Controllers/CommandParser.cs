@@ -22,6 +22,9 @@ public class CommandParser
             case "preview":
                 Exec.Preview(args);
                 break;
+            case "visual":
+                Exec.ToggleVisualMode();
+                break;
             case "select":
                 Exec.Select(args);
                 break;
