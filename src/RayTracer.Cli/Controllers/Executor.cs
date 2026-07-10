@@ -55,6 +55,72 @@ public class Executor
         }
     }
 
+    public void SetViewX(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            Console.WriteLine("Must give an integer between 1 and 10,000");
+            return;
+        }
+
+        if (args.Length > 2)
+        {
+            Console.WriteLine(
+                "viewx command takes only one argument, an integer between 1 and 10,000"
+            );
+            return;
+        }
+
+        if (int.TryParse(args[1], out int x))
+        {
+            if (x < 1 || x > 10000)
+            {
+                Console.WriteLine("Must give an integer between 1 and 10,000");
+                return;
+            }
+            Matrix cameraView = _scene.Camera.Transform;
+            _scene.Camera = new(x, _scene.Camera.VSize, _scene.Camera.FieldOfView);
+            _scene.Camera.Transform = cameraView;
+        }
+        else
+        {
+            Console.WriteLine("Must provide a valid integer as argument");
+        }
+    }
+
+    public void SetViewY(string[] args)
+    {
+        if (args.Length < 2)
+        {
+            Console.WriteLine("Must give an integer between 1 and 10,000");
+            return;
+        }
+
+        if (args.Length > 2)
+        {
+            Console.WriteLine(
+                "viewy command takes only one argument, an integer between 1 and 10,000"
+            );
+            return;
+        }
+
+        if (int.TryParse(args[1], out int y))
+        {
+            if (y < 1 || y > 10000)
+            {
+                Console.WriteLine("Must give an integer between 1 and 10,000");
+                return;
+            }
+            Matrix cameraView = _scene.Camera.Transform;
+            _scene.Camera = new(_scene.Camera.HSize, y, _scene.Camera.FieldOfView);
+            _scene.Camera.Transform = cameraView;
+        }
+        else
+        {
+            Console.WriteLine("Must provide a valid integer as argument");
+        }
+    }
+
     // public facing Preview method calls the appropriate overload based on the provided arguments
     public void Preview(string[] args)
     {
@@ -125,9 +191,9 @@ public class Executor
     {
         _visualMode = !_visualMode;
         if (_visualMode)
-            Console.WriteLine("Visual Mode On.");
+            Console.WriteLine("Visual Mode: ON");
         else
-            Console.WriteLine("Visual Mode Off");
+            Console.WriteLine("Visual Mode: OFF");
     }
 
     private void Select(string id)

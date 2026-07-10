@@ -49,6 +49,12 @@ public class CommandParser
                     );
                 }
                 break;
+            case "viewx":
+                Exec.SetViewX(args);
+                break;
+            case "viewy":
+                Exec.SetViewY(args);
+                break;
             default:
                 Console.WriteLine($"Unable to parse command \"{args[0]}\"");
                 break;
