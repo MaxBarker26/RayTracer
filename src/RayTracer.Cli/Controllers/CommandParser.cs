@@ -55,6 +55,16 @@ public class CommandParser
             case "viewy":
                 Exec.SetViewY(args);
                 break;
+            // camera movements
+            case "dolly":
+                Exec.CameraDolly(args);
+                break;
+            case "tilt":
+                break;
+            case "pan":
+                break;
+            case "zoom":
+                break;
             default:
                 Console.WriteLine($"Unable to parse command \"{args[0]}\"");
                 break;

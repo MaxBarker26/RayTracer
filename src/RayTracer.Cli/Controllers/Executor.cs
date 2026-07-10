@@ -389,4 +389,80 @@ public class Executor
                 * obj.TransformMatrix;
         }
     }
+
+    public void CameraDolly(string[] args)
+    {
+        if (args.Length == 3)
+        {
+            string direction = args[1];
+            double distance = double.Parse(args[2]);
+            switch (direction)
+            {
+                case "left":
+                    DollyLeft(distance);
+                    break;
+                case "right":
+                    DollyRight(distance);
+                    break;
+                case "up":
+                    DollyUp(distance);
+                    break;
+                case "down":
+                    DollyDown(distance);
+                    break;
+                case "forward":
+                    DollyForward(distance);
+                    break;
+                case "back":
+                    DollyBack(distance);
+                    break;
+                default:
+                    Console.WriteLine(
+                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back and follow the \"move\" command."
+                    );
+                    break;
+            }
+        }
+        else
+        {
+            Console.WriteLine(
+                "The \"dolly\" command must be followed by a direction (up, down, left, right, forward, back) AND THEN a distance (a double value)"
+            );
+            //prevents preview from being run if visual mode is activated.
+            return;
+        }
+        //automatically call preview if visualMode is activated
+        if (_visualMode)
+            Preview();
+    }
+
+    private void DollyForward(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(0, 0, distance) * _scene.Camera.Transform;
+    }
+
+    private void DollyBack(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(0, 0, -distance) * _scene.Camera.Transform;
+    }
+
+    private void DollyLeft(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(-distance, 0, 0) * _scene.Camera.Transform;
+    }
+
+    private void DollyRight(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(distance, 0, 0) * _scene.Camera.Transform;
+    }
+
+    private void DollyUp(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(0, -distance, 0) * _scene.Camera.Transform;
+    }
+
+    private void DollyDown(double distance)
+    {
+        _scene.Camera.Transform = Matrix.Translation(0, distance, 0) * _scene.Camera.Transform;
+    }
 }
