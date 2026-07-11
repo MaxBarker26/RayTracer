@@ -384,6 +384,45 @@ public class Matrix
         return relativeTransform;
     }
 
+    public static Matrix CameraRelativeRotationX(Camera cam, double angle)
+    {
+        Matrix viewRotation = ExtractCameraRotation(cam);
+        Matrix cameraRotation = viewRotation.Transpose();
+        return cameraRotation * RotationX(angle) * viewRotation;
+    }
+
+    public static Matrix CameraRelativeRotationY(Camera cam, double angle)
+    {
+        Matrix viewRotation = ExtractCameraRotation(cam);
+        Matrix cameraRotation = viewRotation.Transpose();
+        return cameraRotation * RotationY(angle) * viewRotation;
+    }
+
+    public static Matrix CameraRelativeRotationZ(Camera cam, double angle)
+    {
+        Matrix viewRotation = ExtractCameraRotation(cam);
+        Matrix cameraRotation = viewRotation.Transpose();
+        return cameraRotation * RotationZ(angle) * viewRotation;
+    }
+
+    //Helper method returns the camera's transformation matrix with the translation collumn zeroed out
+    private static Matrix ExtractCameraRotation(Camera cam)
+    {
+        Matrix view = new(4, 4);
+        for (int i = 0; i < cam.Transform.RowCount; i++)
+        {
+            for (int j = 0; j < cam.Transform.ColCount; j++)
+            {
+                view[i, j] = cam.Transform[i, j];
+            }
+        }
+        view[0, 3] = 0;
+        view[1, 3] = 0;
+        view[2, 3] = 0;
+
+        return view;
+    }
+
     /// <summary>
     /// Creates a submatrix by removing the specified row and column from the current matrix.
     /// </summary>

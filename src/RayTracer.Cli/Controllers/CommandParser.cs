@@ -37,6 +37,7 @@ public class CommandParser
             case "deselect":
                 Exec.Deselect(args);
                 break;
+            //object transformations
             case "move":
                 try
                 {
@@ -45,9 +46,23 @@ public class CommandParser
                 catch (FormatException)
                 {
                     Console.WriteLine(
-                        "Could not parse distance, it should go at the end as the last argument of the move command"
+                        "Could not parse distance, it should go at the end as the last argument of the move command and be a valid double."
                     );
                 }
+                break;
+            case "rotate":
+                try
+                {
+                    Exec.Rotate(args);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine(
+                        "Could not parse rotation, it should go at the end as the last argument of the move command and be a valid double."
+                    );
+                }
+                break;
+            case "stretch":
                 break;
             case "viewx":
                 Exec.SetViewX(args);
@@ -57,7 +72,16 @@ public class CommandParser
                 break;
             // camera movements
             case "dolly":
-                Exec.CameraDolly(args);
+                try
+                {
+                    Exec.CameraDolly(args);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine(
+                        "Could not parse distance, it should go at the end as the last argument of the move command and be a valid double."
+                    );
+                }
                 break;
             case "tilt":
                 break;

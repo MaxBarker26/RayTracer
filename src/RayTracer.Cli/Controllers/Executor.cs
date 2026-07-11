@@ -390,6 +390,124 @@ public class Executor
         }
     }
 
+    public void Rotate(string[] args)
+    {
+        // if there are only three arguments passed in, one is assumed to be the "rotate" command itself,
+        // the next to be the direction relative to the camera frame, and the last to be the angle. Currently selected objects will be rotated.
+        if (args.Length == 3)
+        {
+            string direction = args[1];
+            double angle = double.Parse(args[2]);
+            switch (direction)
+            {
+                case "left":
+                    RotateLeft(angle);
+                    break;
+                case "right":
+                    RotateRight(angle);
+                    break;
+                case "up":
+                    RotateUp(angle);
+                    break;
+                case "down":
+                    RotateDown(angle);
+                    break;
+                case "forward":
+                    RotateForward(angle);
+                    break;
+                case "back":
+                    RotateBack(angle);
+                    break;
+                default:
+                    Console.WriteLine(
+                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back and follow the \"move\" command."
+                    );
+                    break;
+            }
+        }
+        else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments preceding direction and distance are the ids of objects to be moved
+        {
+            string direction = args[args.Length - 2];
+            string angle = args[args.Length - 1];
+            string[] directionAndDistance = { "move", direction, angle };
+            //save a deep copy of the currectly selected objects
+            List<IShape> currentlySelected = new();
+            foreach (var obj in _scene.Selected)
+            {
+                currentlySelected.Add(obj);
+            }
+            // deselect current and select the new objects specified in the arguments
+            Deselect();
+            for (int i = 1; i < args.Length - 2; i++)
+            {
+                try
+                {
+                    Select(args[i]);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"The ID {args[i]} does not exist");
+                }
+            }
+            //call move with the direction and distance as arguments
+            Move(directionAndDistance);
+            //reassign Selected to the objects which were selected before the rotation
+            _scene.Selected = currentlySelected;
+            //return prevents preview from being run if visual mode is activated.
+            return;
+        }
+        else
+        {
+            Console.WriteLine(
+                "The move command must be followed by a direction (up, down, left, right, forward, back) AND THEN a distance (a double value)"
+            );
+            //prevents preview from being run if visual mode is activated.
+            return;
+        }
+        //automatically call preview if visualMode is activated
+        if (_visualMode)
+            Preview();
+    }
+
+    private void RotateLeft(double angle)
+    {
+        foreach (IShape obj in _scene.Selected)
+        {
+            Matrix rotation = Matrix.CameraRelativeRotationX(_scene.Camera, -angle);
+            Point center = (obj.TransformMatrix * obj.Center).ToPoint();
+            Matrix moveToOrgin = Matrix.Translation(-center.X, -center.Y, -center.Z);
+            Matrix moveToOrignalPosition = Matrix.Translation(center.X, center.Y, center.Z);
+
+            obj.TransformMatrix =
+                moveToOrignalPosition * rotation * moveToOrgin * obj.TransformMatrix;
+        }
+    }
+
+    private void RotateRight(double angle)
+    {
+        foreach (IShape obj in _scene.Selected) { }
+    }
+
+    private void RotateForward(double angle)
+    {
+        foreach (IShape obj in _scene.Selected) { }
+    }
+
+    private void RotateBack(double angle)
+    {
+        foreach (IShape obj in _scene.Selected) { }
+    }
+
+    private void RotateUp(double angle)
+    {
+        foreach (IShape obj in _scene.Selected) { }
+    }
+
+    private void RotateDown(double angle)
+    {
+        foreach (IShape obj in _scene.Selected) { }
+    }
+
     public void CameraDolly(string[] args)
     {
         if (args.Length == 3)
