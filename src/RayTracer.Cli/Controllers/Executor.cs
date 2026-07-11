@@ -400,23 +400,14 @@ public class Executor
             double angle = double.Parse(args[2]);
             switch (direction)
             {
-                case "left":
-                    RotateLeft(angle);
+                case "x":
+                    RotateX(angle);
                     break;
-                case "right":
-                    RotateRight(angle);
+                case "y":
+                    RotateY(angle);
                     break;
-                case "up":
-                    RotateUp(angle);
-                    break;
-                case "down":
-                    RotateDown(angle);
-                    break;
-                case "forward":
-                    RotateForward(angle);
-                    break;
-                case "back":
-                    RotateBack(angle);
+                case "z":
+                    RotateZ(angle);
                     break;
                 default:
                     Console.WriteLine(
@@ -469,11 +460,11 @@ public class Executor
             Preview();
     }
 
-    private void RotateLeft(double angle)
+    private void RotateX(double angle)
     {
         foreach (IShape obj in _scene.Selected)
         {
-            Matrix rotation = Matrix.CameraRelativeRotationX(_scene.Camera, -angle);
+            Matrix rotation = Matrix.CameraRelativeRotationX(_scene.Camera, angle);
             Point center = (obj.TransformMatrix * obj.Center).ToPoint();
             Matrix moveToOrgin = Matrix.Translation(-center.X, -center.Y, -center.Z);
             Matrix moveToOrignalPosition = Matrix.Translation(center.X, center.Y, center.Z);
@@ -483,29 +474,32 @@ public class Executor
         }
     }
 
-    private void RotateRight(double angle)
+    private void RotateY(double angle)
     {
-        foreach (IShape obj in _scene.Selected) { }
+        foreach (IShape obj in _scene.Selected)
+        {
+            Matrix rotation = Matrix.CameraRelativeRotationY(_scene.Camera, -angle);
+            Point center = (obj.TransformMatrix * obj.Center).ToPoint();
+            Matrix moveToOrgin = Matrix.Translation(-center.X, -center.Y, -center.Z);
+            Matrix moveToOrignalPosition = Matrix.Translation(center.X, center.Y, center.Z);
+
+            obj.TransformMatrix =
+                moveToOrignalPosition * rotation * moveToOrgin * obj.TransformMatrix;
+        }
     }
 
-    private void RotateForward(double angle)
+    private void RotateZ(double angle)
     {
-        foreach (IShape obj in _scene.Selected) { }
-    }
+        foreach (IShape obj in _scene.Selected)
+        {
+            Matrix rotation = Matrix.CameraRelativeRotationZ(_scene.Camera, -angle);
+            Point center = (obj.TransformMatrix * obj.Center).ToPoint();
+            Matrix moveToOrgin = Matrix.Translation(-center.X, -center.Y, -center.Z);
+            Matrix moveToOrignalPosition = Matrix.Translation(center.X, center.Y, center.Z);
 
-    private void RotateBack(double angle)
-    {
-        foreach (IShape obj in _scene.Selected) { }
-    }
-
-    private void RotateUp(double angle)
-    {
-        foreach (IShape obj in _scene.Selected) { }
-    }
-
-    private void RotateDown(double angle)
-    {
-        foreach (IShape obj in _scene.Selected) { }
+            obj.TransformMatrix =
+                moveToOrignalPosition * rotation * moveToOrgin * obj.TransformMatrix;
+        }
     }
 
     public void CameraDolly(string[] args)
