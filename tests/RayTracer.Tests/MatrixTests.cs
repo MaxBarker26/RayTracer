@@ -628,12 +628,10 @@ public class MatrixTests
     public void CameraRelativeRotation_XAxisPitch_MatchesWorldZ()
     {
         Camera c = new(160, 120, Math.PI / 2);
-        // Camera looking down +X. Camera X-axis aligns with World Z-axis.
         c.Transform = Matrix.View(new(0, 0, 0), new(1, 0, 0), new(0, 1, 0));
 
         Matrix result = Matrix.CameraRelativeRotationX(c, Math.PI / 2);
 
-        // Expect the sandwich to output a pure World Z rotation
         Assert.Equal(Matrix.RotationZ(Math.PI / 2), result);
     }
 
@@ -641,12 +639,10 @@ public class MatrixTests
     public void CameraRelativeRotation_YAxisYaw_MatchesWorldY()
     {
         Camera c = new(160, 120, Math.PI / 2);
-        // Camera looking down +X. Camera Y-axis aligns with World Y-axis.
         c.Transform = Matrix.View(new(0, 0, 0), new(1, 0, 0), new(0, 1, 0));
 
         Matrix result = Matrix.CameraRelativeRotationY(c, Math.PI / 2);
 
-        // Expect the sandwich to output a pure World Y rotation
         Assert.Equal(Matrix.RotationY(Math.PI / 2), result);
     }
 
@@ -654,13 +650,10 @@ public class MatrixTests
     public void CameraRelativeRotation_ZAxisRoll_MatchesInvertedWorldX()
     {
         Camera c = new(160, 120, Math.PI / 2);
-        // Camera looking down +X. Camera +Z (backward) aligns with World -X.
         c.Transform = Matrix.View(new(0, 0, 0), new(1, 0, 0), new(0, 1, 0));
 
         Matrix result = Matrix.CameraRelativeRotationZ(c, Math.PI / 2);
 
-        // Expect the sandwich to output a pure World X rotation, but inverted
-        // because the camera's Z axis points opposite the world's X axis
         Assert.Equal(Matrix.RotationX(-Math.PI / 2), result);
     }
 }

@@ -418,9 +418,9 @@ public class Executor
         }
         else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments preceding direction and distance are the ids of objects to be moved
         {
-            string direction = args[args.Length - 2];
+            string axis = args[args.Length - 2];
             string angle = args[args.Length - 1];
-            string[] directionAndDistance = { "move", direction, angle };
+            string[] axisAndAngle = { "rotate", axis, angle };
             //save a deep copy of the currectly selected objects
             List<IShape> currentlySelected = new();
             foreach (var obj in _scene.Selected)
@@ -441,7 +441,7 @@ public class Executor
                 }
             }
             //call move with the direction and distance as arguments
-            Move(directionAndDistance);
+            Move(axisAndAngle);
             //reassign Selected to the objects which were selected before the rotation
             _scene.Selected = currentlySelected;
             //return prevents preview from being run if visual mode is activated.
