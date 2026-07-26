@@ -388,21 +388,21 @@ public class Matrix
     {
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
-        return cameraRotation * RotationX(angle) * viewRotation;
+        return cameraRotation * RotationY(angle) * viewRotation;
     }
 
     public static Matrix CameraRelativeRotationY(Camera cam, double angle)
     {
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
-        return cameraRotation * RotationY(angle) * viewRotation;
+        return cameraRotation * RotationZ(angle) * viewRotation;
     }
 
     public static Matrix CameraRelativeRotationZ(Camera cam, double angle)
     {
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
-        return cameraRotation * RotationZ(angle) * viewRotation;
+        return cameraRotation * RotationX(angle) * viewRotation;
     }
 
     //Helper method returns the camera's transformation matrix with the translation collumn zeroed out

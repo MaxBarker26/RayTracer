@@ -63,6 +63,7 @@ public class CommandParser
                 }
                 break;
             case "stretch":
+                Exec.Stretch(args);
                 break;
             case "viewx":
                 Exec.SetViewX(args);

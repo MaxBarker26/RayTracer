@@ -55,6 +55,7 @@ public class Executor
         }
     }
 
+    //sets the width of the rendered image in pixels
     public void SetViewX(string[] args)
     {
         if (args.Length < 2)
@@ -88,6 +89,7 @@ public class Executor
         }
     }
 
+    //sets the height of the rendered image in pixels
     public void SetViewY(string[] args)
     {
         if (args.Length < 2)
@@ -411,7 +413,7 @@ public class Executor
                     break;
                 default:
                     Console.WriteLine(
-                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back and follow the \"move\" command."
+                        "direction not recognized. Valid directions for the rotate command are: left, right, down, up, forward, back and follow the \"move\" command."
                     );
                     break;
             }
@@ -440,8 +442,8 @@ public class Executor
                     Console.WriteLine($"The ID {args[i]} does not exist");
                 }
             }
-            //call move with the direction and distance as arguments
-            Move(axisAndAngle);
+            //call rotate with the direction and distance as arguments
+            Rotate(axisAndAngle);
             //reassign Selected to the objects which were selected before the rotation
             _scene.Selected = currentlySelected;
             //return prevents preview from being run if visual mode is activated.
@@ -502,6 +504,100 @@ public class Executor
         }
     }
 
+    public void Stretch(string[] args)
+    {
+        // if there are only three arguments passed in, one is assumed to be the "stretch" command itself,
+        // the next to be the axis of the object on which to stretch
+        if (args.Length == 3)
+        {
+            string axis = args[1];
+            double distance = double.Parse(args[2]);
+            switch (axis)
+            {
+                case "x":
+                    StretchX(distance);
+                    break;
+                case "y":
+                    StretchY(distance);
+                    break;
+                case "z":
+                    StretchZ(distance);
+                    break;
+                default:
+                    Console.WriteLine(
+                        "axis not recognized. Valid axes for the stetch command are: x, y, and z."
+                    );
+                    break;
+            }
+        }
+        else if (args.Length > 3) //If there are more than three arguments it is assumed that the arguments preceding direction and distance are the ids of objects to be stretched
+        {
+            string axis = args[args.Length - 2];
+            string distance = args[args.Length - 1];
+            string[] axisAndDistance = { "rotate", axis, distance };
+            //save a deep copy of the currectly selected objects
+            List<IShape> currentlySelected = new();
+            foreach (var obj in _scene.Selected)
+            {
+                currentlySelected.Add(obj);
+            }
+            // deselect current and select the new objects specified in the arguments
+            Deselect();
+            for (int i = 1; i < args.Length - 2; i++)
+            {
+                try
+                {
+                    Select(args[i]);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"The ID {args[i]} does not exist");
+                }
+            }
+            //call stretch with the direction and distance as arguments
+            Stretch(axisAndDistance);
+            //reassign Selected to the objects which were selected before the rotation
+            _scene.Selected = currentlySelected;
+            //return prevents preview from being run if visual mode is activated.
+            return;
+        }
+        else
+        {
+            Console.WriteLine(
+                "The stretch command must be followed by an axis (x, y, or z) AND THEN a distance (a double value)"
+            );
+            //prevents preview from being run if visual mode is activated.
+            return;
+        }
+        //automatically call preview if visualMode is activated
+        if (_visualMode)
+            Preview();
+    }
+
+    private void StretchX(double distance)
+    {
+        foreach (IShape obj in _scene.Selected)
+        {
+            obj.TransformMatrix = Matrix.Scaling(distance, 1, 1) * obj.TransformMatrix;
+        }
+    }
+
+    private void StretchY(double distance)
+    {
+        foreach (IShape obj in _scene.Selected)
+        {
+            obj.TransformMatrix = Matrix.Scaling(1, distance, 1) * obj.TransformMatrix;
+        }
+    }
+
+    private void StretchZ(double distance)
+    {
+        foreach (IShape obj in _scene.Selected)
+        {
+            obj.TransformMatrix = Matrix.Scaling(1, 1, distance) * obj.TransformMatrix;
+        }
+    }
+
     public void CameraDolly(string[] args)
     {
         if (args.Length == 3)
@@ -530,7 +626,7 @@ public class Executor
                     break;
                 default:
                     Console.WriteLine(
-                        "direction not recognized. Valid directions for the move command are: left, right, down, up, forward, back and follow the \"move\" command."
+                        "direction not recognized. Valid directions for the dolly command are: left, right, down, up, forward, back and follow the \"move\" command."
                     );
                     break;
             }
