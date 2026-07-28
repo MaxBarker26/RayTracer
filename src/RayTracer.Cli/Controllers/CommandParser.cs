@@ -63,7 +63,28 @@ public class CommandParser
                 }
                 break;
             case "stretch":
-                Exec.Stretch(args);
+                try
+                {
+                    Exec.Stretch(args);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine(
+                        "Unable to parse the plane on which the object is to be stretched. Please include x, y, or z as the second to last argument to the \"stretch\" command."
+                    );
+                }
+                break;
+            case "scale":
+                try
+                {
+                    Exec.Scale(args);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine(
+                        "Unable to parse the fator by which the object(s) is/are to be scaled please place a double as the last argument to the \"scale\" command"
+                    );
+                }
                 break;
             case "viewx":
                 Exec.SetViewX(args);

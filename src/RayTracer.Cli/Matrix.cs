@@ -388,6 +388,7 @@ public class Matrix
     {
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
+        //possible cause for concern but leave this mismatch for now
         return cameraRotation * RotationY(angle) * viewRotation;
     }
 
@@ -395,6 +396,7 @@ public class Matrix
     {
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
+        //possible cause for concern but leave this mismatch for now
         return cameraRotation * RotationZ(angle) * viewRotation;
     }
 
@@ -403,6 +405,7 @@ public class Matrix
         Matrix viewRotation = ExtractCameraRotation(cam);
         Matrix cameraRotation = viewRotation.Transpose();
         return cameraRotation * RotationX(angle) * viewRotation;
+        //possible cause for concern but leave this mismatch for now
     }
 
     //Helper method returns the camera's transformation matrix with the translation collumn zeroed out

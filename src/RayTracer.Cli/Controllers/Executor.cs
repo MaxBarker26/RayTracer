@@ -504,6 +504,56 @@ public class Executor
         }
     }
 
+    public void Scale(string[] args)
+    {
+        if (args.Length == 2)
+        {
+            double factor = double.Parse(args[1]);
+            Scale(factor);
+        }
+        else if (args.Length > 2)
+        {
+            string factor = args[args.Length - 1];
+            string[] commandArgs = { "scale", factor };
+            //save a deep copy of the currectly selected objects
+            List<IShape> currentlySelected = new();
+            foreach (var obj in _scene.Selected)
+            {
+                currentlySelected.Add(obj);
+            }
+            // deselect current and select the new objects specified in the arguments
+            Deselect();
+            for (int i = 1; i < args.Length - 2; i++)
+            {
+                try
+                {
+                    Select(args[i]);
+                }
+                catch (ArgumentException)
+                {
+                    Console.WriteLine($"The ID {args[i]} does not exist");
+                }
+            }
+            //call scale with the direction and distance as arguments
+            Scale(commandArgs);
+            //reassign Selected to the objects which were selected before the rotation
+            _scene.Selected = currentlySelected;
+            //return prevents preview from being run if visual mode is activated.
+            return;
+        }
+        else
+        {
+            Console.WriteLine(
+                "The scale command must be followed by a double which is the factor by which the object is to be scaled after any objects listed."
+            );
+            //prevents preview from being run if visual mode is activated.
+            return;
+        }
+        //automatically call preview if visualMode is activated
+        if (_visualMode)
+            Preview();
+    }
+
     public void Stretch(string[] args)
     {
         // if there are only three arguments passed in, one is assumed to be the "stretch" command itself,
@@ -534,7 +584,7 @@ public class Executor
         {
             string axis = args[args.Length - 2];
             string distance = args[args.Length - 1];
-            string[] axisAndDistance = { "rotate", axis, distance };
+            string[] axisAndDistance = { "stretch", axis, distance };
             //save a deep copy of the currectly selected objects
             List<IShape> currentlySelected = new();
             foreach (var obj in _scene.Selected)
@@ -574,27 +624,35 @@ public class Executor
             Preview();
     }
 
-    private void StretchX(double distance)
+    private void Scale(double factor)
     {
         foreach (IShape obj in _scene.Selected)
         {
-            obj.TransformMatrix = Matrix.Scaling(distance, 1, 1) * obj.TransformMatrix;
+            obj.TransformMatrix = Matrix.Scaling(factor, factor, factor) * obj.TransformMatrix;
         }
     }
 
-    private void StretchY(double distance)
+    private void StretchX(double factor)
     {
         foreach (IShape obj in _scene.Selected)
         {
-            obj.TransformMatrix = Matrix.Scaling(1, distance, 1) * obj.TransformMatrix;
+            obj.TransformMatrix = Matrix.Scaling(factor, 1, 1) * obj.TransformMatrix;
         }
     }
 
-    private void StretchZ(double distance)
+    private void StretchY(double factor)
     {
         foreach (IShape obj in _scene.Selected)
         {
-            obj.TransformMatrix = Matrix.Scaling(1, 1, distance) * obj.TransformMatrix;
+            obj.TransformMatrix = Matrix.Scaling(1, factor, 1) * obj.TransformMatrix;
+        }
+    }
+
+    private void StretchZ(double factor)
+    {
+        foreach (IShape obj in _scene.Selected)
+        {
+            obj.TransformMatrix = Matrix.Scaling(1, 1, factor) * obj.TransformMatrix;
         }
     }
 
