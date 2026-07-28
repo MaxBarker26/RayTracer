@@ -523,7 +523,7 @@ public class Executor
             }
             // deselect current and select the new objects specified in the arguments
             Deselect();
-            for (int i = 1; i < args.Length - 2; i++)
+            for (int i = 1; i < args.Length - 1; i++)
             {
                 try
                 {
